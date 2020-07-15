@@ -1,0 +1,67 @@
+<p>Please fill the following form</p>
+<p>Price</p>
+<input type="number" [(ngModel)]="tempApp.price">
+<p>neighborhood</p>
+<input type="text"  [(ngModel)]="hood">
+<p>city</p>
+<input type="text"  [(ngModel)]="city">
+<p>country</p>
+<input type="text"  [(ngModel)]="country">
+<p>Adress:</p>
+<input type="text" [(ngModel)]="tempApp.address">
+<p>Capacity:</p>
+<input type="number" [(ngModel)]="tempApp.capacity">
+<p>Size (Square meters):</p>
+<input type="number" [(ngModel)]="tempApp.size">
+<p>Floor:</p>
+<input type="text" [(ngModel)]="tempApp.floor"><br>
+<p>The apartment is Available from</p>
+<input type="text" [(ngModel)]="startD"> To
+<input type="text" style="margin-left: 5px;"[(ngModel)]="endD"><br>
+<p>accesibility: </p>
+<input type="text" [(ngModel)]="tempApp.accessInfo"><br>
+<p>type:</p>
+<input type="text" [(ngModel)]="tempApp.type"><br>
+<p>number of beds:</p>
+<input type="number" [(ngModel)]="tempApp.numberOfBeds"><br>
+<p>longitude</p>
+<input type="number" step="0.000001" [(ngModel)]="tempApp.longitude"><br>
+<p>latitude</p>
+<input type="number" step="0.000001" [(ngModel)]="tempApp.latitude"><br>
+<p>Aditional Services</p>
+<!------------------------------------------------------------------------>
+<input type="checkbox"[(ngModel)]="tempApp.hasWifi" id="id1">
+<label for="id1">wifi</label><br>
+<input type="checkbox" [(ngModel)]="tempApp.hasParking" id="id2">
+<label for="id2">parking</label><br>
+<input type="checkbox" [(ngModel)]="tempApp.hasheat" id="id3">
+<label for="id3">air conditioning</label><br>
+<input type="checkbox" [(ngModel)]="tempApp.allowPets" id="id4">
+<label for="id4">pets allowed</label><br>
+<input type="checkbox" [(ngModel)]="tempApp.allowSmoking" id="id5">
+<label for="id5">smoking allowed</label><br>
+<input type="checkbox" [(ngModel)]="tempApp.hasTv" id="id6">
+<label for="id6">television </label><br>
+<input type="checkbox" [(ngModel)]="tempApp.hasElevator" id="id7">
+<label for="id7">Elevator </label><br>
+<!----------------------------------------------------------------------------->
+<h1>Please provide a small description of the appartment bellow</h1>
+<p>
+    <textarea [(ngModel)]="tempApp.description"> </textarea>
+</p>
+<h3>Image Uploading Module</h3>
+
+
+<div>
+    <input type="file" (change)="onFileChanged($event)">
+
+    <img [src]="imgURL" height="200" *ngIf="imgURL">
+</div>
+
+<hr />
+
+Received Image:
+
+{{ receivedImageData['pic'] }}
+<img [src]="convertedImage" >
+<button (click)="PostIt()">GO</button>

@@ -1,0 +1,14 @@
+<div class="admincontainer">
+    <p id="result" *ngIf="this.httpUsr.isAdminloggedIn()">LOGIN SUCCESFULL AVAILABLE OPTIONS :</p>
+    <ul *ngIf="this.httpUsr.isAdminloggedIn()">  
+          <li><button (click)="getAllUsers()">get All users</button> </li>  
+          <li><button (click)="logout()">Logout</button></li>
+          <li><button (click)="getApps()">Download all appartments</button></li>
+        </ul>
+    <p id="httpResult"></p>
+    <ul *ngIf="ShowUsers">
+        <li *ngFor="let User of userList">
+            <p>USERNAME:    {{User.userName}}</p>
+            <a href='#' routerLink="/userDetails/:{{User.userName}}">User Details</a><br>
+    </ul>
+</div>
