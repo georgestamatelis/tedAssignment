@@ -52,7 +52,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             Authentication auth = authenticationManager.authenticate(authenticationToken);
             return auth;
         }
-
+//Add Host Authentication Here and prehaps in the loginModel
+       /*if(credentials.getHost())
+        {
+            List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+            list.add(new SimpleGrantedAuthority("ROLE_HOST"));
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                    credentials.getUsername(),
+                    credentials.getPassword(),
+                    list);
+            Authentication auth = authenticationManager.authenticate(authenticationToken);
+            return auth;
+        }*/
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     credentials.getUsername(),
                     credentials.getPassword(),
@@ -63,7 +74,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         return auth;
     }
-
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication auth) throws IOException, ServletException {
        // UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();

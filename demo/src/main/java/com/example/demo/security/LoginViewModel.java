@@ -3,6 +3,7 @@ package com.example.demo.security;
 public class LoginViewModel {
     private String username;
     private String password;
+    private Boolean isHost=false;
 
     public String getPassword() {
         return password;
@@ -18,5 +19,13 @@ public class LoginViewModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Boolean getHost() {
+        return isHost;
+    }
+
+    public void setHost(Boolean host) {
+        isHost = host;
     }
 }

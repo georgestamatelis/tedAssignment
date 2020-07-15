@@ -69,6 +69,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                             );
                     return auth;
                 }
+                if(user.getOwner()==true){
+                    List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+                    list.add(new SimpleGrantedAuthority("ROLE_HOST"));
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                            username,null, list);
+                    //Authentication auth = authenticationManager.authenticate(authenticationToken);
+                    return auth;
+                }
                 UsernamePasswordAuthenticationToken auth=new UsernamePasswordAuthenticationToken(
                         username,null, Collections.emptyList()
                 );

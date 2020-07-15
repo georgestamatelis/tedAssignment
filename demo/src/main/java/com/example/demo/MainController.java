@@ -169,7 +169,8 @@ public class MainController {
     }
     @GetMapping("admin/getBookingsbyHost")
     @ResponseBody Iterable< Booking> getBookingsByHost(@RequestParam("usn") String usn){
-        List<appartment>temp=this.appartmentRepository.findByownernameAllIgnoringCase(usn);
+        User usr=this.userRepository.findById(usn).get();
+        List<appartment>temp=this.appartmentRepository.findAllByOwner(usr);
         List<Booking> result=new ArrayList<Booking>();
         for(int i=0;i<temp.size();i++){
             result.addAll(this.bookingRepository.findByAppId(temp.get(i).getId()));

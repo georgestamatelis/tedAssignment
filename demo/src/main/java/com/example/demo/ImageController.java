@@ -12,18 +12,23 @@ import java.io.IOException;
 public class ImageController {
     @Autowired
     ImageRepository imageRepository;
+    @Autowired
+    AppartmentRepository appartmentRepository;
     @PostMapping("user/upload")
     public ImageModel uploadImage(@RequestParam("myFile") MultipartFile file, @RequestParam("id")String id ) throws IOException {
         Integer appId=Integer.parseInt(id);
-        System.out.println(appId+"FOR FUCK'S SAKE");
-        ImageModel img = new ImageModel( file.getOriginalFilename(),file.getContentType(),file.getBytes(),appId);
+     //   System.out.println(appId+"FOR FUCK'S SAKE");
+       // if(!this.appartmentRepository.findById(appId).isPresent())
+     //           return new ImageModel("error","error" ,ull);
+        appartment app=this.appartmentRepository.findById(appId).get();
+        ImageModel img = new ImageModel( file.getOriginalFilename(),file.getContentType(),file.getBytes(),app);
         final ImageModel savedImage = imageRepository.save(img);
         System.out.println("Image saved");
         return savedImage;
     }
     @GetMapping("byId")
     @ResponseBody Iterable<ImageModel> getAllImagesById(@RequestParam Integer id){
-        return this.imageRepository.findAllByAppId(id);
+        return this.imageRepository.findAllByApp(this.appartmentRepository.findById(id).get());
 
     }
     @DeleteMapping("user/imgId")

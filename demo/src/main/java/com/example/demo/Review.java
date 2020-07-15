@@ -1,9 +1,8 @@
 package com.example.demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 public class Review {
@@ -15,6 +14,14 @@ public class Review {
     private int number; //0-5;
     private String comment;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JsonIgnore
+    private appartment appartment;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
     /////////////////////////////////
     public Integer getId() {
         return id;
@@ -54,5 +61,23 @@ public class Review {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+    @JsonIgnore
+    public appartment getAppartment() {
+        return appartment;
+    }
+    @JsonIgnore
+    public void setAppartment(appartment app) {
+        this.appId=app.getId();
+        this.appartment = app;
+    }
+    @JsonIgnore
+    public User getUser() {
+        return user;
+    }
+   @JsonIgnore
+    public void setUser(User user) {
+        this.userName=user.getUserName();
+        this.user = user;
     }
 }

@@ -25,6 +25,8 @@ public class AppartmentController {
     private AppartmentRepository appartmentRepository;
     @Autowired
     private BookingRepository bookingRepository;
+
+
     @PutMapping("user/updateApp")
     public @ResponseBody
     String changeApp(@RequestBody String jsonStr) throws JSONException {
@@ -33,7 +35,7 @@ public class AppartmentController {
         appartment n=this.appartmentRepository.findById(id).get();
         n.setAddress(obj.getString("address"));
         n.setAllowPets(obj.getBoolean("pets"));
-        n.setAllowPets(obj.getBoolean("smoke"));
+        n.setAllowSmoking(obj.getBoolean("smoke"));
         n.setCapacity(obj.getInt("capacity"));
         n.setFloor(obj.getInt("floor"));
         n.setHasheat(obj.getBoolean("ac"));
@@ -46,6 +48,7 @@ public class AppartmentController {
         n.setHasElevator(obj.getBoolean("lift"));
         n.setDescription(obj.getString("description"));
         n.setLongitude(obj.getDouble("longitude"));
+        System.out.println(obj.getDouble("longitude"));
         n.setLatitude(obj.getDouble("latitude"));
         n.setType(obj.getString("type"));
         n.setAccessInfo(obj.getString("accessInfo"));
@@ -62,19 +65,20 @@ public class AppartmentController {
         appartmentRepository.save(n);
         return "OK";
     }
+
     @PostMapping(path="/newApartment")
     public @ResponseBody Integer addNewAppartment(@RequestBody String jsonStr/*,@RequestParam("img")MultipartFile file*/) throws JSONException, IOException {
 
         JSONObject jObject = new JSONObject(jsonStr);
         String tempName=jObject.getString("Ownername");
-        Optional<User> result=userRepository.findById(tempName);
+        User result=userRepository.findById(tempName).get();
 
         //if(!result.get().getOwner())
         //  return "USER DOEN'T HAVE APPARTMENT OWNER PRIVILEGES";
         appartment n=new appartment();
 
+        n.setOwner(result);
         n.setSize((float) jObject.getDouble("size"));
-        n.setOwnername(jObject.getString("Ownername"));
         n.setHasheat(jObject.getBoolean("hasHeat"));
         n.setFloor(jObject.getInt("floor"));
         n.setPrice(jObject.getInt("Price"));
@@ -84,6 +88,8 @@ public class AppartmentController {
         n.setAddress(jObject.getString("Address"));
         n.setHasParking(jObject.getBoolean("HasParking"));
         n.setHasWifi(jObject.getBoolean("HasWifi"));
+        n.setLongitude(jObject.getDouble("longitude"));
+        n.setLatitude(jObject.getDouble("latitude"));
         n.setCapacity(jObject.getInt("capacity"));
         JSONArray jArray=jObject.getJSONArray("Dates");
         ArrayList<String> listdata = new ArrayList<String>();
@@ -111,7 +117,8 @@ public class AppartmentController {
         Optional<User> test =userRepository.findById(usn);
         if(!test.isPresent())
             return null;
-        List<appartment> result=appartmentRepository.findByownernameAllIgnoringCase(usn);
+
+        List<appartment> result=appartmentRepository.findAllByOwner(test.get());
         return  result;
     }
     @GetMapping("Appartments/ById")
@@ -148,7 +155,7 @@ public class AppartmentController {
         return opt;
         // return null;
     }
-    @DeleteMapping("user/appartment")
+    @DeleteMapping("user/DeleteApartment")
     public @ResponseBody String DeleteApartment(@RequestParam Integer id) throws JSONException{
 
         Optional<appartment> temp=appartmentRepository.findById(id);
@@ -157,6 +164,8 @@ public class AppartmentController {
         this.appartmentRepository.delete(temp.get());
         return "OK";
     }
+
+    ///images
     @PostMapping("user/updateAppImage")
     public @ResponseBody String updateAppImage(@RequestParam("imgFile") MultipartFile file,@RequestParam("id")Integer id) throws IOException {
         appartment temp=this.appartmentRepository.findById(id).get();
@@ -177,5 +186,5 @@ public class AppartmentController {
             this.appartmentRepository.save(n);
             return  "OK";
         }
-    } 
+    }
 }

@@ -31,6 +31,7 @@ public class User {
     @Column(name = "pic")
     private byte[] pic;
 
+
     public byte[] getPic() {
         return pic;
     }
@@ -108,4 +109,5 @@ public class User {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }

@@ -1,11 +1,10 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
 
 @Entity
 public class Booking {
@@ -20,6 +19,15 @@ public class Booking {
     List<String> DatesBooked=new ArrayList<String>();
 
 
+    //RELATIONSHIPS
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User usr;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private appartment appartment;
+    //METHODS
     public List<String> getDatesBooked() {
         return DatesBooked;
     }
@@ -50,5 +58,23 @@ public class Booking {
 
     public void setAppId(Integer appId) {
         this.appId = appId;
+    }
+   @JsonIgnore
+    public User getUsr() {
+        return usr;
+    }
+    @JsonIgnore
+    public void setUsr(User usr) {
+        this.userName=usr.getUserName();
+        this.usr = usr;
+    }
+    @JsonIgnore
+    public appartment getAppartment() {
+        return appartment;
+    }
+    @JsonIgnore
+    public void setAppartment(appartment app) {
+        this.appId=app.getId();
+        this.appartment = app;
     }
 }

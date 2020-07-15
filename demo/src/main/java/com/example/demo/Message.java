@@ -1,11 +1,11 @@
 package com.example.demo;
 
-import org.hibernate.annotations.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
-///@Table(name="MESAGE")
+///@Table(name="MESSAGE")
 public class Message {
     @Id
     @GeneratedValue (strategy=GenerationType.AUTO)
@@ -18,8 +18,15 @@ public class Message {
     ////////////////////////////////////////////////////////////////////////
     //////////METHODS
     ////////////////////////////////////////////////////////////
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JsonIgnore
+   private  User sender;
 
+   @ManyToOne(fetch =  FetchType.LAZY)
+   @JsonIgnore
+   private  User receiver;
 
+   ///////////////////////////METHODS
     public Integer getId() {
         return id;
     }
@@ -58,5 +65,23 @@ public class Message {
 
     public void setText(String text) {
         this.text = text;
+    }
+    @JsonIgnore
+    public User getSender() {
+        return sender;
+    }
+    @JsonIgnore
+    public void setSender(User sender) {
+        this.senderUsn=sender.getUserName();
+        this.sender = sender;
+    }
+    @JsonIgnore
+    public User getReceiver() {
+        return receiver;
+    }
+   @JsonIgnore
+    public void setReceiver(User receiver) {
+        this.receiverUsn=receiver.getUserName();
+        this.receiver = receiver;
     }
 }

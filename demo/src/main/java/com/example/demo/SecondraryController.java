@@ -19,6 +19,8 @@ public class SecondraryController {
     private  ReviewRepository reviewRepository;
     @Autowired
     private AppartmentRepository appartmentRepository;
+    @Autowired
+    private UserRepository userRepository;
     ////////////////////////////
     @PostMapping("messages/newMessage")
     public @ResponseBody
@@ -72,7 +74,7 @@ public class SecondraryController {
     @GetMapping("getReviewsByOwner")
     public @ResponseBody Iterable<Review> getReviewsByOwner(@RequestParam("usn") String usn)
     {
-        List<appartment> temp=this.appartmentRepository.findByownernameAllIgnoringCase(usn);
+        List<appartment> temp=this.appartmentRepository.findAllByOwner(this.userRepository.findById(usn).get());
         List<Review> result=new ArrayList<Review>();
         for(int i=0;i<temp.size();i++){
           //  List<Review> tempR=this.reviewRepository.findAllByAppId(temp.get(i).getId());

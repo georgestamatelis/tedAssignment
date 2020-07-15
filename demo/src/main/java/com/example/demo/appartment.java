@@ -1,9 +1,9 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +14,13 @@ public class appartment {
     @GeneratedValue (strategy=GenerationType.AUTO)
     private  Integer id;
     ///foreign key
-    @NotNull
-    private String ownername;
-    /////characteristics
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User owner;
+
+
+    //characteristics
+    private String ownername; //for frontend compatibility
     private int price;
     private float size;
     private int capacity;
@@ -169,15 +173,7 @@ public class appartment {
     public void setIdAvailable(Boolean idAvailable) {
         this.idAvailable = idAvailable;
     }
-    public String getOwnername() {
-        return ownername;
-    }
 
-
-
-    public void setOwnername(String ownername) {
-        this.ownername = ownername;
-    }
 
     public List<String> getDates() {
         return dates;
@@ -247,5 +243,24 @@ public class appartment {
 
     public void setNumberOfBeds(int numberOfBeds) {
         this.numberOfBeds = numberOfBeds;
+    }
+
+    @JsonIgnore
+    public User getOwner() {
+        return owner;
+    }
+    @JsonIgnore
+    public void setOwner(User owner) {
+        this.owner = owner;
+        this.setOwnername(owner.getUserName());
+
+    }
+
+    public String getOwnername() {
+        return ownername;
+    }
+
+    public void setOwnername(String ownername) {
+        this.ownername = ownername;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,18 +25,20 @@ public class ImageModel {
 
     @Column(name = "type")
     private String type;
-    @Column(name="appId")
-    private Integer appId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private appartment app;
 
     @Lob
     @Column(name = "pic")
     private byte[] pic;
 
     //Custom Construtor
-    public ImageModel(String name, String type, byte[] pic,Integer appId) {
+    public ImageModel(String name, String type, byte[] pic,appartment app) {
         this.name = name;
         this.type = type;
         this.pic = pic;
-        this.appId=appId;
+        this.app=app;
     }
 }
