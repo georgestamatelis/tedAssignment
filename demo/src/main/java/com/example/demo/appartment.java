@@ -1,12 +1,14 @@
 package com.example.demo;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Entity
+@Data
 public class appartment {
     @Id
     @GeneratedValue (strategy=GenerationType.AUTO)
@@ -29,10 +31,28 @@ public class appartment {
     private Boolean allowSmoking;
     private Boolean idAvailable; //SOS
     private String location; //location={town+country+neighbourhood}
+    private double latitude;
+    private double longitude;
+    private String accessInfo;
+    private String type;
+    private int numberOfBeds;
+    @Lob
     private String description;
-    //need to add description,location={town,country, neighbourhood} 
     @ElementCollection
     private List<String> dates=new ArrayList<String>();
+    @Lob
+    @Column(name="main_pic")
+    private byte[] main_pic;
+
+    public byte[] getMain_pic() {
+        return main_pic;
+    }
+
+    public void setMain_pic(byte[] main_pic) {
+        this.main_pic = main_pic;
+    }
+
+    ////////////////////////////////////////////////
     public Integer getId() {
         return id;
     }
@@ -189,4 +209,43 @@ public class appartment {
         this.description = description;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getAccessInfo() {
+        return accessInfo;
+    }
+
+    public void setAccessInfo(String accessInfo) {
+        this.accessInfo = accessInfo;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getNumberOfBeds() {
+        return numberOfBeds;
+    }
+
+    public void setNumberOfBeds(int numberOfBeds) {
+        this.numberOfBeds = numberOfBeds;
+    }
 }

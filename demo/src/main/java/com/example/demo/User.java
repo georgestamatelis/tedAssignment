@@ -1,16 +1,17 @@
 package com.example.demo;
 
 
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Data;
 
-import javax.persistence.*;
-//import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
+//import lombok.Data;
 
+@Data
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
     //data
@@ -25,11 +26,19 @@ public class User {
     String firstName;
     String lastName;
     String phoneNumber;
-    /*@OneToMany
-    List<message> sent=new ArrayList<message>();
-    @OneToMany
-    List<message> received=new ArrayList<message>();
-*/
+
+    @Lob
+    @Column(name = "pic")
+    private byte[] pic;
+
+    public byte[] getPic() {
+        return pic;
+    }
+
+    public void setPic(byte[] pic) {
+        this.pic = pic;
+    }
+
     /////methods
     public void setUserName(String userName){
         this.userName=userName;

@@ -1,19 +1,17 @@
 package com.example.demo;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sun.security.util.Password;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.jws.soap.SOAPBinding;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
@@ -60,15 +58,13 @@ public class MainController {
         }
     }
 
-    @GetMapping(path="/admin")
-    public @ResponseBody Iterable<User> getAllUsers(@RequestParam("adminUSN")String usn,@RequestParam("adminPSW")String psw) {
+    @GetMapping(path="/admin/allUsers")
+    public @ResponseBody Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
-        if(usn.equals("admin1") && psw.equals("123"))
-            return userRepository.findAll();
-        //SORRY NO ADMIN PRIVILEGES
-        return null;
+         return userRepository.findAll();
+
     }
-    @GetMapping(path="/oneUser")
+    @GetMapping(path="user/oneUser")
     public @ResponseBody Optional<User> getUserById(@RequestParam("username") String usn)
     {
        //return userRepository.FindByUsername(usn);
@@ -82,6 +78,7 @@ public class MainController {
          return null;*/
 
     }
+
     @PutMapping("/EditUserData/Password")
     public @ResponseBody String updatePassword(@RequestBody String jsonStr) throws  JSONException
     {
@@ -95,6 +92,16 @@ public class MainController {
         found.setPassword(newPassword);
         this.userRepository.save(found);
         return "YOUR PASSWORD HAS CHANGED";
+    }
+    @PutMapping("/EditUserData/Phone")
+    public @ResponseBody String editUserDataP(@RequestBody String jsonStr) throws JSONException{
+        JSONObject obj=new JSONObject(jsonStr);
+        String username=obj.getString("username");
+        String phone=obj.getString("phone");
+        User found=this.userRepository.findById(username).get();
+        found.setPhoneNumber(phone);
+        this.userRepository.save(found);
+        return "YOUR EMAIL HAS CHANGED";
     }
     @PutMapping("/EditUserData/Email")
     public @ResponseBody String updateEmail(@RequestBody String jsonStr) throws  JSONException
@@ -110,125 +117,10 @@ public class MainController {
         this.userRepository.save(found);
         return "YOUR EMAIL HAS CHANGED";
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////APPARTMENTS
-    ///////////////////////////////////////////////////////////
-    @PostMapping(path="/newApartment")
-    public @ResponseBody String addNewAppartment(@RequestBody String jsonStr) throws JSONException
-    {
-        System.out.println("fuck me");
-        JSONObject jObject = new JSONObject(jsonStr);
-        String tempName=jObject.getString("Ownername");
-        String tempPSW=jObject.getString("OwnerPassword");
 
-        Optional<User> result=userRepository.findById(tempName);
-        if(!result.isPresent())
-            return "ERROR USERNAME OR PASSWORD WRONG";
-        else if(!tempPSW.equals(result.get().getPassword()))
-            return "WRONG PASSWORD";
-        //if(!result.get().getOwner())
-          //  return "USER DOEN'T HAVE APPARTMENT OWNER PRIVILEGES";
-        appartment n=new appartment();
-
-        n.setSize((float) jObject.getDouble("size"));
-        n.setOwnername(jObject.getString("Ownername"));
-        n.setHasheat(jObject.getBoolean("hasHeat"));
-        n.setFloor(jObject.getInt("floor"));
-        n.setPrice(jObject.getInt("Price"));
-        n.setIdAvailable(true);
-        n.setAllowPets(jObject.getBoolean("AllowPets"));
-        n.setAllowSmoking(jObject.getBoolean("AllowSmoking"));
-        n.setAddress(jObject.getString("Address"));
-        n.setHasParking(jObject.getBoolean("HasParking"));
-        n.setHasWifi(jObject.getBoolean("HasWifi"));
-        n.setCapacity(jObject.getInt("capacity"));
-        JSONArray jArray=jObject.getJSONArray("Dates");
-        ArrayList<String> listdata = new ArrayList<String>();
-        if (jArray != null) {
-            for (int i=0;i<jArray.length();i++){
-                listdata.add(jArray.getString(i));
-            }
-        }
-        n.setDates(listdata);
-        ///now it is time to set location
-        n.setLocation(jObject.getString("country")+"+"+jObject.getString("town")+"+"+jObject.getString("neighborhood"));
-        appartmentRepository.save(n);
-        return "AppartmentAdded";
-    }
-    @GetMapping("/allApartments")
-    public @ResponseBody Iterable<appartment> getAllAppartments(/*@RequestBody String jsonStr*/)throws JSONException
-    {
-     //   JSONObject obj=new JSONObject(jsonStr);
-       // String adminName=obj.getString("adminName");
-        //String adminPsw=obj.getString("password");
-        //if(adminName.equals("admin1") && adminPsw.equals("123"))
-        return appartmentRepository.findAll();
-        // return null;
-
-    }
-    @GetMapping("/AppByUsr")
-    public @ResponseBody Iterable<appartment> getApartmentsByUsrID(@RequestParam("username") String usn) throws JSONException
-    {
-
-      Optional<User> test =userRepository.findById(usn);
-      if(!test.isPresent())
-          return null;
-      List<appartment> result=appartmentRepository.findByownernameAllIgnoringCase(usn);
-      return  result;
-    }
-    @GetMapping("Appartments/ById")
-    public @ResponseBody Optional<appartment> findAppById(@RequestParam("id")Integer id){
-        return this.appartmentRepository.findById(id);
-    }
-    @GetMapping("/ByLocation")
-    public @ResponseBody Iterable<appartment> getApartmentsByLocation(@RequestParam("country") String country,@RequestParam("city")String city
-    ,@RequestParam("neighborhood")String neighborhood) throws  JSONException
-    {
-
-        String Location=country+"+"+ city +"+"+ neighborhood;
-        return appartmentRepository.findBylocationOrderByPriceAllIgnoringCase(Location);
-       // return null;
-
-    }
-    @GetMapping("/ByLocation/Dates")
-    public @ResponseBody Iterable<appartment> getApartmentsByLocationDates(
-            @RequestParam("capacity") Integer capacity,
-            @RequestParam("startD")String st, @RequestParam("endD")String end,
-            @RequestParam("country") String country,@RequestParam("city")String city
-            ,@RequestParam("neighborhood")String neighborhood) throws  JSONException
-    {
-
-        String Location=country+"+"+ city +"+"+ neighborhood;
-        List<appartment> opt=this.appartmentRepository.findByLocationAndCapacityOrderByPriceAllIgnoringCase(Location,capacity);
-        Iterator itr = opt.iterator();
-        while (itr.hasNext())
-        {
-            appartment app=(appartment)itr.next();
-            if(!app.getDates().contains(st) || !app.getDates().contains(end))
-                    itr.remove();
-        }
-        return opt;
-        // return null;
-    }
-    @DeleteMapping("appartment")
-    public @ResponseBody String DeleteApartment(@RequestParam Integer id) throws JSONException{
-
-        Optional<appartment> temp=appartmentRepository.findById(id);
-        if(!temp.isPresent())
-            return "ERROR";
-        this.appartmentRepository.delete(temp.get());
-        return "OK";
-    }
-    @GetMapping("appartment/data")
-    public  @ResponseBody Optional<appartment> getAppartmentData(@RequestBody String jsonStr) throws JSONException
-    {
-        JSONObject obj=new JSONObject(jsonStr);
-        return this.appartmentRepository.findById(obj.getInt("id"));
-    }
     @PostMapping("admin/ConfirmRequest")
     public @ResponseBody String CofirmRequest(@RequestBody String jsonStr) throws JSONException
     {
-       // System.out.println("fuck me");
         JSONObject obj=new JSONObject(jsonStr);
         String usn=obj.getString("username");
         Optional<User> temp=this.userRepository.findById(usn);
@@ -248,7 +140,7 @@ public class MainController {
     ///////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    @PostMapping("appartment/book")
+    @PostMapping("user/appartment/book")
     public @ResponseBody String BookApp(@RequestBody String jsonStr) throws JSONException{
         JSONObject obj=new JSONObject(jsonStr);
         String renter= obj.getString("renter");
@@ -271,8 +163,29 @@ public class MainController {
         this.bookingRepository.save(n);
         return "OK";
     }
-    @GetMapping("getBookings")
+    @GetMapping("user/getBookings")
     @ResponseBody Iterable< Booking> getBookings(@RequestParam("id") Integer appId){
         return this.bookingRepository.findByAppId(appId);
     }
+    @GetMapping("admin/getBookingsbyHost")
+    @ResponseBody Iterable< Booking> getBookingsByHost(@RequestParam("usn") String usn){
+        List<appartment>temp=this.appartmentRepository.findByownernameAllIgnoringCase(usn);
+        List<Booking> result=new ArrayList<Booking>();
+        for(int i=0;i<temp.size();i++){
+            result.addAll(this.bookingRepository.findByAppId(temp.get(i).getId()));
+        }
+        return result;
+    }
+    @GetMapping("admin/getBookingsByClient")
+    @ResponseBody Iterable<Booking> getBookingsByClient(@RequestParam("usn") String usn){
+        return this.bookingRepository.findByUserName(usn);
+    }
+    @PostMapping("user/uploadProfilePic")
+    public @ResponseBody byte[] uploadProfilePic(@RequestParam("imgFile") MultipartFile file,@RequestParam("usn") String usn) throws IOException {
+        User temp=this.userRepository.findById(usn).get();
+        temp.setPic(file.getBytes());
+        userRepository.save(temp);
+        return temp.getPic();
+    }
+
 }

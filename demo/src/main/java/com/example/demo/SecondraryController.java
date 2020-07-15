@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller // This means that this class is a Controller
 @RequestMapping(path="/accesories") // This means URL's start with /demo (after Application path)
 @CrossOrigin
@@ -14,6 +17,8 @@ public class SecondraryController {
     private MessageRepository messageRepository;
     @Autowired
     private  ReviewRepository reviewRepository;
+    @Autowired
+    private AppartmentRepository appartmentRepository;
     ////////////////////////////
     @PostMapping("messages/newMessage")
     public @ResponseBody
@@ -35,6 +40,10 @@ public class SecondraryController {
     @GetMapping("messages/getAllByUsr")
     public @ResponseBody Iterable<Message> getAllByUsr(@RequestParam("receiver") String receiver){
         return this.messageRepository.findAllByReceiverUsn(receiver);
+    }
+    @GetMapping("messages/duplex")
+    public @ResponseBody Iterable<Message> getAllDuplex(@RequestParam("receiver")String r,@RequestParam("sender")String s){
+        return this.messageRepository.findAllByReceiverUsnAndSenderUsn(r,s);
     }
     @DeleteMapping("messages/delete")
     public @ResponseBody String DeleteM(@RequestParam("id")Integer  id){
@@ -59,5 +68,21 @@ public class SecondraryController {
     @GetMapping("getReviews")
     public @ResponseBody Iterable<Review> getReviews(@RequestParam("id") Integer appId){
             return this.reviewRepository.findAllByAppId(appId);
+    }
+    @GetMapping("getReviewsByOwner")
+    public @ResponseBody Iterable<Review> getReviewsByOwner(@RequestParam("usn") String usn)
+    {
+        List<appartment> temp=this.appartmentRepository.findByownernameAllIgnoringCase(usn);
+        List<Review> result=new ArrayList<Review>();
+        for(int i=0;i<temp.size();i++){
+          //  List<Review> tempR=this.reviewRepository.findAllByAppId(temp.get(i).getId());
+            result.addAll(this.reviewRepository.findAllByAppId(temp.get(i).getId()));
+        }
+
+        return result;
+    }
+    @GetMapping("getReviewsByCreator")
+    public @ResponseBody Iterable<Review> getReviewsByConductior(@RequestParam("usn") String usn){
+        return this.reviewRepository.findAllByUserName(usn);
     }
 }
