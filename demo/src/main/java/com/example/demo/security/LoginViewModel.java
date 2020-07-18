@@ -4,6 +4,8 @@ public class LoginViewModel {
     private String username;
     private String password;
     private Boolean isHost=false;
+    private Boolean isRenter=false;
+
 
     public String getPassword() {
         return password;
@@ -21,11 +23,19 @@ public class LoginViewModel {
         this.username = username;
     }
 
-    public Boolean getHost() {
+   public Boolean getHost() {
         return isHost;
     }
 
     public void setHost(Boolean host) {
         isHost = host;
+    }
+
+    public Boolean getRenter() {
+        return isRenter;
+    }
+
+    public void setRenter(Boolean renter) {
+        isRenter = renter;
     }
 }

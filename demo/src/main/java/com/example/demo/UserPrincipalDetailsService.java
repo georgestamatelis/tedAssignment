@@ -30,6 +30,7 @@ public class UserPrincipalDetailsService implements UserDetailsService {
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }
+
         BCryptPasswordEncoder temp=new BCryptPasswordEncoder(4);
 
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();

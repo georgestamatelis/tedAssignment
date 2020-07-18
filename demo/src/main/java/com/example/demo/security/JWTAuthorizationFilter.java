@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.example.demo.security.SecurityConstants.*;
@@ -69,19 +68,24 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                             );
                     return auth;
                 }
-                if(user.getOwner()==true){
-                    List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+                List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+                if(user.getOwner()==true) {
                     list.add(new SimpleGrantedAuthority("ROLE_HOST"));
+                }
+                if(user.getRenter()==true)
+                {
+                    list.add(new SimpleGrantedAuthority("ROLE_RENTER"));
+                }
                     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                             username,null, list);
                     //Authentication auth = authenticationManager.authenticate(authenticationToken);
                     return auth;
                 }
-                UsernamePasswordAuthenticationToken auth=new UsernamePasswordAuthenticationToken(
+                /*UsernamePasswordAuthenticationToken auth=new UsernamePasswordAuthenticationToken(
                         username,null, Collections.emptyList()
                 );
                 return auth;
-            }
+            }*/
             return null;
         }
         return null;

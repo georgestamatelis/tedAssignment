@@ -45,6 +45,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
              .antMatchers("/demo/user/DeleteApartment").hasRole("HOST")
             .antMatchers("/demo/ByLocation/**").permitAll()
             .antMatchers("/demo/Appartments/**").permitAll()
+            .antMatchers("/demo/allUserNames").permitAll()
             .antMatchers("/demo/admin/").hasRole("ADMIN")
             .antMatchers("/demo/admin/**").hasRole("ADMIN")
             .antMatchers("/demo/user/**").authenticated()

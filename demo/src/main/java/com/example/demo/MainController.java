@@ -41,21 +41,21 @@ public class MainController {
         n.setFirstName(obj.getString("firstname"));
         n.setLastName(obj.getString("lastname"));
         n.setPhoneNumber(obj.getString("phonenumber"));
+        n.setRenter(obj.getBoolean("renterReq"));
         if(obj.getBoolean("Request"))
         {
             n.setRequestforOwner(true);
             n.setOwner(false);
-            n.setRenter(true);
             this.userRepository.save(n);
             return "YOU WILL BE NOTIFIED";
         }
         else{
             n.setOwner(false);
-            n.setRenter(true);
             n.setRequestforOwner(false);
             this.userRepository.save(n);
             return "OK";
         }
+
     }
 
     @GetMapping(path="/admin/allUsers")
@@ -63,6 +63,15 @@ public class MainController {
         // This returns a JSON or XML with the users
          return userRepository.findAll();
 
+    }
+    @GetMapping(path="allUserNames")
+    public  @ResponseBody Iterable<String> getAllUserNames(){
+        List <User> users= (List<User>) this.userRepository.findAll();
+        List<String> result=new ArrayList<String>();
+        for(User var :users){
+            result.add(var.getUserName());
+        }
+        return  result;
     }
     @GetMapping(path="user/oneUser")
     public @ResponseBody Optional<User> getUserById(@RequestParam("username") String usn)
@@ -181,12 +190,29 @@ public class MainController {
     @ResponseBody Iterable<Booking> getBookingsByClient(@RequestParam("usn") String usn){
         return this.bookingRepository.findByUserName(usn);
     }
-    @PostMapping("user/uploadProfilePic")
+    @PutMapping("user/uploadProfilePic")
     public @ResponseBody byte[] uploadProfilePic(@RequestParam("imgFile") MultipartFile file,@RequestParam("usn") String usn) throws IOException {
         User temp=this.userRepository.findById(usn).get();
         temp.setPic(file.getBytes());
         userRepository.save(temp);
         return temp.getPic();
+    }
+    @PutMapping("/EditUserData/FName")
+    public @ResponseBody String changeFName(@RequestBody String jStr) throws JSONException {
+        JSONObject obj=new JSONObject(jStr);
+        User temp=this.userRepository.findById(obj.getString("username")).get();
+        temp.setFirstName(obj.getString("firstName"));
+        this.userRepository.save(temp);
+        return "OK";
+
+    }
+    @PutMapping("/EditUserData/LName")
+    public @ResponseBody String changeLName(@RequestBody String jStr) throws JSONException {
+        JSONObject obj=new JSONObject(jStr);
+        User temp=this.userRepository.findById(obj.getString("username")).get();
+        temp.setLastName(obj.getString("lastName"));
+        this.userRepository.save(temp);
+        return "OK";
     }
 
 }
