@@ -1,0 +1,29 @@
+<html>
+<header>
+    AIRBNB
+</header>
+    <div id="welcome" *ngIf="this.http.loggedIn()">Welcome  {{this.testUsr.userName}}</div>
+<div id="admincontainer">
+    <div id="actions" *ngIf="this.http.loggedIn()">Available Actions</div>
+    <nav *ngIf="this.http.loggedIn()"> 
+        <button routerLink="/editProfile">Edit Profile Data</button>
+        <div *ngIf="this.testUsr.renter"><button routerLink="/appartment">Search for appartments</button></div>
+        <div *ngIf="this.testUsr.owner"><button   routerLink="/manageApp">Are you a host??manage your appartments</button></div>
+        <div *ngIf="this.testUsr.owner"><button routerLink="/add-appartment/:{{testUsr.userName}}"> Add new appartment</button> </div>
+        <button  (click)="seeMessages()">Click here to see your messages</button>
+        <button (click)="logout()" >Click here to logout</button>
+    </nav>
+</div>
+<div  *ngIf="ShowMessages">
+    <li *ngFor="let m of messages |  paginate: { itemsPerPage: 10, currentPage: p }">
+        <p> Date : {{m.date}}</p>
+        <p> From: {{m.senderUsn}}</p>
+        <p>{{m.text}}</p>
+            <textarea></textarea>
+        <br><button (click)="Reply()">Send reply</button>
+        <br><button (click)="Delete_Message()">Click here to delete</button>
+    </li>
+</div>
+<div class="text-right"  *ngIf="ShowMessages">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

@@ -1,0 +1,46 @@
+html {
+    background: url('indoors1.webp') white no-repeat;
+    background-size: cover;
+    font-weight: bold;
+    font-size: 110%;
+    height: 100%;
+    background-attachment: fixed;
+    position:fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+  }
+  button {
+    margin-top:15px;
+  }
+  #welcome {
+   border-radius: 10px;
+    background-color: white;
+    opacity: 75%;
+    text-align: center;
+    width: 400px;
+    font-size: 120%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  #admincontainer {
+    border-radius: 10px;
+    background-color: white;
+    opacity: 75%;
+    width: 320px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+  #admincontainer:hover {
+    opacity: 90%;
+  }

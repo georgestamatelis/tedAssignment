@@ -1,0 +1,9 @@
+<div id="history" *ngIf="showH">
+    <button (click)="Test()">Click Here to load previous messages send by {{this.ReceiverUsn}}</button>
+    <br><p id="latest">{{this.latest_message_text}}</p>
+</div>
+<h1 style="margin-left: 32px;">Type your message here</h1>
+<p style="margin-left: 32px;">
+    <textarea [(ngModel)]="messageText" > </textarea>
+</p>
+<button class="common" (click)="Send_Message()">Send</button>

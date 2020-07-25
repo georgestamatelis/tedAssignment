@@ -1,0 +1,131 @@
+html {
+    background: url('p5.jpg') white no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  header {
+    margin-bottom: 0px;
+  }
+  a {
+     color: black;
+     font-weight: bold;
+     font-family: "Calibri";
+     text-decoration: none;
+  }
+  a.logo {
+    font-weight: bold;
+  }
+  nav {
+    float: right;
+    font-size: 90%;
+    margin-left: 30px;
+  }
+  nav ul {
+     list-style-type: none;
+     margin: 0;
+     display: flex;
+  }
+  nav ul li a {
+     padding: 1em;
+  }
+  li:hover {
+    opacity: 100%;
+  }
+  #bookBeautiful {
+    margin-top: 36px;
+    margin-bottom: 10px;
+    font-size: 250%;
+    font-style: italic;
+    font-weight: bold;
+    color:white;
+    text-align: center;
+  }
+  ul {
+    margin-right: 10px;
+  }
+  
+  li{
+      display: block;
+      text-align: center;
+      padding-bottom: 2%;
+      background-color: white;
+      opacity: 80%;
+      margin-left: 5px;
+      margin-right: 5px;
+    border: 2px black solid;
+  }
+  
+  #linker{
+      background-color:yellow;
+      border-color: yellow;
+  }
+  #timeset{
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    min-width: 100px;
+    background-color: white;
+    opacity: 70%;
+    border-right: blueviolet;
+    border-left: blueviolet;
+    padding-bottom: 15px;
+    padding-top: 7px;
+    display: block;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #timeset:hover {
+    opacity: 90%;
+  }
+  #addReq {
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 120%;
+    text-align: center;
+    background-color: white;
+    opacity: 70%;
+    padding-bottom: 7px;
+    padding-top: 10px;
+    margin-top: 20px;
+    display: block;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #addReq:hover {
+    opacity: 90%;
+  }
+  #addReqBody {
+    margin-top: 8px;
+    font-size: 80%;
+    text-align: left;
+    padding-left: 18%;
+  }
+  .checkbox {
+    margin-right: 8px;
+  }
+  #maxCost {
+    margin-bottom: 20px;
+  }
+  #apartmentType {
+    margin-bottom: 10px;
+  }
+  #searchButton {
+    text-align: center;
+  }
+  button {
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    margin: 15px;
+    opacity: 80%;
+  }
+  button:hover {
+    opacity: 100%;
+  }

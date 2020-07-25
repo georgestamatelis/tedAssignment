@@ -1,0 +1,17 @@
+<p>{{this.usr.userName}}'s appartments</p>
+<ul >
+    <table>
+    <td><li *ngFor="let app of appartmentList | paginate: { itemsPerPage: 10, currentPage: p }">
+        <p >Price(Per Night): {{app.price}}</p>
+        <p *ngIf="app.reviews">number of reviews: {{app.reviews.length}}</p>
+        <p *ngIf="!app.reviews">zero reviews yet</p>
+        <p *ngIf="app.reviews">average review: {{this.getAverage(app.reviews)}}</p>
+        <img *ngIf="app.main_pic" src="data:image/jpeg;base64,{{app.main_pic}}">
+        <p >Size (Square meters) : {{app.size}}</p>
+        <button *ngIf="app!=null" id="linker"routerLink="/manageApp1/:id:{{app.id}}">Click here to see more</button>
+    </li></td>
+    </table>
+    <div class="text-right" >
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+   </div>
+</ul>
