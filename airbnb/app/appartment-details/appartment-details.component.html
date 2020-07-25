@@ -50,23 +50,18 @@
 <div class="text-right" >
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
-
-<button (click)=Book()>Book it</button><br>
-<button (click)="message()">Got any Questions Click here to messange the owner</button>-->
+<div *ngIf="this.userLoggedIn==true">
+    <button (click)=Book()>Book it</button><br>
+<button  (click)="message()">Got any Questions Click here to messange the owner</button>
+</div>
 <!--<button  *ngIf="this.userhttp.loggedIn()" id="linker"routerLink="/chat/:sender:{{this.userhttp.getLastUsr().userName}}/:receiver:{{this.cur.ownername}}">Got any Questions Click here to messange the owner</button>
 --><h1 id="resUlt"></h1>
 <h2>Appartment's geographical location </h2>
 <div id="map" class="map"></div>
-<p>Have you already visited this appartment? Provide a review(0-5) stars</p>
+<p *ngIf="this.userLoggedIn">Have you already visited this appartment? Provide a review(0-5) stars</p>
 <input style="margin-left: 26px; margin-bottom:26px ;" type="number" [(ngModel)]="review">
 <button style="margin-left: 26px; margin-bottom:26px ;" (click)=submit()>Submit</button><br>
 
 <p *ngIf="has_reviewed">Your review has already been sent</p>
-<div id="messages" *ngIf="openChat">
-    <p>Please type your Questions in the text area Below:</p>
-    <p>
-        <textarea [(ngModel)]=Question> </textarea>
-    </p>
-    <button (click)="sendMessage()" >SEND</button>
-</div>
+
 

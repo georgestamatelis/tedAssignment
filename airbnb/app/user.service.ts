@@ -92,6 +92,7 @@ export class UserService {
       "Request":"false",
       "renterReq":usr.renter
   };
+
     if(usr.requestforOwner)
     {
       body={
@@ -117,10 +118,19 @@ export class UserService {
     if(this.tester)
         return false
     
-   //   return false;
-    //console.log("fuck me");
-    this.http.post<String>(tempUrl,body,httpOptions).subscribe(result=> subscription=result.toString());
+   
+    this.http.post<String>(tempUrl,body).subscribe(result=> subscription=result.toString());
     return true;
+  }
+  uploadProfilePic(usn:String,picture){
+    let url="https://localhost:8443/demo/user/uploadProfilePic";
+    this.http.put(url,picture).subscribe(
+      res=>{
+        console.log(res)
+      //  this.usr.pic=event.target.files[0];
+     //   this.usr.pic=res;
+            }
+    )
   }
   changePassword(usr :User,identifier:String,newPassword :String):Boolean{
     const httpOptions = {
@@ -191,7 +201,8 @@ export class UserService {
   }
   getMessagesBySenderAndReceiver(sender:String,receiver:String):Observable<message[]>
   {
-    let url="https://localhost:8443/accesories/messages/duplex?receiver="+receiver+"&sender="+sender;
+    let url="https://localhost:8443/accesories/messages/duplex?receiver="+sender+"&sender="+receiver;
+    console.log(url);
     return this.http.get<message[]>(url);
     // return null;
   }

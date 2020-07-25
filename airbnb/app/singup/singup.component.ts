@@ -14,6 +14,7 @@ export class SingupComponent implements OnInit {
   success:Boolean;
   show:Boolean;
   newUser:User;
+  uploadData;
   secondPassword:String="";
   constructor(private http:UserService,private router:Router) { }
 
@@ -35,8 +36,23 @@ export class SingupComponent implements OnInit {
         this.success=false;
       }
     else
-      this.success=true;
-
+     {
+        this.success=true;
+        
+        
+     }
+  
   }
+  public sendImage(){
+    this.http.uploadProfilePic(this.newUser.userName,this.uploadData);
+  }
+  public  onFileChanged(event) {
+    this.newUser.pic=event.target.files[0];
+    let selectedFile = event.target.files[0];
+     this.uploadData = new FormData();
+    this.uploadData.append('imgFile',selectedFile);
+    this.uploadData.append('usn',this.newUser.userName.toString());
+  }
+
 
 }

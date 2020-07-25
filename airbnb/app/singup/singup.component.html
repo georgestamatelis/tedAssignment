@@ -60,6 +60,11 @@
     <div class="checkbox">
         <input class="checkbox" type="checkbox" name="checkbox" id="checker" [(ngModel)]="newUser.renter">
     </div>
+    <div class="form" *ngIf="success==true">
+        <p> One More step left, please choose your profile Picture</p>
+        <input type="file" (change)="onFileChanged($event)">
+        <button (click)="sendImage()">Go</button>
+    </div>
 </div>
     <button id="signUpButton" (click)="handleClick()"> <strong>Sign up</strong> </button><br>
 <div *ngIf="success==true && show==true">Sign up succesfull.</div>

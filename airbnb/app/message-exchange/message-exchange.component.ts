@@ -17,30 +17,28 @@ export class MessageExchangeComponent implements OnInit {
   messageText:String;
   Date:String;
   com_history:message[];
-  showH:Boolean;
-  latest_message_text:String;
   constructor(private route: ActivatedRoute,private userhttp:UserService,private httpC:HttpClient) { }
 
   ngOnInit(): void {
-    this.Date="1-1-1821"
-    this.showH=false;
+    this.Date=new Date().toString();
+    console.log(this.Date)
     //let input=this.route.snapshot.params.sender;
     //this.SenderUsn=input.split(":")[2];
     ///////////////////////////
     let input=this.route.snapshot.params.receiver;
     this.ReceiverUsn=input.split(":")[2];
-    this.userhttp.getMessagesBySenderAndReceiver(this.ReceiverUsn,this.SenderUsn).subscribe(
-      data=>{
-        this.com_history=data;
-        this.latest_message_text=this.com_history[this.com_history.length-1].text;
-        if(this.latest_message_text)
-          this.showH=true;
-      }
-    );
       this.httpC.get("https://localhost:8443/demo/user/UserName",{ responseType: 'text'}).subscribe(
         data=>{
-          this.SenderUsn=data; });
-    console.log(this.SenderUsn,this.ReceiverUsn);
+          this.SenderUsn=data;
+          console.log(this.SenderUsn,this.ReceiverUsn); 
+          this.userhttp.getMessagesBySenderAndReceiver(this.ReceiverUsn,this.SenderUsn).subscribe(
+            data=>{
+              this.com_history=data;
+              console.log(this.com_history);
+            });
+          }
+          );
+   
   }
   Send_Message(){
     this.userhttp.messageUsr(this.SenderUsn,this.ReceiverUsn,this.Date,this.messageText);

@@ -23,6 +23,7 @@ export class AppartmentDetailsComponent implements OnInit {
 has_reviewed:Boolean;
   Question:String;
   openChat:Boolean;
+  userLoggedIn:Boolean;
   cur:appartment;
   id:String;
   id1:number;
@@ -35,6 +36,8 @@ has_reviewed:Boolean;
 
   ngOnInit(): void {   
     /////////////////////////////////////////
+    this.userLoggedIn=this.userhttp.isAuthenticated();
+    console.log(this.userLoggedIn);
     this.id=this.route.snapshot.params.id;
     console.log(this.id);
     var arr=this.id.split(":");
@@ -94,7 +97,7 @@ has_reviewed:Boolean;
   message():void{
     if(this.userhttp.loggedIn())
      {
-      this.openChat=true;
+     // this.openChat=true;
       var usn:String
       this.httpC.get("https://localhost:8443/demo/user/UserName",{ responseType: 'text'}).subscribe(
         data=>{
