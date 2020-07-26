@@ -1,0 +1,15 @@
+
+<ul>
+    <li>UserName: {{current.userName}}</li>
+    <li>email: {{current.email}}</li><br>
+    <li>firstName: {{current.firstName}}</li><br>
+    <li>lastName: {{current.lastName}}</li><br>
+    <li>phoneNumber: {{current.phoneNumber}}</li><br>
+    <li *ngIf="current.requestforOwner"><button (click)="confirmRequest()"> CONFIRM CURRENT USERS REQUEST</button></li>
+    <li *ngIf="current.owner"><button (click)="GetUserApps()">DOWNLOAD(JSON) APARTMENTS PROVIDED BY THIS HOST</button>   </li>
+    <li *ngIf="current.owner"><button (click)="GetUserReviews()">DOWNLOAD(JSON) REVIEWS ON THIS HOST'S APPARTMENTS</button></li>
+    <li *ngIf="current.renter"><button (click)="getConducterRevies()">DOWNLOAD(JSON) ALL REVIEWS PROVIDED BY THIS USER</button></li>
+    <li *ngIf="current.renter"><button (click)="getBookingsClient()">DOWNLOAD ALL BOOKINGS BY THIS USER</button></li>
+    <li *ngIf="current.owner"><button (click)="getBookingsHost()">DOWNLOAD ALL BOOKINGS ON THIS HOSTS APPARTMENTS</button></li>
+    <br>
+</ul>

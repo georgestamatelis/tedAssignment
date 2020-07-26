@@ -1,0 +1,50 @@
+html {
+    background: url('login.jpg') white no-repeat;
+    background-size: cover;
+    font-weight: bold;
+    font-size: 110%;
+    height: 100%;
+    background-attachment: fixed;
+    position:fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+  }
+  #typeStuff {
+    background-color: white;
+    opacity: 75%;
+    width: 280px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-top: 50px;
+  }
+  #typeStuff:hover {
+    opacity: 90%;
+  }
+  .form {
+    margin-bottom: 20px;
+  }
+  button {
+    opacity: 75%;
+    margin-top: 20px;
+    border-radius: 10px;
+    border-color: black;
+    border: 3px black solid;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 35px;
+    margin-left: 0px;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  button:hover {
+    opacity: 100%;
+  }

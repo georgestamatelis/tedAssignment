@@ -1,0 +1,27 @@
+p{
+    margin-left:25px;
+}
+input{
+    margin-left:25px;
+}
+h1{
+    margin-left: 25px;
+}
+h3{
+    margin-left: 25px;
+}
+textarea{
+    width:250px;
+    height:150px ;
+}
+button{
+    background-color: blueviolet;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  margin-left: 30px;
+  margin-bottom: 25px;
+}

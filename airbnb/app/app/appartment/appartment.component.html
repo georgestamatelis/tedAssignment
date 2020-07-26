@@ -1,0 +1,101 @@
+<html>
+<header>
+    <strong>WELCOME TO AIRBNB ON A BUDGET</strong>
+</header>
+<nav>
+    <ul>
+      <li><a href="#" routerLink="/login">Login</a></li>
+      <li><a href="#" routerLink="/signUp">Sign Up</a></li>
+    </ul>
+</nav>
+<div class="inputForm">
+    <div id="bookBeautiful">
+        Book beautiful unique apartments now
+    </div>
+    <div id="timeset">
+    	<div class="where">
+    		<div class="text">
+        		Where:
+        	</div>
+        	<div class="form">
+        		<input type="text" [(ngModel)]="location">
+        	</div>
+    	</div>
+    	<div class="checkIn">
+    		<div class="text">
+	        	Check In:
+	        </div>
+	        <div class="form">
+	        	<input type="date" [(ngModel)]="startD">
+	        </div>
+    	</div>
+    	<div class="checkOut">
+    		<div class="text">
+        		Check Out:
+        	</div>
+        	<div class="form">
+	        	<input type="date" [(ngModel)]="endD">
+	        </div>
+        </div>
+        <div class="guests">
+        	<div class="text">
+        		Guests:
+        	</div>
+        	<div class="form">
+	        	<input type="number" [(ngModel)]="capacity">
+	        </div>
+        </div>
+    </div>
+    <div id="addReq">
+        Additional Requirements
+        <div id='addReqBody'>
+    	    <input class="checkbox" type="checkbox"[(ngModel)]="wifi" id="id1">
+    	    <label for="id1">WiFi</label><br>
+    	    <input class="checkbox" type="checkbox" [(ngModel)]="parking" id="id2">
+    	    <label for="id2">Parking</label><br>
+    	    <input class="checkbox" type="checkbox" [(ngModel)]="ac" id="id3">
+    	    <label for="id3">Air Conditioning</label><br>
+    	    <input class="checkbox" type="checkbox" [(ngModel)]="pets" id="id4">
+    	    <label for="id4">Pets allowed</label><br>
+    	    <input class="checkbox" type="checkbox" [(ngModel)]="smoking" id="id5">
+    	    <label for="id5">Smoking allowed</label><br>
+    	    <input class="checkbox" type="checkbox" [(ngModel)]="tv" id="id6">
+    	    <label for="id6">Television </label><br>
+    	    <input class="checkbox" type="checkbox" [(ngModel)]="elevator" id="id7">
+    	    <label for="id7">Elevator/Ground floor</label><br><br>
+    	</div>
+    	<div id="maxCost">
+    	    Maximum Cost:<br>
+    	    <input type="number" [(ngModel)]="maxCost"> <br>
+    	</div>
+    	<div id="apartmentType">
+        	Accomodation type:<br>
+        	<select [(ngModel)]="desiredType" id="choice">
+        	    <option *ngFor="let t of appartmentTypes" >{{t}}</option> 
+        	</select>
+    	</div>
+    </div>
+    <div id="searchButton">
+    	<button id="go" (click)="byLocation()">SEARCH</button>
+    </div>
+    <div id="result">
+        <ul *ngIf="show" id="hor">
+            <table>
+            <td><li *ngFor="let app of allApartments | paginate: { itemsPerPage: 10, currentPage: p }">
+                <p >Price(Per Night): {{app.price}}</p>
+                <p >Capacity : {{app.capacity}}</p>
+                <p *ngIf="app.reviews">number of reviews: {{app.numberOfReviews}}</p>
+                <p *ngIf="!app.reviews">zero reviews yet</p>
+                <p>Type: {{app.type}}</p>
+                <p *ngIf="app.reviews">average review: {{this.getAverage(app.reviews)}}</p>
+                <img  src="data:image/jpeg;base64,{{app.main_pic}}">
+                <button *ngIf="app!=null" id="linker"routerLink="/appDetails/:id:{{app.id}}/:startD:{{this.startD}}/:endD:{{this.endD}}">Click here to see more</button>
+            </li></td>
+            </table>
+        </ul>
+          <!--Including the pagination control.-->
+        <div class="text-right" *ngIf="show">
+             <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    
+    </div>
