@@ -1,0 +1,99 @@
+<h3>Change the appartemnt components you want and leave the others the same</h3>
+<div id="LocationInfo">
+    <h1> Appartment's location </h1>
+    <div id="map" class="map"></div>
+    <div id="mouse-position"></div>
+    <p> Neighborhood</p>
+    <input type="text" [(ngModel)]="hood">
+    <p>City:</p>
+    <input type="text" [(ngModel)]="city">
+    <p>Country:</p>
+    <input type="text" [(ngModel)]="country">
+    <p>address</p>
+    <input type="text" [(ngModel)]="cur.address">
+    <p> Acesibility</p>
+    <input type="text" [(ngModel)]="cur.accessInfo">
+</div>
+<div id="spaceInfo">
+    <h1>Appartment's space</h1> 
+    <p> Size (square meters)</p>
+    <input type="number" [(ngModel)]="cur.size">
+    <p>maximum capacity</p>
+    <input type="number" [(ngModel)]="cur.capacity">
+    <p>minimum price :</p>
+    <input type="number" [(ngModel)]="cur.price">
+    <p>aditional cost per person</p>
+    <input type="number" [(ngModel)]="cur.cost_per_person">
+    <p> Living room?</p>
+    <input type="checkbox"  [(ngModel)]="cur.hasLivingRoom">
+    <p>number of beds:</p>
+    <input type="number" [(ngModel)]="cur.numberOfBeds">
+    <p>Number of bedrooms</p>
+    <input type="number" [(ngModel)]  ="cur.numberOfBedrooms">
+    <p>Number of bathrooms</p>
+    <input type="number" [(ngModel)]  ="cur.numberOfBathrooms"> <br>
+    Accomodation type:<br>
+        <select [(ngModel)]="cur.type" id="choice">
+            <option value="private flat" >private flat</option> 
+            <option value="shared room">shared room</option>
+            <option value="full house">full house</option>
+        </select>
+</div>
+<div id="rules">
+    <h1> Appartment rules:</h1>
+
+    <input type="checkbox" [(ngModel)]="cur.allowPets" id="id4">
+    <label for="id4">pets allowed</label><br>
+    <input type="checkbox" [(ngModel)]="cur.allowSmoking" id="id5">
+    <label for="id5">smoking allowed</label><br>
+    <input type="checkbox" [(ngModel)]="cur.idAvailable" id="ava">
+    <label for="ava">Is Appartment available for gatherings,parties e.t.c ?</label>
+    <p>Minimum Mandatory dates to book:</p>
+    <input type="number" [(ngModel)]="cur.minDatesToBook">
+</div>
+<div id="services">
+    <h1>Additional Services</h1>
+    <input type="checkbox"[(ngModel)]="cur.hasWifi" id="id1">
+    <label for="id1">wifi</label><br>
+    <input type="checkbox" [(ngModel)]="cur.hasParking" id="id2">
+    <label for="id2">parking</label><br>
+    <input type="checkbox" [(ngModel)]="cur.hasheat" id="id3">
+    <label for="id3">air conditioning</label><br>
+    <input type="checkbox" [(ngModel)]="cur.hasTv" id="id6">
+    <label for="id6">television </label><br>
+    <input type="checkbox" [(ngModel)]="cur.hasElevator" id="id7">
+    <label for="id7">Elevator </label><br> 
+</div>
+<div id="description">
+    <h1>description:</h1>
+    <input type="textarea" [(ngModel)]="cur.description" >
+</div>
+<div id="mainPic">
+    <h1> Appartment's main /representing Picture</h1>
+    <img src="data:image/jpeg;base64,{{cur.main_pic}}">
+    <p> Upload you new profile picture bellow</p>
+    <div>
+        <input type="file" (change)="onFileChanged($event)">
+    
+        <img [src]="imgURL" height="200" *ngIf="imgURL">
+        <button (click)="changeMainPic()">Change picture</button>
+    </div>
+</div>
+<div id="aditional pictures">
+<h1>More pictures of the appartment are bellow</h1>
+<!--<img src="data:image/jpeg;base64,{{this.imageList[0].pic}}" id="photo-id"/>-->
+    <li *ngFor="let cur of imageList | paginate: { itemsPerPage: 3, currentPage: p }">
+        <img src="data:image/jpeg;base64,{{cur.pic}}">
+        <br><button (click)="DeleteImage(cur.id)">Click here to delete this picture</button>
+    </li>
+    <div class="text-right" >
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+    <!----------------------------------------------->
+    <h1>Add a new Picture Bellow</h1>
+    <div>
+        <input type="file" (change)="onFileChanged($event)">
+    </div>
+    <button (click)="AddPic()"  value="upload" >GO</button>
+</div> 
+<button (click)="PostIt()">UPDATE APPARTMENT</button>

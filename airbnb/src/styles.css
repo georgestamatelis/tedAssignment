@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+	margin: 0;
+	font-size: 150%;
+}
+header {
+	margin-top: 0px;
+	font-style: italic;
+	font-family: "Calibri";
+	color:black;
+	padding: 1px;
+	text-align: center;
+	background-color: white;
+	opacity: 75%;
+	font-size: 200%;
+	padding: 10px;
+	margin-bottom: 16px;
+}
