@@ -33,6 +33,7 @@ public class AppartmentController {
         JSONObject obj=new JSONObject(jsonStr);
         Integer id=obj.getInt("id");
         appartment n=this.appartmentRepository.findById(id).get();
+        n.setSize((float) obj.getDouble("size"));
         n.setAddress(obj.getString("address"));
         n.setAllowPets(obj.getBoolean("pets"));
         n.setAllowSmoking(obj.getBoolean("smoke"));
@@ -41,10 +42,11 @@ public class AppartmentController {
         n.setHasheat(obj.getBoolean("ac"));
         n.setHasParking(obj.getBoolean("parking"));
         n.setHasWifi(obj.getBoolean("wifi"));
-        n.setIdAvailable(true);
+        n.setIdAvailable(obj.getBoolean("idAvailable"));
         n.setPrice(obj.getInt("price"));
+        n.setHasTv(obj.getBoolean("hasTv"));
         n.setCapacity(obj.getInt("capacity"));
-        n.setLocation(obj.getString("location"));
+        n.setLocation(obj.getString("country")+"+"+obj.getString("town")+"+"+obj.getString("neighborhood"));
         n.setHasElevator(obj.getBoolean("lift"));
         n.setDescription(obj.getString("description"));
         n.setLongitude(obj.getDouble("longitude"));
@@ -53,6 +55,7 @@ public class AppartmentController {
         n.setType(obj.getString("type"));
         n.setAccessInfo(obj.getString("accessInfo"));
         n.setNumberOfBeds(obj.getInt("numberOfBeds"));
+        n.setCost_per_person(obj.getInt("cost-per-person"));
         n.setNumberOfBathrooms(obj.getInt("numberOfBathrooms" ));
        // n.setNumberOfBeds(obj.getInt("numberOfBeds"));
         n.setHasLivingRoom(obj.getBoolean("hasLivingRoom"));
@@ -87,7 +90,8 @@ public class AppartmentController {
         n.setHasheat(jObject.getBoolean("hasHeat"));
         n.setFloor(jObject.getInt("floor"));
         n.setPrice(jObject.getInt("Price"));
-        n.setIdAvailable(true);
+        n.setHasTv(jObject.getBoolean("hasTv"));
+        n.setIdAvailable(jObject.getBoolean("idAvailable"));
         n.setAllowPets(jObject.getBoolean("AllowPets"));
         n.setAllowSmoking(jObject.getBoolean("AllowSmoking"));
         n.setAddress(jObject.getString("Address"));
@@ -97,6 +101,10 @@ public class AppartmentController {
         n.setLatitude(jObject.getDouble("latitude"));
         n.setCapacity(jObject.getInt("capacity"));
         JSONArray jArray=jObject.getJSONArray("Dates");
+        n.setType(jObject.getString("type"));
+        n.setAccessInfo(jObject.getString("accessInfo"));
+        n.setHasElevator(jObject.getBoolean("lift"));
+        n.setCost_per_person(jObject.getInt("cost-per-person"));
         ArrayList<String> listdata = new ArrayList<String>();
         if (jArray != null) {
             for (int i=0;i<jArray.length();i++){

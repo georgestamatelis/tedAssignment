@@ -36,6 +36,8 @@ public class SecondraryController {
         msg.setReceiverUsn(receiverUsn);
         msg.setSenderUsn(senderUsn);
         msg.setText(text);
+        msg.setReceiver(this.userRepository.findById(receiverUsn).get());
+        msg.setSender(this.userRepository.findById(senderUsn).get());
         messageRepository.save(msg);
         return "OK";
     }
@@ -45,7 +47,9 @@ public class SecondraryController {
     }
     @GetMapping("messages/duplex")
     public @ResponseBody Iterable<Message> getAllDuplex(@RequestParam("receiver")String r,@RequestParam("sender")String s){
-        return this.messageRepository.findAllByReceiverUsnAndSenderUsn(r,s);
+        List<Message> result=this.messageRepository.findAllByReceiverUsnAndSenderUsnOrderByDate(r,s);
+        result.addAll( this.messageRepository.findAllByReceiverUsnAndSenderUsnOrderByDate(s,r));
+        return result;
     }
     @DeleteMapping("messages/delete")
     public @ResponseBody String DeleteM(@RequestParam("id")Integer  id){

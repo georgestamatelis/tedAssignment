@@ -66,7 +66,6 @@ public class MainController {
         }
 
     }
-
     @GetMapping(path="/admin/allUsers")
     public @ResponseBody Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users

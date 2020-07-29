@@ -25,6 +25,7 @@ public class appartment {
     private float size;
     private int capacity;
     private int floor;
+    private int cost_per_person;
     private Boolean hasWifi;
     private Boolean hasParking;
     private String address;
@@ -304,5 +305,13 @@ public class appartment {
 
     public void setDates(List<String> dates) {
         this.dates = dates;
+    }
+
+    public int getCost_per_person() {
+        return cost_per_person;
+    }
+
+    public void setCost_per_person(int cost_per_person) {
+        this.cost_per_person = cost_per_person;
     }
 }
