@@ -1,11 +1,9 @@
 html {
-/*  background: url('p5.jpg') white no-repeat;*/
-  background-size: cover;
   font-weight: bold;
   font-size: 110%;
   height: 100%;
-  background-attachment: fixed;
-  position:fixed;
+  /*background-attachment: fixed;
+  position:fixed;*/
   top: 0;
   left: 0;
   min-height: 100%;

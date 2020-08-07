@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import org.assertj.core.util.Lists;
+import org.assertj.core.util.Sets;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -197,18 +199,27 @@ public class AppartmentController {
     {
 
         String Location=country+"+"+ city +"+"+ neighborhood;
-        List<appartment> opt=this.appartmentRepository.findByLocationAndCapacityOrderByPriceAllIgnoringCase(Location,capacity);
-        Iterator itr = opt.iterator();
+        List<appartment> opt=this.appartmentRepository.findByLocationAndCapacityGreaterThanEqualOrderByPrice(Location,capacity);
+        //System.out.println(opt);
 
         ArrayList<String> DatesRequired=this.getDates(st,end);
-        while (itr.hasNext())
-        {
-            appartment app=(appartment)itr.next();
-            for(int j=0;j<DatesRequired.size();j++)
-             if(!app.getDates().contains(DatesRequired.get(j)))
-                itr.remove();
+        List<appartment> result=new ArrayList<appartment>();
+        System.out.println(DatesRequired);
+        for(appartment app: opt){
+            System.out.println(app.getDates());
+            System.out.println(app.getId());
+            System.out.println(DatesRequired);
+            for(int i=0;i<DatesRequired.size();i++){
+                if(!app.getDates().contains(DatesRequired.get(i)))
+                    break;
+                else
+                    result.add(app);
+            }
         }
-        return opt;
+
+        List<appartment> noDuplicates= Lists.newArrayList(Sets.newHashSet(result));
+        noDuplicates.sort(Comparator.comparing(appartment::getPrice));
+        return noDuplicates;
         // return null;
     }
     @DeleteMapping("user/DeleteApartment")

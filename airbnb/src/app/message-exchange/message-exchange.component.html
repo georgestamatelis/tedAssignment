@@ -3,6 +3,7 @@
     <p> Sent By {{message.senderUsn}}</p> 
     <p> Date: {{message.date}}</p>
     <p>{{message.text}}</p>
+    <button *ngIf="message.senderUsn==this.SenderUsn" (click)="Delete_Message(message.id)">Delete this message</button>
     </li>
 </div>
 <h1 style="margin-left: 32px;">Type your message here</h1>

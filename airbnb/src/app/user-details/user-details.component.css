@@ -1,0 +1,21 @@
+
+#userStuff{
+    background:radial-gradient(grey,azure);
+    background-size: cover;
+    text-align: center;
+    margin:0px;
+    padding: 0px; 
+    height:100%; 
+    width:100%;
+    /*min-height: 100%;*/
+    background-color: azure;
+    background-size:cover;
+}
+ul{
+    list-style-type: none;
+}
+button{
+    font-size: x-large;
+    padding: 2%;
+    margin-bottom: 2%;
+}

@@ -3,6 +3,7 @@ import {User} from 'src/app/models/User'
 import { HttpClient,HttpHeaders, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { message } from './models/message';
+import { catchError, tap } from 'rxjs/operators'; // Important! Be sure to connect operators
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 //import { NULL_EXPR } from '@angular/compiler/src/output/output_ast';
 //import { maxHeaderSize } from 'http';
@@ -42,6 +43,10 @@ export class UserService {
   getLastUsr():User
   {
     return this.tester;
+  }
+  getLoggedInUser():Observable<string>
+  {
+    return this.http.get("https://localhost:8443/demo/user/UserName",{ responseType: 'text'});
   }
   getUser(usn:String) :Observable<User>
   {
@@ -184,17 +189,21 @@ export class UserService {
   logout(){
     localStorage.removeItem("token");
   }
-  messageUsr(sender:String,receiver:String,date:String,text:String){
+  messageUsr(sender:String,receiver:String,date:String,text:String,Appid:Number){
     let url="https://localhost:8443/accesories/messages/newMessage"
     let body={
       "receiver":receiver,
       "sender":sender,
       "date":date,
-      "text":text
+      "text":text,
+      "appId":Appid
     };
     let subscription="";
     this.http.post<String>(url,body).subscribe(
-      data=>subscription=data.toString()
+      data=>{
+        subscription=data.toString();
+        console.log(data)
+      }
     );
   }
   getMessages(usn:String):Observable<message[]>{
@@ -228,8 +237,15 @@ export class UserService {
       "username":usn,
       "password":password
     }
-    console.log("the fuck's going on??");
-    return this.http.post<string>(loginUrl, ln, { observe: 'response'});
+    return this.http.post<string>(loginUrl, ln, { observe: 'response'}).pipe(
+      tap((data: any) => {
+          console.log(data);
+      }),
+      catchError((err) => {
+        window.alert("INVALID CREDENTIALS PLEASE TRY AGAIN");
+        throw 'Error in source. Details: ' + err;
+      })
+  );
   }
 }
 

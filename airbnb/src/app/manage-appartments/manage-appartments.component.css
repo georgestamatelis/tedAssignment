@@ -1,0 +1,32 @@
+#routerL{
+    font-size:x-large;
+    background-color:azure;
+    padding: 2%;
+}
+#wrapper{
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+button{
+    font-size:medium;
+    background-color:azure;
+    padding: 1%;
+}
+li{
+  margin-left: 40%;
+}
+
+#apparmentList{
+    text-align: center;
+}
+table{
+    float:center;
+}
+.text-right{
+    margin-top: 4%;
+}
+html{
+    background-color: cadetblue;
+}

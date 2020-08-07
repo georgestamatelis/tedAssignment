@@ -36,6 +36,9 @@ public class SecondraryController {
         msg.setReceiverUsn(receiverUsn);
         msg.setSenderUsn(senderUsn);
         msg.setText(text);
+        msg.setAnswered(false);
+        msg.setApp_id(obj.getInt("appId"));
+        msg.setAppartment(this.appartmentRepository.findById(obj.getInt("appId")).get());
         msg.setReceiver(this.userRepository.findById(receiverUsn).get());
         msg.setSender(this.userRepository.findById(senderUsn).get());
         messageRepository.save(msg);
@@ -43,18 +46,30 @@ public class SecondraryController {
     }
     @GetMapping("messages/getAllByUsr")
     public @ResponseBody Iterable<Message> getAllByUsr(@RequestParam("receiver") String receiver){
-        return this.messageRepository.findAllByReceiverUsn(receiver);
+        return this.messageRepository.findAllByReceiverUsnAndAnswered(receiver,false);
     }
     @GetMapping("messages/duplex")
     public @ResponseBody Iterable<Message> getAllDuplex(@RequestParam("receiver")String r,@RequestParam("sender")String s){
-        List<Message> result=this.messageRepository.findAllByReceiverUsnAndSenderUsnOrderByDate(r,s);
-        result.addAll( this.messageRepository.findAllByReceiverUsnAndSenderUsnOrderByDate(s,r));
+        List<Message> result=this.messageRepository.findAllByReceiverUsnAndSenderUsnAndAnsweredOrderByDate(r,s,false);
+        result.addAll( this.messageRepository.findAllByReceiverUsnAndSenderUsnAndAnsweredOrderByDate(s,r,false));
         return result;
+    }
+    @PutMapping("messages/markAsAnswered")
+    public @ResponseBody String markAsAnswered(@RequestParam("id")Integer id){
+        Message m=this.messageRepository.findById(id).get();
+        m.setAnswered(true);
+        this.messageRepository.save(m);
+        return "OK";
     }
     @DeleteMapping("messages/delete")
     public @ResponseBody String DeleteM(@RequestParam("id")Integer  id){
         this.messageRepository.delete(this.messageRepository.findById(id).get());
         return "OK";
+    }
+    @GetMapping("messages/ByAppartment")
+    public @ResponseBody Iterable<Message> getByApp(@RequestParam("appId")Integer appId)
+    {
+        return this.messageRepository.findAllByAppartment(this.appartmentRepository.findById(appId).get());
     }
     ///now time for reviews
     @PostMapping("newReview")

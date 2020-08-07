@@ -4,4 +4,6 @@ export class message{
     receiverUsn:String;
     date:String;
     text:String
+    appId:number;
+    answered:Boolean
 }

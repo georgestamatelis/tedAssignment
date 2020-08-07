@@ -18,10 +18,21 @@ export class ManageAppartmentsComponent implements OnInit {
   constructor(private usrHttp:UserService ,private appHttp:AppartmentService) {       }
 
   ngOnInit(): void {
-    this.usr=this.usrHttp.getLastUsr();
-    this.appHttp.getAppartmentsByOwnerName(this.usr.userName).subscribe(
-      data=>this.appartmentList=data
-    );
+    this.usrHttp.getLoggedInUser().subscribe(
+      data=>{
+        console.log(data);
+        this.usrHttp.getUser(data).subscribe(
+          res=>
+          {
+            this.usr=res
+            this.appHttp.getAppartmentsByOwnerName(this.usr.userName).subscribe(
+              data=>this.appartmentList=data
+            );
+          }
+        )
+      }
+    )
+   
   }
  getAverage(array:number[]):number{
    var average:number=0;

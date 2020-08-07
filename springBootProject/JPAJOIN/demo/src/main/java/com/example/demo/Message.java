@@ -15,6 +15,11 @@ public class Message {
     private String receiverUsn;
     private String date;
     private String text;
+    private int app_id;
+    private boolean answered;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private  appartment appartment;
     ////////////////////////////////////////////////////////////////////////
     //////////METHODS
     ////////////////////////////////////////////////////////////
@@ -83,5 +88,29 @@ public class Message {
     public void setReceiver(User receiver) {
         this.receiverUsn=receiver.getUserName();
         this.receiver = receiver;
+    }
+
+    public int getApp_id() {
+        return app_id;
+    }
+
+    public void setApp_id(int app_id) {
+        this.app_id = app_id;
+    }
+    @JsonIgnore
+    public appartment getAppartment() {
+        return appartment;
+    }
+    @JsonIgnore
+    public void setAppartment(appartment app) {
+        this.appartment = app;
+    }
+
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
     }
 }

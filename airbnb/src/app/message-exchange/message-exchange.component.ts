@@ -4,6 +4,10 @@ import {User} from 'src/app/models/User';
 import {message} from 'src/app/models/message';
 import {ActivatedRoute} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { appartment } from '../models/appartment';
+import { AppartmentService } from '../appartment.service';
+import { MessageService } from '../message.service';
+import { allowedNodeEnvironmentFlags } from 'process';
 
 @Component({
   selector: 'app-message-exchange',
@@ -16,8 +20,10 @@ export class MessageExchangeComponent implements OnInit {
   ReceiverUsn:String;
   messageText:String;
   Date:String;
+  curApp:appartment;
   com_history:message[];
-  constructor(private route: ActivatedRoute,private userhttp:UserService,private httpC:HttpClient) { }
+  constructor(private route: ActivatedRoute,private userhttp:UserService,private httpC:HttpClient,private appHtttp:
+    AppartmentService, private messageHttp:MessageService) { }
 
   ngOnInit(): void {
     this.Date=new Date().toString();
@@ -27,6 +33,8 @@ export class MessageExchangeComponent implements OnInit {
     ///////////////////////////
     let input=this.route.snapshot.params.receiver;
     this.ReceiverUsn=input.split(":")[2];
+    input=this.route.snapshot.params.appartment;
+    let appId=input.split(":")[2];
       this.httpC.get("https://localhost:8443/demo/user/UserName",{ responseType: 'text'}).subscribe(
         data=>{
           this.SenderUsn=data;
@@ -38,18 +46,29 @@ export class MessageExchangeComponent implements OnInit {
             });
           }
           );
+    this.appHtttp.getAppartmentById(appId).subscribe(
+      data=>{
+        this.curApp=data
+        console.log(data);
+      }
+    ) ;
    
   }
   Send_Message(){
-    this.userhttp.messageUsr(this.SenderUsn,this.ReceiverUsn,this.Date,this.messageText);
-    let m =new message();
-    m.date=this.Date;
+    this.userhttp.messageUsr(this.SenderUsn,this.ReceiverUsn,this.Date,this.messageText,this.curApp.id);
+    alert("Your message has been sent")
+    let m=new message();
+    m.senderUsn=this.SenderUsn;
     m.receiverUsn=this.ReceiverUsn;
-    m.senderUsn=this.SenderUsn
+    m.date=this.Date;
     m.text=this.messageText;
-    this.com_history.push(m);
+    m.appId=this.curApp.id;
+    m.answered=false;
   }
-
+  Delete_Message(id){
+    this.messageHttp.deleteMessage(id);
+    alert("Message Deleted Successfully");
+  }
    Test(){
 
    }

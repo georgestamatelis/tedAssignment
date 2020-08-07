@@ -6,6 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import {ImageModel} from 'src/app/models/ImageModel';
 import { DomSanitizer } from '@angular/platform-browser';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
+import { CurrencyPipe } from '@angular/common';
+import { message } from '../models/message';
+import { UserService } from '../user.service';
+import { MessageService } from '../message.service';
 
 declare var ol: any;
 
@@ -17,12 +21,17 @@ declare var ol: any;
 export class ManageApp1Component implements OnInit {
   ///pagination shit
   p: number = 1;
+  p2:number=1;
   map: any;
+  bla:number=1;
+  foo:number=2;
   lon;
   lat;
   hood:String;
   city:String;
   country:String; 
+  startD:String;
+  endD:String;
   ///////////
   public selectedFile;
   public event1;
@@ -37,9 +46,10 @@ export class ManageApp1Component implements OnInit {
   url:any;
   uploadData:any;
   thumbnail: any;
+  messages: message[];
   imageToShow;
   constructor(private router:Router,private route :ActivatedRoute ,private appHttp:AppartmentService,private http:HttpClient,
-    private sanitizer:DomSanitizer,private client:HttpClient) { }
+    private userHttp:UserService,private sanitizer:DomSanitizer,private client:HttpClient,private messageHttp:MessageService) { }
 
   ngOnInit(): void {
     this.cur=new appartment;
@@ -49,6 +59,13 @@ export class ManageApp1Component implements OnInit {
         this.set_up_map();
         let Arr=this.cur.location.split("+");
         this.hood=Arr[0]; this.city=Arr[1] ; this.country=Arr[2];
+        this.messageHttp.getMessages(this.cur.id).subscribe(
+          res=>{
+            this.messages=res;
+            console.log(res);
+          }
+          
+        );
       }
     );
     this.getImage();
@@ -84,8 +101,13 @@ export class ManageApp1Component implements OnInit {
  DeleteImage(id:number){
    let url="https://localhost:8443/img/user/imgId?id="+id;
    this.http.delete<String>(url).subscribe(
-     result=>console.log(result)
+     result=>{
+      console.log(result);
+      
+      }
    );
+   window.alert("DELETION WAS SUCCESFULL RELOADING")
+   window.location.reload();
  }
  public  onFileChanged(event) {
   console.log(event);
@@ -103,12 +125,19 @@ export class ManageApp1Component implements OnInit {
       console.log(res)
     }
   );
+  window.alert("image has been added to the appartment's collection ,reloading");
+  window.location.reload();
 }  
 
 
  PostIt(){
+   this.startD=this.formatDate(this.startD);
+   this.endD=this.formatDate(this.endD);
+   this.cur.dates=this.get_dates(this.startD.toString(),this.endD.toString());
   this.appHttp.updateAppartment(this.cur,this.city,this.country,this.hood);
- }
+  window.alert("the appartment has been updated refreshing page");
+  window.location.reload();
+}
  onFileChange(event){
   console.log(event);
   this.selectedFile = event.target.files[0];
@@ -174,5 +203,62 @@ export class ManageApp1Component implements OnInit {
     window.alert("picture changer , redirecting");
     window.location.reload();
   }
- 
+ //////////////////////////////////////////////////////////
+ formatDate(inputDate:String){
+  let Arr=inputDate.split("-");
+  console.log(Arr[2])
+  let day=Arr[2];
+  let month=Arr[1];
+  let year=Arr[0];
+  var result:String;
+  if(day.charAt(0)=='0')
+    result=day.charAt(1).toString();
+  else
+    result=day
+  result=result+"-";
+  if(month.charAt(0)=='0')
+    result+=month.charAt(1).toString();
+  else result+=month
+
+  result=result+"-"+year;
+  console.log(result);
+  return result;
+}
+get_dates(startD:string,endD:string):String[]{
+  var result:String[]=new Array();
+  result.push(startD);
+  let sd=+startD.split("-")[0]; 
+  let sm=+startD.split("-")[1];
+  let sy=+startD.split("-")[2];
+  let ed=+endD.split("-")[0];
+  let em=+endD.split("-")[1];
+  let ey=+endD.split("-")[2];
+  for(let day=sd+1;day<=30;day++){
+    let temp=day.toString()+"-"+sm.toString()+"-"+sy.toString();
+    result.push(temp);  
+    if(temp==endD)
+      return result;
+  }
+  for(let year =sy ;year<=ey;year++){
+    for(let month=sm+1; month<=em;month++){
+      for(let day=1;day<=30;day++){
+          let temp=day.toString()+"-"+month.toString()+"-"+year.toString();
+          result.push(temp);
+          if(temp==endD)
+            return result;
+      }
+    }
+  }
+  return result;
+
+}
+  deleteMessage(id){
+    this.messageHttp.deleteMessage(id);
+  }
+  Reply(usn){
+    this.router.navigateByUrl("/chat/:receiver:"+usn+"/:appartment:"+this.cur.id);
+  }
+  Mark(id){
+    this.messageHttp.markMessage(id);
+  }
 }

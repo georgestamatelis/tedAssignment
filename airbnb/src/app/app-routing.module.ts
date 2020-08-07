@@ -31,7 +31,7 @@ const routes: Routes = [
   {path:"appDetails/:id/:startD/:endD",component:AppartmentDetailsComponent},
   { path:'editProfile', loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfileModule) ,canActivate:[AuthGuard] },
   { path: 'appartment', loadChildren: () => import('./appartment/appartment.module').then(m => m.AppartmentModule) },
-  {path:"chat/:receiver",component:MessageExchangeComponent}
+  {path:"chat/:receiver/:appartment",component:MessageExchangeComponent}
 ];
 
 @NgModule({

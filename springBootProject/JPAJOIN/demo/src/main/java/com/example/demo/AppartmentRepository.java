@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,8 @@ public interface AppartmentRepository extends CrudRepository<appartment, Integer
     ////////////////////////////////////////////////////////////////////
     public List<appartment>  findByLocationAndCapacityOrderByPriceAllIgnoringCase(String location,Integer Capacity);
    //@Query("select a from apparment a where ")
-    //public List<appartment>  findByLocationAndCapacityAndDates(String location,Integer capacity);
+    @Query(value = "SELECT distinct * FROM appartment a WHERE a.location=?1 AND a.capacity >= ?2 ORDER BY a.price",nativeQuery =true)
+    public List<appartment>  findByLocationAndCapacityGreaterThanEqualOrderByPrice(String location,Integer capacity);
 
 
     public List<appartment>  findByLocationAndCapacityAndHasWifiOrderByPriceAllIgnoringCase(String location,Integer Capacity, Boolean hasWifi);

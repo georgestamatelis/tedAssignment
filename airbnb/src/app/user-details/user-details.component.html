@@ -1,10 +1,19 @@
-
+<html>
+<header>
+    AIRBNB 
+</header>
+<body>
+<div id="userStuff">
 <ul>
-    <li>UserName: {{current.userName}}</li>
-    <li>email: {{current.email}}</li><br>
-    <li>firstName: {{current.firstName}}</li><br>
-    <li>lastName: {{current.lastName}}</li><br>
-    <li>phoneNumber: {{current.phoneNumber}}</li><br>
+    <li><p>UserName: {{current.userName}}</p></li>
+    <li><p>Password: {{current.password}}</p></li>
+    <li><p>email: {{current.email}}</p></li>
+    <li><p>firstName: {{current.firstName}}</p></li>
+    <li><p>lastName: {{current.lastName}}</p></li>
+    <li><p>phoneNumber: {{current.phoneNumber}}</p></li>
+    <li>profile picture:<br>
+        <img src="data:image/jpeg;base64,{{current.pic}}">
+    </li>
     <li *ngIf="current.requestforOwner"><button (click)="confirmRequest()"> CONFIRM CURRENT USERS REQUEST</button></li>
     <li *ngIf="current.owner"><button (click)="GetUserApps()">DOWNLOAD(JSON) APARTMENTS PROVIDED BY THIS HOST</button>   </li>
     <li *ngIf="current.owner"><button (click)="GetUserReviews()">DOWNLOAD(JSON) REVIEWS ON THIS HOST'S APPARTMENTS</button></li>
@@ -13,3 +22,6 @@
     <li *ngIf="current.owner"><button (click)="getBookingsHost()">DOWNLOAD ALL BOOKINGS ON THIS HOSTS APPARTMENTS</button></li>
     <br>
 </ul>
+</div>
+</body>
+</html>

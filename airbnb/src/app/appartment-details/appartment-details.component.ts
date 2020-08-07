@@ -124,7 +124,7 @@ has_reviewed:Boolean;
         data=>{
           usn=data; 
           console.log(data);
-          this.router.navigateByUrl("/chat/:receiver:"+this.cur.ownername);
+          this.router.navigateByUrl("/chat/:receiver:"+this.cur.ownername+"/:appartment:"+this.cur.id);
 
         }
       )
@@ -147,10 +147,8 @@ has_reviewed:Boolean;
     console.log(this.review);
     this.apphttp.addReview(this.userhttp.getLastUsr().userName,this.cur.id,this.review," ");
   }
-  sendMessage(){
-    this.usr=this.userhttp.getLastUsr();
-    this.userhttp.messageUsr(this.usr.userName,this.cur.ownername,"2-2-2020",this.Question)
-  }
+ 
+  
   getImages(){
     let url="https://localhost:8443/img/byId?id="+this.id1;
     this.http.get<ImageModel[]>(url).subscribe(
