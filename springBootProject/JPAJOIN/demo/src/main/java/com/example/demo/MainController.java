@@ -177,6 +177,7 @@ public class MainController {
         Booking n=new Booking();
         n.setAppId(id);
         n.setAppartment(temp);
+        n.setLocation(temp.getLocation());
         n.setUsr(this.userRepository.findById(renter).get());
         n.setUserName(renter);
         n.setDatesBooked(listdata);
@@ -187,6 +188,10 @@ public class MainController {
     @GetMapping("user/getBookings")
     @ResponseBody Iterable< Booking> getBookings(@RequestParam("id") Integer appId){
         return this.bookingRepository.findByAppId(appId);
+    }
+    @GetMapping("user/myBookings")
+    @ResponseBody Iterable<Booking> getMyBookings(@RequestParam("usn")String userName){
+        return this.bookingRepository.findByUserName(userName);
     }
     @GetMapping("admin/getBookingsbyHost")
     @ResponseBody Iterable< Booking> getBookingsByHost(@RequestParam("usn") String usn){

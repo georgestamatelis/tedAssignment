@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
-import { AnonymousComponent } from './anonymous/anonymous.component';
 import {UserService} from 'src/app/user.service';
 import { SingupComponent } from './singup/singup.component';
 import { AppartmentDetailsComponent } from './appartment-details/appartment-details.component';
@@ -25,8 +24,8 @@ import { AddAppartmentComponent } from './add-appartment/add-appartment.componen
 import { ManageApp1Component } from './manage-app1/manage-app1.component';
 import { ReplyComponent } from './reply/reply.component';
 import { MessageExchangeComponent } from './message-exchange/message-exchange.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { LoginComponent } from './login/login.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 //import { AngularOpenlayersModule } from 'ngx-openlayers';
 
 
@@ -35,7 +34,6 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     AdminComponent,
     UserComponent,
-    AnonymousComponent,
     SingupComponent,
     AppartmentDetailsComponent,
     ManageAppartmentsComponent,
@@ -44,8 +42,8 @@ import { LoginComponent } from './login/login.component';
     ManageApp1Component,
     ReplyComponent,
     MessageExchangeComponent,
-    WelcomeComponent,
-    LoginComponent, 
+    LoginComponent,
+    SearchResultsComponent, 
   ],
   imports: [
     BrowserModule,

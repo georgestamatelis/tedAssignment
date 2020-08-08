@@ -7,6 +7,7 @@ import { HttpHeaders  } from '@angular/common/http';
 
 import {appartment} from "src/app/models/appartment"
 import {review} from "src/app/models/review";
+import { Booking } from './models/booking';
 ////////////////////////
 @Injectable({
   providedIn: 'root'
@@ -193,8 +194,13 @@ export class AppartmentService {
     let url="https://localhost:8443/demo/getBookingsbyHost?usn="+usn;
     return this.http.get(url,{responseType: 'blob'});
   }
+  getBookinsByClientObservable(usn:String):Observable<Booking[]>{
+    let url="https://localhost:8443/demo/user/myBookings?usn="+usn;
+    return this.http.get<Booking[]>(url);
+
+  }
   getBookingsByClient(usn:String){
-    let url="https://localhost:8443/demo/getBookingsByClient?usn="+usn;
+    let url="https://localhost:8443/demo/admin/getBookingsByClient?usn="+usn;
     return this.http.get(url,{responseType: 'blob'});
   }
   

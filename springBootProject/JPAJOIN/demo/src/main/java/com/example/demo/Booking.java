@@ -13,6 +13,7 @@ public class Booking {
     Integer id;
    // @ForeignKey
     String userName;
+    String location; //to make my life easier
  ///   @ForeignKey
     Integer appId;
     @ElementCollection
@@ -76,5 +77,13 @@ public class Booking {
     public void setAppartment(appartment app) {
         this.appId=app.getId();
         this.appartment = app;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

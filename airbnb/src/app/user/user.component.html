@@ -1,15 +1,27 @@
 <html>
-<header>
-    AIRBNB
-</header>
-    <div id="welcome" *ngIf="this.http.loggedIn()">Welcome  {{this.testUsr.userName}}</div>
+<div id="wrapper">
+<div id="welcome" *ngIf="this.http.loggedIn()">Welcome  {{this.testUsr.userName}}</div>
 <div id="admincontainer">
     <div id="actions" *ngIf="this.http.loggedIn()"><h2>Available Actions</h2></div>
     <nav *ngIf="this.http.loggedIn()"> 
         <button routerLink="/editProfile">Edit Profile Data</button>
         <div *ngIf="this.testUsr.renter"><button routerLink="/appartment">Search for appartments</button></div>
         <div *ngIf="this.testUsr.owner"><button   routerLink="/manageApp">Manage your appartments</button></div>
-        <button (click)="logout()" >Click here to logout</button>
+        <button (click)="logout()" >Click here to logout</button><br>
     </nav>
 </div>
-  
+<div id="Bookings">
+<p>My Bookings:</p>
+<li *ngFor="let b of myBookings | paginate: {id: 'foo', itemsPerPage: 3, currentPage: p2 }">
+    <p>appId: {{b.appId}}</p>
+    <p>Booked:  dates: {{b.datesBooked}}</p>
+    <p>Location: {{b.location}}</p>
+    <p>Rate Appartment bellow </p> 
+    <input type="number" [(ngModel)]="temp"><br>
+    <button (click)="rateAppartment(b.appId,temp)">Save review</button>
+</li>
+<div class="message-pagination" >
+    <pagination-controls  id="foo" (pageChange)="p2 = $event"></pagination-controls>
+ </div>
+</div>
+</div>

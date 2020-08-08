@@ -38,7 +38,13 @@ export class EditProfileComponent implements OnInit {
   constructor(private http:UserService,private client:HttpClient) { }
 
   ngOnInit(): void {
-    this.usr=this.http.getLastUsr();
+    this.http.getLoggedInUser().subscribe(
+      data=>{
+        this.http.getUser(data).subscribe(
+          res=>this.usr=res
+        )
+      }
+    );
     this.changePs=false;
   }
   setPic(){

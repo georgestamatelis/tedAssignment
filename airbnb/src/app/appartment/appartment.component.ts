@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { review } from '../models/review';
 import { ImageModel } from '../models/ImageModel';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-appartment',
@@ -41,7 +42,7 @@ export class AppartmentComponent implements OnInit {
   Pictures: Record<number,ImageModel>;
   imageList:ImageModel[]
 
-  constructor(private userhttp:UserService,private apphttp:AppartmentService,private http:HttpClient) {
+  constructor(private router : Router, private userhttp:UserService,private apphttp:AppartmentService,private http:HttpClient) {
     //this.apphttp.getAllAppartments().subscribe(data => this.allApartments=data);
    }
 
@@ -79,7 +80,11 @@ export class AppartmentComponent implements OnInit {
     this.Country=splitted[2];    
     this.startD=this.formatDate(this.startD.toString());
     this.endD=this.formatDate(this.endD.toString())
-    this.input1=this.apphttp.getAppartmentsBylocation(this.Country,this.City,this.neighborhood,this.startD,this.endD,this.capacity);
+    this.router.navigateByUrl("search/:startD:"+this.startD
+    +"/:endD:"+this.endD+"/:capacity:"+this.capacity
+    +"/:country:"+this.Country+"/:city:"+this.City+"/:neighborhood:"+this.neighborhood); 
+
+    /*this.input1=this.apphttp.getAppartmentsBylocation(this.Country,this.City,this.neighborhood,this.startD,this.endD,this.capacity);
     this.input1.subscribe(
       res=> 
       {
@@ -139,7 +144,7 @@ export class AppartmentComponent implements OnInit {
       for(let i=0;i<this.allApartments.length;i++)
         if(!this.allApartments[i].hasElevator && this.allApartments[i].floor>=1)
             delete this.allApartments[i];
-          
+      */    
   }
   getAverage(array: review[]):number{
     var average:number=0;

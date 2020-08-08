@@ -4,6 +4,8 @@ import {User} from 'src/app/models/User'
 import { message } from '../models/message';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from '../message.service';
+import { AppartmentService } from '../appartment.service';
+import { Booking } from '../models/booking';
 
 @Component({
   selector: 'app-user',
@@ -13,13 +15,16 @@ import { MessageService } from '../message.service';
 export class UserComponent implements OnInit {
 
   loginOk:Boolean;
+  myBookings:Booking[];
   p: number = 1;
+  p2:number=1;
+  temp:number=0;
   reply:Boolean;
   public testUsr:User;
   ShowMessages:Boolean;
   show:Boolean;
   messages:message[];
-  constructor(public http:UserService,private router :Router,private route:ActivatedRoute,private messageHttp:MessageService) { }
+  constructor(public http:UserService,private router :Router,private appHttp:AppartmentService,private route:ActivatedRoute,private messageHttp:MessageService) { }
 
   ngOnInit(): void {
     this.loginOk=false;
@@ -30,6 +35,13 @@ export class UserComponent implements OnInit {
       data=>{
           this.testUsr=data;
           console.log(data);
+          this.appHttp.getBookinsByClientObservable(this.testUsr.userName)
+          .subscribe(
+            res=>{
+                this.myBookings=res;
+                console.log(res);
+            }
+          )
       }
   );
     
@@ -60,5 +72,12 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl("/");
 
      
+  }
+  rateAppartment(id:number,value:number){
+    if(value <0 || value >5){
+      alert("PLEASE KEEP THE VALUE BETWEEN 0 AND 5")
+        return;
+    }
+    this.appHttp.addReview(this.testUsr.userName,id,value,"no-comment");
   }
 }

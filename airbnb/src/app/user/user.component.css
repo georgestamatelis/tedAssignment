@@ -1,20 +1,10 @@
-html {
-    background: url('indoors1.webp') white no-repeat;
-    background-size: cover;
-    font-weight: bold;
-    font-size: 110%;
-    height: 100%;
-    background-attachment: fixed;
-    position:fixed;
-    top: 0;
-    left: 0;
-    min-height: 100%;
-    min-width: 100%;
-  }
+
   button {
     margin-top:2%;
     font-size: x-large;
     background-color: azure;
+    margin-bottom: 2%;
+    color:blue;
     /*padding: 1.5%;
 */
   }
@@ -35,7 +25,7 @@ html {
   }
   #admincontainer {
     border-radius: 45%;
-    background-color: white;
+    background-color: darkslategray;
     opacity: 75%;
     width: 55%;
     display: block;
@@ -44,7 +34,22 @@ html {
     text-align: center;
     padding-bottom: 35px;
     padding-top: 20px;
+    margin-bottom: 3%;
   }
   #admincontainer:hover {
     opacity: 90%;
+  }
+  ul{
+    list-style-type: none;
+  }
+  li{
+    list-style-type: none;
+    background-color: lightgray;
+    border-style: solid;
+    margin-bottom: 2%;
+
+  }
+  #Bookings{
+    margin-left: 2%;
+    margin-right: 2%;
   }

@@ -15,25 +15,14 @@ html {
   a.logo {
     font-weight: bold;
   }
-  nav {
-    float: right;
-    font-size: 90%;
-    margin-left: 30px;
-  }
-  nav ul {
-     list-style-type: none;
-     margin: 0;
-     display: flex;
-  }
-  nav ul li a {
-     padding: 1em;
-  }
+  
+
   li:hover {
     opacity: 100%;
   }
   #bookBeautiful {
-    margin-top: 36px;
-    margin-bottom: 10px;
+   /* margin-top: 36px;
+    */margin-bottom: 10px;
     font-size: 250%;
     font-style: italic;
     font-weight: bold;

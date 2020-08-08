@@ -29,4 +29,7 @@ public class Matrix {
     public void update_jth_column(int n){
 
     }
+    public void setElement(int i,int j,int value){
+        this.array[i][j]=value;
+    }
 }

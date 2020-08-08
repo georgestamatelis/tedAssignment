@@ -33,6 +33,7 @@ textarea{
 }
 #wrapper{
     margin-left: 2.5%;
+    height:100%;
 }
 #updateApp{
     padding: 2%;
@@ -48,8 +49,9 @@ button{
     font-size: large;
     background-color: azure;
 }
-body{
+html {
     background-color: cadetblue;
+    background-size: cover;
 }
 .check{
     width:20px;
@@ -61,4 +63,7 @@ li{
 #messages li{
     background-color: beige;
     border-style: solid;
+}
+h3{
+    margin-top:0px;
 }
