@@ -27,7 +27,7 @@ const routes: Routes = [
   {path:"signUp",component:SingupComponent},
   {path:"manageApp",component:ManageAppartmentsComponent, canActivate:[AuthGuard]},
   {path:"appDetails/:id/:startD/:endD",component:AppartmentDetailsComponent},
-  {path:"search/:startD/:endD/:capacity/:country/:city/:neighborhood",component:SearchResultsComponent},
+  {path:"search/:startD/:endD/:capacity/:country/:city/:neighborhood/:wifi/:tv/:pets/:parking/:desiredType/:ac/:smoking/:elevator/:maxCost",component:SearchResultsComponent},
   { path:'editProfile', loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfileModule) ,canActivate:[AuthGuard] },
   { path: 'appartment', loadChildren: () => import('./appartment/appartment.module').then(m => m.AppartmentModule) },
   {path:"chat/:receiver/:appartment",component:MessageExchangeComponent}

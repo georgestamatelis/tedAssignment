@@ -19,6 +19,7 @@ export class AppartmentComponent implements OnInit {
   p: number = 1;
   usr:User;
   Country:String="";
+
   neighborhood:String="";
   City:String="";
   location:String="neighborhood-city-country";
@@ -82,7 +83,8 @@ export class AppartmentComponent implements OnInit {
     this.endD=this.formatDate(this.endD.toString())
     this.router.navigateByUrl("search/:startD:"+this.startD
     +"/:endD:"+this.endD+"/:capacity:"+this.capacity
-    +"/:country:"+this.Country+"/:city:"+this.City+"/:neighborhood:"+this.neighborhood); 
+    +"/:country:"+this.Country+"/:city:"+this.City+"/:neighborhood:"+this.neighborhood+
+    "/:wifi:false/:tv:false/:pets:false/:parking:false/:desiredType:none/:ac:false/:smoking:false/:elevator:false/:maxCost:9999999"); 
 
     /*this.input1=this.apphttp.getAppartmentsBylocation(this.Country,this.City,this.neighborhood,this.startD,this.endD,this.capacity);
     this.input1.subscribe(

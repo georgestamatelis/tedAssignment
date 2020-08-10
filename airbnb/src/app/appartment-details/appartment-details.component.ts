@@ -95,7 +95,24 @@ has_reviewed:Boolean;
         zoom: 8
       })
     });
-
+    var vectorLayer = new ol.layer.Vector({
+      source: new ol.source.Vector({
+        features: [new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.transform([this.cur.longitude, this.cur.latitude], 'EPSG:4326', 'EPSG:3857')),
+        })]
+      }),
+      style: new ol.style.Style({
+        image: new ol.style.Icon({
+          anchor: [0.5, 0.5],
+          anchorXUnits: "fraction",
+          anchorYUnits: "fraction",
+          scale: 0.085,
+          src: "assets/osm-marker.webp"
+        })
+      })
+    });
+    this.map.addLayer(vectorLayer);
+    
    this.setCenter();    
   }
   Book():void{
@@ -113,6 +130,7 @@ has_reviewed:Boolean;
   setCenter() {
     var view = this.map.getView();
     view.setCenter(ol.proj.fromLonLat([this.cur.longitude, this.cur.latitude]));
+    view.addMarker(ol.proj.fromLonLat([this.cur.longitude, this.cur.latitude]));
     view.setZoom(8);
   }
   message():void{
