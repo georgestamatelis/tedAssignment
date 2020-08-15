@@ -55,7 +55,7 @@ export class MessageExchangeComponent implements OnInit {
    
   }
   Send_Message(){
-    this.userhttp.messageUsr(this.SenderUsn,this.ReceiverUsn,this.Date,this.messageText,this.curApp.id);
+    this.messageHttp.sendMessage(this.ReceiverUsn,this.SenderUsn,this.messageText,this.Date,this.curApp.id);
     alert("Your message has been sent")
     let m=new message();
     m.senderUsn=this.SenderUsn;

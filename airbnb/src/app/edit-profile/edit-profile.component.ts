@@ -117,11 +117,12 @@ export class EditProfileComponent implements OnInit {
   }
   changeNum()
   {
-      this.http.changeNumber(this.usr.userName,this.phn);
-
+     this.usr.phoneNumber=this.phn;
+     this.http.updateUser(this.usr);
+      window.alert("your phone number has been changed succesfully")
   }
   sendPic(){
-    let url="https://localhost:8443/demo/user/uploadProfilePic";
+    let url="https://localhost:8443/demo/user/ProfilePic/"+this.usr.userName;
     this.client.put(url,this.uploadData).subscribe(
       res=>{
         console.log(res)
@@ -133,25 +134,13 @@ export class EditProfileComponent implements OnInit {
 
   }
   public changeFName(){
-    let url="https://localhost:8443/demo/EditUserData/FName";
-    let body={
-      "username":this.usr.userName,
-      "firstName":this.newFirstName
-    }
-    this.client.put(url,body).subscribe(
-      data=>console.log(data)
-    );
+     this.usr.firstName=this.newFirstName;
+     this.http.updateUser(this.usr);
     window.alert("your first name has changed successfully")
   }
   public changeLName(){
-    let url="https://localhost:8443/demo/EditUserData/LName";
-    let body={
-      "username":this.usr.userName,
-      "lastName":this.newLastName
-    }
-    this.client.put(url,body).subscribe(
-      data=>console.log(data)
-    );
+   this.usr.lastName=this.newLastName;
+   this.http.updateUser(this.usr);
       window.alert("your last name has changed successfully");
   }
   public  onFileChanged(event) {

@@ -56,6 +56,7 @@ export class ManageApp1Component implements OnInit {
     this.appHttp.getAppartmentById(+this.route.snapshot.params.id.split(":")[2]).subscribe(
       data=>{
         this.cur=data
+        this.getImage();
         this.set_up_map();
         let Arr=this.cur.location.split("+");
         this.hood=Arr[0]; this.city=Arr[1] ; this.country=Arr[2];
@@ -68,23 +69,17 @@ export class ManageApp1Component implements OnInit {
         );
       }
     );
-    this.getImage();
   }
   getImage(){  
     let id=this.route.snapshot.params.id.split(":")[2];
     console.log(id);
-    let url="https://localhost:8443/img/byId?id="+id;
+    let url="https://localhost:8443/demo/Apartments/"+this.cur.id+"/Images";
     this.http.get<ImageModel[]>(url).subscribe(
       res=>{
         this.imageList=res;
-       // this.img=res;
         console.log(res);
-       // let url=URL.createObjectURL(res[0].pic);
         let objectURL = 'data:'+res[0].type+';base64,' + res[0].pic;
-       // let objectURL = 'data:image/jpeg;base64,' + res[0].pic;
-       //this.imageToShow=this.sanitizer.bypassSecurityTrustUrl(url);
        this.imageToShow= 'data:image/jpg;base64,'+(this.sanitizer.bypassSecurityTrustResourceUrl(res[0].pic) as any);//.changingThisBreaksApplicationSecurity;
-        //this.imageToShow = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
       })
       
   }
@@ -99,11 +94,10 @@ export class ManageApp1Component implements OnInit {
     }
   }
  DeleteImage(id:number){
-   let url="https://localhost:8443/img/user/imgId?id="+id;
+   let url="https://localhost:8443/demo/Apartments/Images/"+id;
    this.http.delete<String>(url).subscribe(
      result=>{
       console.log(result);
-      
       }
    );
    window.alert("DELETION WAS SUCCESFULL RELOADING")
@@ -119,7 +113,7 @@ export class ManageApp1Component implements OnInit {
  
  }
  AddPic(){
-  let url="https://localhost:8443/img/user/upload";
+  let url="https://localhost:8443/demo/Apartments/"+this.cur.id+"/Images";
   this.client.post(url,this.uploadData).subscribe(
     res=>{
       console.log(res)
@@ -200,7 +194,7 @@ export class ManageApp1Component implements OnInit {
   }
   changeMainPic(){
     this.appHttp.changePic(this.cur.id,this.selectedFile);
-    window.alert("picture changer , redirecting");
+    window.alert("picture changed , reloading");
     window.location.reload();
   }
  //////////////////////////////////////////////////////////
@@ -254,11 +248,16 @@ get_dates(startD:string,endD:string):String[]{
 }
   deleteMessage(id){
     this.messageHttp.deleteMessage(id);
+    alert("MESSAGE DELETE SUCCESSFULY");
+    window.location.reload();
   }
   Reply(usn){
     this.router.navigateByUrl("/chat/:receiver:"+usn+"/:appartment:"+this.cur.id);
   }
   Mark(id){
     this.messageHttp.markMessage(id);
+    alert("MESSAGE HAS BEEN MARKED SUCCESSFULY")
+    window.location.reload();
+
   }
 }

@@ -106,12 +106,12 @@
 <div id="messages">
     <h1>Questions About the Appartment</h1>
     <li *ngFor="let m of messages  | paginate: {id: 'foo', itemsPerPage: 3, currentPage: p2 }" >
-        <p *ngIf="!m.answered"> From : {{m.senderUsn}}</p>
-        <p *ngIf="!m.answered">date: {{m.date}}</p>
-        <p *ngIf="!m.answered">text: {{m.text}}</p>
-        <button *ngIf="!m.answered" (click)="deleteMessage(m.id)">Click Here to Delete</button><br>
-        <button *ngIf="!m.answered" (click)="Reply(m.senderUsn)">Click Here to reply</button><br>
-        <button *ngIf="!m.answered" (click)="Mark(m.id)">Click here to mark as anwered/Ignore</button><br><br>
+        <p > From : {{m.senderUsn}}</p>
+        <p >date: {{m.date}}</p>
+        <p >text: {{m.text}}</p>
+        <button  (click)="deleteMessage(m.id)">Click Here to Delete</button><br>
+        <button  (click)="Reply(m.senderUsn)">Click Here to reply</button><br>
+        <button  (click)="Mark(m.id)">Click here to mark as anwered/Ignore</button><br><br>
 </div>
  <!--Including the pagination control.-->
  <div class="message-pagination" >

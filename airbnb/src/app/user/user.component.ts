@@ -73,11 +73,13 @@ export class UserComponent implements OnInit {
 
      
   }
-  rateAppartment(id:number,value:number){
+  rateAppartment(bookingId:number,id:number,value:number){
     if(value <0 || value >5){
       alert("PLEASE KEEP THE VALUE BETWEEN 0 AND 5")
         return;
     }
     this.appHttp.addReview(this.testUsr.userName,id,value,"no-comment");
+    this.http.markBooking(bookingId);
+    alert("REVIEW HAS BEEN UPLOADED SUCCESSFULLY THANK YOU")
   }
 }

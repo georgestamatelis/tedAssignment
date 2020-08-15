@@ -25,6 +25,7 @@ has_reviewed:Boolean;
   openChat:Boolean;
   userLoggedIn:Boolean;
   cur:appartment;
+  userName:String;
   id:String;
   id1:number;
   Dates:String[];
@@ -60,7 +61,13 @@ has_reviewed:Boolean;
   console.log(endD);
   this.Dates=[StartD,endD]; //for now
   this.getImages();
-   
+  this.userhttp.getLoggedInUser().subscribe(
+    res=>{
+      console.log(res);
+      this.userName=res;
+    }
+    
+  ) 
     
   
 }
@@ -116,9 +123,10 @@ has_reviewed:Boolean;
    this.setCenter();    
   }
   Book():void{
-    if(this.userhttp.loggedIn())
+
+    if(this.userName)
       {
-        this.apphttp.bookAppartment(this.id1,this.Dates,this.userhttp.getLastUsr().userName);
+        this.apphttp.bookAppartment(this.id1,this.Dates,this.userName);
         document.getElementById("resUlt").innerHTML="Success";
         console.log(this.Dates);
       }
@@ -168,7 +176,7 @@ has_reviewed:Boolean;
  
   
   getImages(){
-    let url="https://localhost:8443/img/byId?id="+this.id1;
+    let url="https://localhost:8443/demo/Apartments/"+this.id1+"/Images";
     this.http.get<ImageModel[]>(url).subscribe(
       res=>{
         this.imageList=res;

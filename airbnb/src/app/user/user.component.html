@@ -17,8 +17,9 @@
     <p>Booked:  dates: {{b.datesBooked}}</p>
     <p>Location: {{b.location}}</p>
     <p>Rate Appartment bellow </p> 
-    <input type="number" [(ngModel)]="temp"><br>
-    <button (click)="rateAppartment(b.appId,temp)">Save review</button>
+    <p  *ngIf="!b.HasReviewed"><input  type="number" [(ngModel)]="temp"></p>
+    <p  *ngIf="!b.HasReviewed"><button  (click)="rateAppartment(b.id,b.appId,temp)">Save review</button></p>
+    <p *ngIf="b.HasReviewed">This appartment has allready been reviewed</p>
 </li>
 <div class="message-pagination" >
     <pagination-controls  id="foo" (pageChange)="p2 = $event"></pagination-controls>

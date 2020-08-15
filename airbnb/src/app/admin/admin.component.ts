@@ -42,7 +42,14 @@ export class AdminComponent implements OnInit {
     this.input1.subscribe( data=> this.userList=data);  
       
   }
-
+  getAppsJson(){
+    this.httpApp.getAllAppartmentsJsonBlob().subscribe(
+      res=>{
+        console.log(res);
+        saveAs(res,"appartments");
+      }
+    )
+  }
   getApps(){
     this.httpApp.getAllAppartmentsBlob().subscribe(
       res=>{

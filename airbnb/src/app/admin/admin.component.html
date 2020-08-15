@@ -14,7 +14,10 @@
         <button (click)="logout()">Logout</button>
       </div>
       <div>
-        <button (click)="getApps()">Download all apartments</button>
+        <button (click)="getApps()">Download all apartments, xml format</button>
+      </div>
+      <div>
+        <button (click)="getAppsJson()">Download all apartments,Json format</button>
       </div>
     </ul>
     <p id="httpResult"></p>
@@ -27,7 +30,7 @@
             {{User.userName}}
           </div>
           <div class="userDetails">
-            <a href='#' routerLink="/userDetails/:{{User.userName}}">User Details</a>
+            <a href='#' routerLink="/userDetails/:{{User.userName}}">User Details</a> <br>
           </div>
     </ul>
 </div>

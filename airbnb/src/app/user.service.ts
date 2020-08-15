@@ -15,7 +15,7 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 export class UserService {
   
   tester:User; 
-  allUsers: String="https://localhost:8443/demo/admin/allUsers";
+  allUsers: String="https://localhost:8443/demo/user";
   constructor(private http: HttpClient) { }
 
   authAdmin():Observable<HttpResponse<string>>{
@@ -50,7 +50,7 @@ export class UserService {
   }
   getUser(usn:String) :Observable<User>
   {
-    let url="https://localhost:8443/demo/user/oneUser/?username="+usn;
+    let url="https://localhost:8443/demo/user/"+usn;
     this.http.get<User>(url).subscribe(data=>this.tester=data);
     return this.http.get<User>(url);
   }
@@ -86,7 +86,7 @@ export class UserService {
     const httpOptions = {
       headers: { 'Content-Type': 'application/json'},    
     };
-    let tempUrl="https://localhost:8443/demo/newUser";
+    let tempUrl="https://localhost:8443/demo/user";
     let subscription="";
     let body={
       "username":usr.userName,
@@ -131,8 +131,8 @@ export class UserService {
     return true;
   }
   uploadProfilePic(usn:String,picture){
-    //console.log("whyyyyyyyyyy");
-    let url="https://localhost:8443/demo/user/uploadProfilePic";
+    console.log("whyyyyyyyyyy");
+    let url="https://localhost:8443/demo/user/ProfilePic/"+usn;
     this.http.put(url,picture).subscribe(
       res=>{
         console.log(res)
@@ -149,11 +149,13 @@ export class UserService {
     };
     if(usr.password != identifier)
       return false; //WRONG PASSWORD
-    let tempUrl="https://localhost:8443/demo/EditUserData/Password";
+    let tempUrl="https://localhost:8443/demo/user/"+usr.userName;
     let subscription="";
     let body={
-      "username":usr.userName,
-      "newPassword":newPassword
+      "newPassword":newPassword,
+      "LastName":usr.lastName,
+      "FirstName":usr.firstName,
+      "email":usr.email
     }
     this.http.put<String>(tempUrl,body,httpOptions).subscribe(result => subscription=result.toString());
     return true;
@@ -167,15 +169,16 @@ export class UserService {
         'Content-Type':  'application/json',
       })
     };
-    let tempUrl="https://localhost:8443/demo/EditUserData/Email";
+    let tempUrl="https://localhost:8443/demo/user/"+usr.userName;
     let subscription="";
     let body={
-      "username":usr.userName,
-      "newEmail":newEmail
+      "newPassword":usr.password,
+      "LastName":usr.lastName,
+      "FirstName":usr.firstName,
+      "email":newEmail
     }
     this.http.put<String>(tempUrl,body,httpOptions).subscribe(result => subscription=result.toString());
     return true;
-
   }
   loggedIn(){
     if(!this.isAuthenticated())
@@ -190,7 +193,7 @@ export class UserService {
     localStorage.removeItem("token");
   }
   messageUsr(sender:String,receiver:String,date:String,text:String,Appid:Number){
-    let url="https://localhost:8443/accesories/messages/newMessage"
+    let url="https://localhost:8443/accesories/messages"
     let body={
       "receiver":receiver,
       "sender":sender,
@@ -246,6 +249,28 @@ export class UserService {
         throw 'Error in source. Details: ' + err;
       })
   );
+  }
+  updateUser(usr:User){
+    let url="https://localhost:8443/demo/user/"+usr.userName;
+    let body={
+      "LastName":usr.lastName,
+      "FirstName":usr.firstName,
+      "PhoneNumber":usr.phoneNumber,
+      "email":usr.email,
+      "newPassword":usr.password
+    }
+    this.http.put(url,body).subscribe(
+      res=>
+      {
+        console.log(res);
+      }
+    )
+  }
+  markBooking(id:number){
+    let url="https://localhost:8443/demo/Bookings/"+id;
+    this.http.put(url,{}).subscribe(
+      res=>console.log(res)
+    );
   }
 }
 
