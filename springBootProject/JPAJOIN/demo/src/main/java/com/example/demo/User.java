@@ -26,6 +26,8 @@ public class User {
     String firstName;
     String lastName;
     String phoneNumber;
+  //  @Column(unique = true)
+    //private Integer id;
 
     @Lob
     @Column(name = "pic")

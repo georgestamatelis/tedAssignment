@@ -1,4 +1,4 @@
-package com.example.demo.Recomendation;
+/*package com.example.demo.Recomendation;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
@@ -40,4 +40,4 @@ public class NLP {
         }
         return mainSentiment;
     }
-}
+}*/

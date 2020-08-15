@@ -39,18 +39,22 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers(HttpMethod.POST, "/login").permitAll()
              .antMatchers("/img/byId").permitAll()
-             .antMatchers("/demo/user/updateApp").hasRole("HOST")
-             .antMatchers("/demo/user/AppByUsr").hasRole("HOST")
-             .antMatchers("/demo/user/DeleteApartment").hasRole("HOST")
-            .antMatchers("/demo/ByLocation/**").permitAll()
-            .antMatchers("/demo/Appartments/**").permitAll()
-            .antMatchers("/demo/allUserNames").permitAll()
-            .antMatchers("/demo/admin/").hasRole("ADMIN")
-                .antMatchers("/demo/allApartments").hasRole("ADMIN")
+                //Apartment Methods
+                .antMatchers(HttpMethod.GET,"/demo/Apartments/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/demo/Apartments/**").hasRole("HOST")
+                .antMatchers(HttpMethod.PUT,"/demo/Apartments/**").hasRole("HOST")
+                .antMatchers(HttpMethod.DELETE,"/demo/Apartments/**").hasRole("HOST")
+                //user Methods
+                .antMatchers(HttpMethod.POST ,"/demo/user/**").permitAll()
+                //EVERYONE CAN LOGIN BUT ONLY AUTHENTICATED GUYS CAN DO THE FOLLOWING
+                .antMatchers(HttpMethod.PUT, "/demo/user/**").authenticated()
+                .antMatchers(HttpMethod.GET,"/demo/user/**").authenticated()
+                .antMatchers("/demo/allUserNames").permitAll()
+                //ADMIN METHODS
                 .antMatchers("/demo/admin/**").hasRole("ADMIN")
-            .antMatchers("/demo/user/**").authenticated()
-            .antMatchers("/demo/EditUserData/**").authenticated()
-             .antMatchers("/accesories/getReviews").permitAll()
+                //REVIEWS
+             .antMatchers("/accesories/Reviews").permitAll()
+                .antMatchers("/accesories/Apartment/**").permitAll()
             .anyRequest()
             .authenticated()
             .and().

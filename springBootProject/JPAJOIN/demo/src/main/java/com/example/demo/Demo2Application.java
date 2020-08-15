@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.Recomendation.NLP;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,9 +10,9 @@ public class Demo2Application {
 	//	return new BCryptPasswordEncoder();
 	//}
 	public static void main(String[] args) {
-		String comment=new String("Gorgeous Beautiful apartment friendly host clean");
-		NLP.init();
-		System.out.println("value of comment is :" +NLP.findSentiment(comment));
+	///	String comment=new String("Gorgeous Beautiful apartment friendly host clean");
+	//	NLP.init();
+	//	System.out.println("value of comment is :" +NLP.findSentiment(comment));
 		SpringApplication.run(Demo2Application.class, args);
 	}
 

@@ -15,6 +15,8 @@ public class Booking {
     String userName;
     String location; //to make my life easier
  ///   @ForeignKey
+    @Column( columnDefinition = "boolean default false")
+      private Boolean HasReviewed=false;
     Integer appId;
     @ElementCollection
     List<String> DatesBooked=new ArrayList<String>();
@@ -85,5 +87,13 @@ public class Booking {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Boolean getHasReviewed() {
+        return HasReviewed;
+    }
+
+    public void setHasReviewed(Boolean hasReviewed) {
+        HasReviewed = hasReviewed;
     }
 }

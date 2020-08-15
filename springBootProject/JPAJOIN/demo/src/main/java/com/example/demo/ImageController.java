@@ -8,32 +8,30 @@ import java.io.IOException;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path="img")
+@RequestMapping(path="/demo")
 public class ImageController {
     @Autowired
     ImageRepository imageRepository;
     @Autowired
     AppartmentRepository appartmentRepository;
-    @PostMapping("user/upload")
-    public ImageModel uploadImage(@RequestParam("myFile") MultipartFile file, @RequestParam("id")String id ) throws IOException {
-        Integer appId=Integer.parseInt(id);
-     //   System.out.println(appId+"FOR FUCK'S SAKE");
-       // if(!this.appartmentRepository.findById(appId).isPresent())
-     //           return new ImageModel("error","error" ,ull);
-        appartment app=this.appartmentRepository.findById(appId).get();
+    @PostMapping("Apartments/{appId}/Images") //Upload An image in the appartment
+    public ImageModel uploadImage(@RequestParam("myFile") MultipartFile file, @PathVariable String appId ) throws IOException {
+        Integer id=Integer.parseInt(appId);
+        System.out.println("FUCK MY LIFE");
+        appartment app=this.appartmentRepository.findById(id).get();
         ImageModel img = new ImageModel( file.getOriginalFilename(),file.getContentType(),file.getBytes(),app);
         final ImageModel savedImage = imageRepository.save(img);
         System.out.println("Image saved");
         return savedImage;
     }
-    @GetMapping("byId")
-    @ResponseBody Iterable<ImageModel> getAllImagesById(@RequestParam Integer id){
-        return this.imageRepository.findAllByApp(this.appartmentRepository.findById(id).get());
+    @GetMapping("Apartments/{appId}/Images") //get all images of the appartment
+    @ResponseBody Iterable<ImageModel> getAllImagesById(@PathVariable Integer appId){
+        return this.imageRepository.findAllByApp(this.appartmentRepository.findById(appId).get());
 
     }
-    @DeleteMapping("user/imgId")
-    @ResponseBody String DeleteImageById(@RequestParam("id")Long  id){
-        ImageModel temp=this.imageRepository.findById(id).get();
+    @DeleteMapping("Apartments/Images/{id}") //Delete one image from an appartment
+    @ResponseBody String DeleteImageById(@PathVariable String  id){
+        ImageModel temp=this.imageRepository.findById((long)Integer.parseInt(id)).get();
         this.imageRepository.delete(temp);
         return "OK";
     }

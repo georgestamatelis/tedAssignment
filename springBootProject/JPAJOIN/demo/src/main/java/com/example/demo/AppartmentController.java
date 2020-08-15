@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,13 +27,17 @@ public class AppartmentController {
     @Autowired
     private BookingRepository bookingRepository;
 
-
-    @PutMapping("user/updateApp")
-    public @ResponseBody
-    String changeApp(@RequestBody String jsonStr) throws JSONException {
+    @RequestMapping(value = "/Apartments", method = RequestMethod.GET,
+            produces = { "application/json", "application/xml" })
+    public @ResponseBody Iterable<appartment> getAllAppartments()throws JSONException
+    {
+        return appartmentRepository.findAll();
+    }
+    @PutMapping("/Apartments/{id}")
+    public @ResponseBody String changeApp(@RequestBody String jsonStr,@PathVariable String id) throws JSONException {
         JSONObject obj=new JSONObject(jsonStr);
-        Integer id=obj.getInt("id");
-        appartment n=this.appartmentRepository.findById(id).get();
+        System.out.println("fuuuuuuuucK");
+        appartment n=this.appartmentRepository.findById(Integer.parseInt(id)).get();
         n.setSize((float) obj.getDouble("size"));
         n.setAddress(obj.getString("address"));
         n.setAllowPets(obj.getBoolean("pets"));
@@ -76,7 +79,7 @@ public class AppartmentController {
         return "OK";
     }
 
-    @PostMapping(path="/newApartment")
+    @PostMapping(path="/Apartments")
     public @ResponseBody Integer addNewAppartment(@RequestBody String jsonStr/*,@RequestParam("img")MultipartFile file*/) throws JSONException, IOException {
 
         JSONObject jObject = new JSONObject(jsonStr);
@@ -125,13 +128,9 @@ public class AppartmentController {
         appartmentRepository.save(n);
         return n.getId();
     }
-    @GetMapping("/allApartments")
-    public @ResponseBody Iterable<appartment> getAllAppartments(/*@RequestBody String jsonStr*/)throws JSONException
-    {
-        return appartmentRepository.findAll();
-    }
-    @GetMapping("user/AppByUsr")
-    public @ResponseBody Iterable<appartment> getApartmentsByUsrID(@RequestParam("username") String usn) throws JSONException
+
+    @GetMapping("/user/{usn}/Apartments")
+    public @ResponseBody Iterable<appartment> getApartmentsByUsrID(@PathVariable String usn) throws JSONException
     {
 
         Optional<User> test =userRepository.findById(usn);
@@ -141,20 +140,11 @@ public class AppartmentController {
         List<appartment> result=appartmentRepository.findAllByOwner(test.get());
         return  result;
     }
-    @GetMapping("Appartments/ById")
-    public @ResponseBody Optional<appartment> findAppById(@RequestParam("id")Integer id){
+    @GetMapping("/Apartments/{id}")
+    public @ResponseBody Optional<appartment> findAppById(@PathVariable Integer id){
         return this.appartmentRepository.findById(id);
     }
-    @GetMapping("/ByLocation")
-    public @ResponseBody Iterable<appartment> getApartmentsByLocation(@RequestParam("country") String country,@RequestParam("city")String city
-            ,@RequestParam("neighborhood")String neighborhood) throws  JSONException
-    {
 
-        String Location=country+"+"+ city +"+"+ neighborhood;
-        return appartmentRepository.findBylocationOrderByPriceAllIgnoringCase(Location);
-        // return null;
-
-    }
     //private helper function to get the dates required
     private  ArrayList<String> getDates(String startD,String endD){
         ArrayList<String> result=new ArrayList<String>();
@@ -190,19 +180,19 @@ public class AppartmentController {
         return result;
 
     }
-    @GetMapping("/ByLocation/Dates")
+    @GetMapping("/Apartments/{capacity}/{startD}/{endD}/{country}/{city}/{neighborhood}")
     public @ResponseBody Iterable<appartment> getApartmentsByLocationDates(
-            @RequestParam("capacity") Integer capacity,
-            @RequestParam("startD")String st, @RequestParam("endD")String end,
-            @RequestParam("country") String country,@RequestParam("city")String city
-            ,@RequestParam("neighborhood")String neighborhood) throws  JSONException
+            @PathVariable String capacity,
+            @PathVariable  String startD, @PathVariable String endD,
+            @PathVariable String country,@PathVariable String city
+            ,@PathVariable  String neighborhood) throws  JSONException
     {
 
         String Location=country+"+"+ city +"+"+ neighborhood;
-        List<appartment> opt=this.appartmentRepository.findByLocationAndCapacityGreaterThanEqualOrderByPrice(Location,capacity);
+        List<appartment> opt=this.appartmentRepository.findByLocationAndCapacityGreaterThanEqualOrderByPrice(Location,Integer.parseInt(capacity));
         //System.out.println(opt);
-
-        ArrayList<String> DatesRequired=this.getDates(st,end);
+       System.out.println(startD+endD);
+        ArrayList<String> DatesRequired=this.getDates(startD,endD);
         List<appartment> result=new ArrayList<appartment>();
         System.out.println(DatesRequired);
         for(appartment app: opt){
@@ -218,12 +208,12 @@ public class AppartmentController {
         }
 
         List<appartment> noDuplicates= Lists.newArrayList(Sets.newHashSet(result));
-        noDuplicates.sort(Comparator.comparing(appartment::getPrice));
+        //Collections.sort(noDuplicates,comparing(appartment::getPrice));
         return noDuplicates;
         // return null;
     }
-    @DeleteMapping("user/DeleteApartment")
-    public @ResponseBody String DeleteApartment(@RequestParam Integer id) throws JSONException{
+    @DeleteMapping("/Apartment/{id}")
+    public @ResponseBody String DeleteApartment(@PathVariable Integer id) throws JSONException{
 
         Optional<appartment> temp=appartmentRepository.findById(id);
         if(!temp.isPresent())
@@ -233,25 +223,16 @@ public class AppartmentController {
     }
 
     ///images
-    @PostMapping("user/updateAppImage")
-    public @ResponseBody String updateAppImage(@RequestParam("imgFile") MultipartFile file,@RequestParam("id")Integer id) throws IOException {
-        appartment temp=this.appartmentRepository.findById(id).get();
+    @PostMapping("/Apartment/Profile-Image/{id}")
+    public @ResponseBody String updateAppImage(@RequestParam("imgFile") MultipartFile file,@PathVariable String id) throws IOException {
+        appartment temp=this.appartmentRepository.findById(Integer.parseInt(id)).get();
         System.out.println("fuck me");
         temp.setMain_pic(file.getBytes());
         this.appartmentRepository.save(temp);
         return "OK";
     }
-    @PostMapping("user/updateAppDescription")
-    public @ResponseBody String updateAppDescription(@RequestBody String jsonStr) throws JSONException {
-        JSONObject obj=new JSONObject(jsonStr);
-        appartment n=this.appartmentRepository.findById(obj.getInt("id")).get();
-        if(n==null)
-            return "ERROR";
-        else
-        {
-            n.setDescription(obj.getString("description"));
-            this.appartmentRepository.save(n);
-            return  "OK";
-        }
+    @GetMapping("/Apartment/Profile-Image/{id}")
+    public @ResponseBody byte[] getAppImage(@PathVariable String id){
+        return this.appartmentRepository.findById(Integer.parseInt(id)).get().getMain_pic();
     }
 }
