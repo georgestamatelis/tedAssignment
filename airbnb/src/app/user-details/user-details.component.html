@@ -12,12 +12,25 @@
         <img src="data:image/jpeg;base64,{{current.pic}}">
     </li>
     <li *ngIf="current.requestforOwner"><button (click)="confirmRequest()"> CONFIRM CURRENT USERS REQUEST</button></li>
-    <li *ngIf="current.owner"><button (click)="GetUserApps()">DOWNLOAD(JSON) APARTMENTS PROVIDED BY THIS HOST</button>   </li>
-    <li *ngIf="current.owner"><button (click)="GetUserReviews()">DOWNLOAD(JSON) REVIEWS ON THIS HOST'S APPARTMENTS</button></li>
-    <li *ngIf="current.renter"><button (click)="getConducterRevies()">DOWNLOAD(JSON) ALL REVIEWS PROVIDED BY THIS USER</button></li>
-    <li *ngIf="current.renter"><button (click)="getBookingsClient()">DOWNLOAD ALL BOOKINGS BY THIS USER</button></li>
-    <li *ngIf="current.owner"><button (click)="getBookingsHost()">DOWNLOAD ALL BOOKINGS ON THIS HOSTS APPARTMENTS</button></li>
+   <div id="JSONDOWNLOADS">
+        <h1>AVAILABLE JSON DOWNLOADS</h1>
+        <li *ngIf="current.owner"><button (click)="GetUserApps()">DOWNLOAD APARTMENTS PROVIDED BY THIS HOST</button>   </li>
+        <li *ngIf="current.owner"><button (click)="GetUserReviews()">DOWNLOAD REVIEWS ON THIS HOST'S APPARTMENTS</button></li>
+        <li *ngIf="current.renter"><button (click)="getConducterRevies()">DOWNLOAD ALL REVIEWS PROVIDED BY THIS USER</button></li>
+        <li *ngIf="current.renter"><button (click)="getBookingsClient()">DOWNLOAD ALL BOOKINGS BY THIS USER</button></li>
+        <li *ngIf="current.owner"><button (click)="getBookingsHost()">DOWNLOAD ALL BOOKINGS ON THIS HOSTS APPARTMENTS</button></li>
+        <br>
+   </div>
+   <div id="JSONDOWNLOADS">
+    <h1>AVAILABLE XML DOWNLOADS</h1>
+    <li *ngIf="current.owner"><button (click)="GetUserAppsXML()">DOWNLOAD APARTMENTS PROVIDED BY THIS HOST</button>   </li>
+    <li *ngIf="current.owner"><button (click)="GetUserReviewsXML()">DOWNLOAD REVIEWS ON THIS HOST'S APPARTMENTS</button></li>
+    <li *ngIf="current.renter"><button (click)="getConducterReviesXML()">DOWNLOAD ALL REVIEWS PROVIDED BY THIS USER</button></li>
+    <li *ngIf="current.renter"><button (click)="getBookingsClientXML()">DOWNLOAD ALL BOOKINGS BY THIS USER</button></li>
+    <li *ngIf="current.owner"><button (click)="getBookingsHostXML()">DOWNLOAD ALL BOOKINGS ON THIS HOSTS APPARTMENTS</button></li>
     <br>
+</div>
+
 </ul>
 </div>
 </body>

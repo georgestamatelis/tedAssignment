@@ -47,12 +47,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 //user Methods
                 .antMatchers(HttpMethod.POST ,"/demo/user/**").permitAll()
                 //EVERYONE CAN LOGIN BUT ONLY AUTHENTICATED GUYS CAN DO THE FOLLOWING
+                .antMatchers("/demo/user/usernames").permitAll()
+                .antMatchers("/api/Colab").authenticated()
                 .antMatchers(HttpMethod.PUT, "/demo/user/**").authenticated()
                 .antMatchers(HttpMethod.GET,"/demo/user/**").authenticated()
-                .antMatchers("/demo/allUserNames").permitAll()
                 //ADMIN METHODS
                 .antMatchers("/demo/admin/**").hasRole("ADMIN")
                 //REVIEWS
+                .antMatchers("/demo/user/usernames").permitAll()
              .antMatchers("/accesories/Reviews").permitAll()
                 .antMatchers("/accesories/Apartment/**").permitAll()
             .anyRequest()

@@ -64,6 +64,14 @@ export class ManageApp1Component implements OnInit {
           res=>{
             this.messages=res;
             console.log(res);
+            this.messages.forEach(element => {
+              console.log(element.answered)
+              if(element.answered)
+              { 
+                  console.log(element)
+               //   this.messages.splice(this.messages.indexOf(element))
+              }
+            });
           }
           
         );

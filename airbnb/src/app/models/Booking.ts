@@ -3,5 +3,5 @@ export class Booking{
     userName:String;
     appId:Number;
     datesBooked:String[];
-    HasReviewed:Boolean;
+    hasReviewed:Boolean;
 }

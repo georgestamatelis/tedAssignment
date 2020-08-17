@@ -18,14 +18,21 @@ export class UserService {
   allUsers: String="https://localhost:8443/demo/user";
   constructor(private http: HttpClient) { }
 
-  authAdmin():Observable<HttpResponse<string>>{
+  authAdmin(password:String):Observable<HttpResponse<string>>{
     let loginUrl="https://localhost:8443/login";
     let ln={
       "username":"admin1",
-      "password":"123"
+      "password":password
     }
-    console.log("the fuck's going on??");
-    return this.http.post<string>(loginUrl, ln, { observe: 'response'});
+  //  console.log("the fuck's going on??");
+  return this.http.post<string>(loginUrl, ln, { observe: 'response'}).pipe(
+        tap((data: any) => {
+         console.log(data);
+    }),
+    catchError((err) => {
+      window.alert("INVALID CREDENTIALS PLEASE TRY AGAIN");
+      throw 'Error in source. Details: ' + err;
+    }));;
   }
   XauthAdmin(){
    localStorage.removeItem("token");
@@ -60,7 +67,7 @@ export class UserService {
     return this.http.get<User[]>(this.allUsers.toString());
   }
   getAllUserNames() :Observable<String[]>{
-    return this.http.get<String[]>("https://localhost:8443/demo/allUserNames");
+    return this.http.get<String[]>("https://localhost:8443/demo/user/usernames");
   }
   getAllRequestingUsers(): Observable<User[]>
   {
@@ -112,21 +119,28 @@ export class UserService {
          "renterReq":usr.renter
         }
     };
-    
-   this.authAdmin().subscribe(
-    res=>{
-      console.log(res);
-      localStorage.setItem('token', res.headers.get('Authorization'));
-    });
-    this.getUser(usr.userName).subscribe(
-      data=>this.tester=data
-    );
-    if(this.tester)
-        return false
-    console.log("skataaaaaa");
+    let str=""
+   this.getAllUserNames().subscribe(
+     res=>
+     {
+        res.forEach(element=>{
+          if(element==usr.userName)
+            {
+              str=element.toString();
+              alert("USERNAME ALLREADY EXITS")
+              return false;
+            }
+        })
+      }
+   )
+   if(str)
+      {
+        alert("USERNAME ALLREADY EXITS")
+              return;
+      }
     this.http.post<String>(tempUrl,body).subscribe(
       result=> 
-       console.log("fuuuuckkk")
+       console.log(result)
     );
     return true;
   }

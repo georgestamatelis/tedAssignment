@@ -49,8 +49,16 @@ export class AppartmentService {
     return this.http.get<appartment[]>(url);
   }
   getAppartmentsByOwnerNameBlob(str:String){
-    let url="https://localhost:8443/demo/user/Apartments/"+str;
+    let url="https://localhost:8443/demo/user/"+str+"/Apartments/";
     return this.http.get(url,{responseType: 'blob'});
+  }
+  getAppartmentsByOwnerNameBlobXML(str:String){
+    let url="https://localhost:8443/demo/user/"+str+"/Apartments/";
+    return this.http.get(url,{
+      headers:new HttpHeaders({
+        Accept:'application/xml'
+      }),
+      responseType: 'blob'});
   }
   //////////post
   postAppartment(app:appartment,psw:String,town:String,country:String,hood:String,selectedFile):void{
@@ -186,13 +194,38 @@ export class AppartmentService {
     let url="https://localhost:8443/accesories/user/"+usn+"/Apartment/Reviews";
     return this.http.get(url,{responseType: 'blob'});
   }
+  getReviewByOwnerNameXML(usn:String){
+    let url="https://localhost:8443/accesories/user/"+usn+"/Apartment/Reviews";
+    return this.http.get(url, { 
+      headers: new HttpHeaders({ 
+        'Accept': 'application/xml' 
+      }), 
+      responseType: 'blob' 
+    })
+  }
   getReviewsByConductor(usn:String){
     let url="https://localhost:8443/accesories/user/"+usn+"/Reviews";
     return this.http.get(url,{responseType: 'blob'});
   }
+  getReviewsByConductorXml(usn:String){
+    let url="https://localhost:8443/accesories/user/"+usn+"/Reviews";
+    return this.http.get(url,{
+      headers: new HttpHeaders({ 
+        'Accept': 'application/xml' 
+      }), 
+      responseType: 'blob'});
+  }
   getBookingsByHost(usn:String){
     let url="https://localhost:8443/demo/admin/getBookingsbyHost?usn="+usn;
     return this.http.get(url,{responseType: 'blob'});
+  }
+  getBookingsbyHostXML(usn:String){
+    let url="https://localhost:8443/demo/admin/getBookingsbyHost?usn="+usn;
+    return this.http.get(url,{
+      headers: new HttpHeaders({ 
+        'Accept': 'application/xml' 
+      }),
+      responseType: 'blob'});
   }
   getBookinsByClientObservable(usn:String):Observable<Booking[]>{
     let url="https://localhost:8443/demo/user/"+usn+"/Bookings/";
@@ -203,5 +236,13 @@ export class AppartmentService {
     let url="https://localhost:8443/demo/admin/getBookingsByClient?usn="+usn;
     return this.http.get(url,{responseType: 'blob'});
   }
-  
+ getBookingsByClientXML(usn:String)
+ {
+  let url="https://localhost:8443/demo/admin/getBookingsByClient?usn="+usn;
+  return this.http.get(url,{
+    headers: new HttpHeaders({ 
+      'Accept': 'application/xml' 
+    }),
+    responseType: 'blob'});
+ } 
 }

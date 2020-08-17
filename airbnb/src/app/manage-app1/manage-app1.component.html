@@ -104,7 +104,7 @@
     <button (click)="AddPic()"  value="upload" >GO</button>
 </div> 
 <div id="messages">
-    <h1>Questions About the Appartment</h1>
+    <h1>Questions About the Appartment/Chat</h1>
     <li *ngFor="let m of messages  | paginate: {id: 'foo', itemsPerPage: 3, currentPage: p2 }" >
         <p > From : {{m.senderUsn}}</p>
         <p >date: {{m.date}}</p>

@@ -37,6 +37,14 @@ export class UserDetailsComponent implements OnInit {
       }
     );
   }
+  GetUserAppsXML(){
+    this.appHttp.getAppartmentsByOwnerNameBlobXML(this.current.userName).subscribe(
+      res=>{
+        console.log(res);
+        saveAs(res,"")
+      }
+    );
+  }
   GetUserReviews(){
     this.appHttp.getReviewByOwnerName(this.current.userName).subscribe(
       res=>{
@@ -44,8 +52,20 @@ export class UserDetailsComponent implements OnInit {
       }
     )
   }
+  GetUserReviewsXML(){
+    this.appHttp.getReviewByOwnerNameXML(this.current.userName).subscribe(
+      res=>{saveAs(res,"")}
+    );
+  }
   getConducterRevies(){
     this.appHttp.getReviewsByConductor(this.current.userName).subscribe(
+      res=>{
+        saveAs(res,"");
+      }
+    )
+  }
+  getConducterReviesXML(){
+    this.appHttp.getReviewsByConductorXml(this.current.userName).subscribe(
       res=>{
         saveAs(res,"");
       }
@@ -58,8 +78,20 @@ export class UserDetailsComponent implements OnInit {
       }
     )
   }
+  getBookingsHostXML(){
+    this.appHttp.getBookingsbyHostXML(this.current.userName).subscribe(
+      res=>{
+        saveAs(res,"");
+      }
+    )
+  }
   getBookingsClient(){
     this.appHttp.getBookingsByClient(this.current.userName).subscribe(
+      res=>saveAs(res,"")
+    );
+  }
+  getBookingsClientXML(){
+    this.appHttp.getBookingsByClientXML(this.current.userName).subscribe(
       res=>saveAs(res,"")
     );
   }

@@ -76,4 +76,5 @@ public class MessageController {
     {
         return this.messageRepository.findAllByAppartmentAndAnswered(this.appartmentRepository.findById(appId).get(),false);
     }
+
 }

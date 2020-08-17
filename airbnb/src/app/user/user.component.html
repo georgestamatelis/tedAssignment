@@ -17,12 +17,20 @@
     <p>Booked:  dates: {{b.datesBooked}}</p>
     <p>Location: {{b.location}}</p>
     <p>Rate Appartment bellow </p> 
-    <p  *ngIf="!b.HasReviewed"><input  type="number" [(ngModel)]="temp"></p>
-    <p  *ngIf="!b.HasReviewed"><button  (click)="rateAppartment(b.id,b.appId,temp)">Save review</button></p>
-    <p *ngIf="b.HasReviewed">This appartment has allready been reviewed</p>
+    <p ><input  type="number" [(ngModel)]="temp"></p>
+    <p  ><button  (click)="rateAppartment(b.id,b.appId,temp)">Save review</button></p>
 </li>
 <div class="message-pagination" >
     <pagination-controls  id="foo" (pageChange)="p2 = $event"></pagination-controls>
+ </div>
+ <!---------REVIEWED BOOKINGS-->
+ <li *ngFor="let b of reviewedBookings | paginate: {id: 'bla', itemsPerPage: 3, currentPage: p3 }">
+    <p>appId: {{b.appId}}</p>
+    <p>Booked:  dates: {{b.datesBooked}}</p>
+    <p>Location: {{b.location}}</p>    
+</li>
+<div class="message-pagination" >
+    <pagination-controls  id="bla" (pageChange)="p3 = $event"></pagination-controls>
  </div>
 </div>
 </div>

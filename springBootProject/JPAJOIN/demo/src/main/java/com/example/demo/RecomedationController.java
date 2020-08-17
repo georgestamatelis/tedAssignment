@@ -1,17 +1,19 @@
 package com.example.demo;
 
 
+import com.example.demo.Recomendation.AppView;
+import com.example.demo.Recomendation.AppViewRepository;
+import com.example.demo.Recomendation.Search;
+import com.example.demo.Recomendation.SearchRepository;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller // This means that this class is a Controller
-@RequestMapping(path="/bonus") // This means URL's start with /demo (after Application path)
+@RestController // This means that this class is a Controller
+@RequestMapping(path="/api/Colab") // This means URL's start with /demo (after Application path)
 @CrossOrigin
 public class RecomedationController {
     @Autowired
@@ -22,6 +24,10 @@ public class RecomedationController {
     private BookingRepository bookingRepository;
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private SearchRepository searchRepository;
+    @Autowired
+    private AppViewRepository appViewRepository;
 
     private int get_Average_Review(User ui){
         List<Review> allR=this.reviewRepository.findAllByUserName(ui.getUserName());
@@ -46,4 +52,41 @@ public class RecomedationController {
         int number_of_results=5;
         return null;
     }
+    ///////////////Searches/
+    //Root
+    @GetMapping("/Search")
+    public @ResponseBody Iterable<Search> getAllSearches(){
+        return this.searchRepository.findAll();
+    }
+    @PostMapping("/Search")
+    public @ResponseBody String newSearch(@RequestBody String jsonStr) throws JSONException {
+        JSONObject obj=new JSONObject(jsonStr);
+        Search n=new Search();
+        n.setDate(obj.getString("Date"));
+        n.setSearchlocation(obj.getString("searchLocation"));
+        n.setUser(this.userRepository.findById(obj.getString("username")).get());
+        this.searchRepository.save(n);
+        return "OK";
+    }
+    @GetMapping("/user/{usn}/Search")
+    public @ResponseBody Iterable<Search> getSearch(@PathVariable String usn){
+        return this.searchRepository.findAllByUser(this.userRepository.findById(usn).get());
+    }
+    /////////VIEWS
+    @GetMapping("/AppView")
+    public @ResponseBody Iterable<AppView> getAllViews(){
+        return this.appViewRepository.findAll();
+    }
+    @PostMapping("/AppView")
+    public  @ResponseBody String newAppView(@RequestBody String jsonStr) throws JSONException
+    {
+        JSONObject obj=new JSONObject(jsonStr);
+        AppView n=new AppView();
+        n.setApp(this.appartmentRepository.findById(obj.getInt("appId")).get());
+        n.setDate(obj.getString("Date"));
+        n.setUser(this.userRepository.findById(obj.getString("user")).get());
+        this.appViewRepository.save(n);
+        return "OK";
+    }
+
 }

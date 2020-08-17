@@ -7,6 +7,9 @@ import {User} from 'src/app/models/User';
 import { HttpClient } from '@angular/common/http';
 import {ImageModel} from 'src/app/models/ImageModel';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
+import { message } from '../models/message';
+import { MessageService } from '../message.service';
+import { CollaborationService } from '../collaboration.service';
 
 declare var ol: any;
 
@@ -19,6 +22,7 @@ declare var ol: any;
 export class AppartmentDetailsComponent implements OnInit {
 
  p:number=1;
+ p2:number=1;
   map: any;
 has_reviewed:Boolean;
   Question:String;
@@ -32,8 +36,10 @@ has_reviewed:Boolean;
   review:number;
   usr:User; 
   imageList:ImageModel[];
+  messages: message[];
+
   //averageReview:number;
-  constructor(private httpC:HttpClient,private route: ActivatedRoute,private router:Router,private apphttp:AppartmentService,public userhttp:UserService,private http:HttpClient) { }
+  constructor(private collabHttp:CollaborationService,private messageHttp:MessageService,private httpC:HttpClient,private route: ActivatedRoute,private router:Router,private apphttp:AppartmentService,public userhttp:UserService,private http:HttpClient) { }
 
   ngOnInit(): void {   
     /////////////////////////////////////////
@@ -65,10 +71,12 @@ has_reviewed:Boolean;
     res=>{
       console.log(res);
       this.userName=res;
+      this.collabHttp.StoreAppView(this.userName,this.cur.id,StartD);
     }
     
   ) 
-    
+ 
+ 
   
 }
   set_up_map(){
@@ -183,5 +191,10 @@ has_reviewed:Boolean;
         console.log(res);
       }
     )
+    this.messageHttp.getMessages(this.id1).subscribe(
+      res=>{
+        this.messages=res;
+        console.log(res);
+      });
   }
 }

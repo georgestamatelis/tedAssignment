@@ -16,8 +16,10 @@ export class UserComponent implements OnInit {
 
   loginOk:Boolean;
   myBookings:Booking[];
+  reviewedBookings:Booking[];
   p: number = 1;
   p2:number=1;
+  p3:number=1;
   temp:number=0;
   reply:Boolean;
   public testUsr:User;
@@ -28,6 +30,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginOk=false;
+    this.reviewedBookings=new Array();
     this.ShowMessages=false;
     let arr=this.route.snapshot.params.userName.split(":");
     let userN=arr[1];
@@ -40,6 +43,17 @@ export class UserComponent implements OnInit {
             res=>{
                 this.myBookings=res;
                 console.log(res);
+                this.myBookings.forEach(element=>{
+                  console.log(element.hasReviewed);
+                  if(element.hasReviewed)
+                  {
+                    console.log(element);
+                    this.reviewedBookings.push(element);
+                    this.myBookings.filter(
+                      obj=>obj!=element);
+                 /*   this.myBookings.splice(this.myBookings.indexOf(element))*/
+                  }
+                })
             }
           )
       }

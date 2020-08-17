@@ -52,16 +52,27 @@
 <div class="text-right" >
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
-<div *ngIf="this.userLoggedIn==true">
-    <button (click)=Book()>Book it</button><br>
-<button  (click)="message()">Got any Questions Click here to messange the owner</button>
-</div>
 <!--<button  *ngIf="this.userhttp.loggedIn()" id="linker"routerLink="/chat/:sender:{{this.userhttp.getLastUsr().userName}}/:receiver:{{this.cur.ownername}}">Got any Questions Click here to messange the owner</button>
 --><h1 id="resUlt"></h1>
 <h2>Appartment's geographical location </h2>
 <div id="map" class="map"></div>
 <div id="mouse-position"></div>
-
-
+<div *ngIf="this.userLoggedIn==true">
+    <button (click)=Book()>Book it</button><br>
+<button  (click)="message()">Got any Questions Click here to messange the owner</button>
+</div>
+<div id="chat">
+<div id="messages">
+    <h1>Q&A About the Appartment</h1>
+    <li *ngFor="let m of messages  | paginate: {id: 'foo', itemsPerPage: 5, currentPage: p2 }" >
+        <p > From : {{m.senderUsn}}</p>
+        <p >date: {{m.date}}</p>
+        <p >text: {{m.text}}</p>
+</div>
+ <!--Including the pagination control.-->
+ <div class="message-pagination" >
+    <pagination-controls  id="foo" (pageChange)="p2 = $event"></pagination-controls>
+ </div>
+</div>
 
 

@@ -4,6 +4,8 @@ import { UserService } from '../user.service';
 import { AppartmentService } from '../appartment.service';
 import { appartment } from '../models/appartment';
 import { review } from '../models/review';
+import { CollaborationService } from '../collaboration.service';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-search-results',
@@ -17,6 +19,7 @@ export class SearchResultsComponent implements OnInit {
   appartmentTypes:String[]=["private flat","shared room","full house","none"]
   desiredType:String="none";
   parking:Boolean=false;
+  usn:String;
   ac:Boolean=false;
   smoking:Boolean=false;
   tv:Boolean=false;
@@ -30,7 +33,7 @@ export class SearchResultsComponent implements OnInit {
   endD:String;
   maxCost:number=99999;
   appList:appartment[];
-  constructor(private route: ActivatedRoute,private userHttp:UserService,private appHttp:AppartmentService,private router:Router) { 
+  constructor(private colabHttp:CollaborationService,private route: ActivatedRoute,private userHttp:UserService,private appHttp:AppartmentService,private router:Router) { 
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
   }
@@ -72,6 +75,13 @@ export class SearchResultsComponent implements OnInit {
               this.appList.sort((a,b) => (a.price > b.price) ? 1 : ((b.price > a.price) ? -1 : 0))
       }
     )
+  this.userHttp.getLoggedInUser().subscribe(
+    usn=>{
+      this.usn=usn;
+      this.colabHttp.storeSearch(usn,this.startD,this.country+"+"+this.city+"+"+this.neighborhood);
+
+    }
+  )
  }
  getAverage(array: review[]):number{
   var average:number=0;

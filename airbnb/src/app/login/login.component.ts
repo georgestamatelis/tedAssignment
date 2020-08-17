@@ -29,12 +29,7 @@ export class LoginComponent implements OnInit {
   handleClick(){
 
     if(this.username=="admin1"){
-      if(this.password!="123")
-        {
-          alert('INVALID CREDENTIALS PLEASE TRY AGAIN');
-          return;
-        }
-      this.http.authAdmin().subscribe(
+      this.http.authAdmin(this.password).subscribe(
         res=>{
           console.log(res);
           localStorage.setItem('token', res.headers.get('Authorization'));
