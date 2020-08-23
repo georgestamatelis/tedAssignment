@@ -27,25 +27,29 @@ header {
   padding-top: 15px;
   padding-bottom: 1px;
   opacity: 75%;
-  width: 450px;
+  width: 60%;
   display: block;
   margin-left: auto;
+  background-color: gray;
   margin-right: auto;
-  background-color: white;
+}
+a{
+  color:lightseagreen
+}
+.admincontainer:hover{
+  opacity: 95%;
 }
 button {
-  padding: 10px 25px;
-  text-align: center;
-  font-family: "Calibri";
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 30px;
-  margin-bottom: 25px;
-  border-color: 3px black solid;
+  margin-top:2%;
+  font-size: x-large;
+  background-color: black;
+  margin-bottom: 2%;
+  padding: 2.5%;
+  color:white;
+  cursor: pointer;
 }
-button:hover {
-  opacity: 100%;
+button:hover{
+  background-color:lightseagreen;
 }
 .username {
   float: left;

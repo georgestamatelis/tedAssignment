@@ -34,9 +34,15 @@ h1{
 ul{
   list-style-type: none;
 }
-button{
-  border-width: thick;
-background-color: azure;
-font-size: large;
-margin-bottom: 2%;
+button {
+  margin-top:2%;
+  font-size: x-large;
+  background-color: black;
+  margin-bottom: 2%;
+  padding: 2.5%;
+  color:white;
+  cursor: pointer;
+}
+button:hover{
+  background-color:lightseagreen;
 }

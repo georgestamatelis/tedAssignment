@@ -1,6 +1,6 @@
 <html>
 <div id="wrapper">
-<div id="welcome" *ngIf="this.http.loggedIn()">Welcome  {{this.testUsr.userName}}</div>
+<h1>Welcome  {{this.testUsr.userName}}</h1>
 <div id="admincontainer">
     <div id="actions" *ngIf="this.http.loggedIn()"><h2>Available Actions</h2></div>
     <nav *ngIf="this.http.loggedIn()"> 
@@ -10,8 +10,8 @@
         <button (click)="logout()" >Click here to logout</button><br>
     </nav>
 </div>
-<div id="Bookings">
-<p>My Bookings:</p>
+<div id="Bookings" *ngIf="!testUsr.owner">
+<h1>My Bookings:</h1>
 <li *ngFor="let b of myBookings | paginate: {id: 'foo', itemsPerPage: 3, currentPage: p2 }">
     <p>appId: {{b.appId}}</p>
     <p>Booked:  dates: {{b.datesBooked}}</p>
@@ -33,4 +33,20 @@
     <pagination-controls  id="bla" (pageChange)="p3 = $event"></pagination-controls>
  </div>
 </div>
+<div id="Messages" *ngIf="!testUsr.owner" >
+<h1>My messages</h1>
+<li *ngFor="let m of messages | paginate: {id: 'bloom', itemsPerPage: 3, currentPage: p4 }">
+    <p>about appartment {{m.app_id}}</p>
+    <p>From: {{m.senderUsn}}</p>
+    <p>{{m.date}}</p>
+    <p>{{m.text}}</p>
+    <button (click)="DeleteMessage(m.id)">DELETE</button> <br>
+    <button (click)="MarkMessage(m.id)">MARK AS READ/IGNORE</button> <br>
+    <button (click)="Reply(m.senderUsn,m.app_id)">Reply</button> <br>
+</li>
+<div class="message-pagination" >
+    <pagination-controls  id="bloom" (pageChange)="p3 = $event"></pagination-controls>
+ </div>
 </div>
+</div>
+</html>

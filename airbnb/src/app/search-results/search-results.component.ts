@@ -5,7 +5,7 @@ import { AppartmentService } from '../appartment.service';
 import { appartment } from '../models/appartment';
 import { review } from '../models/review';
 import { CollaborationService } from '../collaboration.service';
-import { Console } from 'console';
+//import { Console } from 'console';
 
 @Component({
   selector: 'app-search-results',

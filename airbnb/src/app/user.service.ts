@@ -15,7 +15,7 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 export class UserService {
   
   tester:User; 
-  allUsers: String="https://localhost:8443/demo/user";
+  allUsers: String="https://localhost:8443/api/user";
   constructor(private http: HttpClient) { }
 
   authAdmin(password:String):Observable<HttpResponse<string>>{
@@ -37,15 +37,52 @@ export class UserService {
   XauthAdmin(){
    localStorage.removeItem("token");
   }   
-  isAdminloggedIn(){
-    if(localStorage.getItem("token"))
-      return true;
+  isAdminloggedIn(){ //here check by login from backend
+  var obj:any;
+  if(!localStorage.getItem('token'))
     return false;
+  let str=localStorage.getItem('token').slice(7);
+  if(!str)
+    return false;
+  obj=atob(str.split('.')[1])
+  if(!obj)
+    return false;
+  let array=obj.split(":");
+  if(array.length<2)
+    return false;
+  let usn=array[1].split(",")[0];
+  console.log(usn)///if authentication is successfull then  usn="username"}
+  if(usn=='"admin1"')
+    return true;
+  return false;    
   }   
 
-  
-  isAuthenticated(){
-    return !!localStorage.getItem("token");
+ 
+  isAuthenticated(){ //here check by login from backend
+    
+    var obj:any;
+   // let usn="-"
+    if(!localStorage.getItem('token'))
+      return false;
+    let str=localStorage.getItem('token').slice(7);
+    if(!str)
+      return false;
+    obj=atob(str.split('.')[1])
+    if(!obj)
+      return false;
+    let array=obj.split(":");
+    if(array.length<2)
+      return false;
+    let usn=array[1].split(",")[0];
+    console.log(usn)///if authentication is successfull then  usn="username"}
+    if(usn)
+      return true;
+    return false;
+  }
+  isHost(){
+    if(!this.isAuthenticated())
+      return false;
+      ///fill it up
   }
   getLastUsr():User
   {
@@ -53,11 +90,11 @@ export class UserService {
   }
   getLoggedInUser():Observable<string>
   {
-    return this.http.get("https://localhost:8443/demo/user/UserName",{ responseType: 'text'});
+    return this.http.get("https://localhost:8443/api/user/UserName",{ responseType: 'text'});
   }
   getUser(usn:String) :Observable<User>
   {
-    let url="https://localhost:8443/demo/user/"+usn;
+    let url="https://localhost:8443/api/user/"+usn;
     this.http.get<User>(url).subscribe(data=>this.tester=data);
     return this.http.get<User>(url);
   }
@@ -67,11 +104,11 @@ export class UserService {
     return this.http.get<User[]>(this.allUsers.toString());
   }
   getAllUserNames() :Observable<String[]>{
-    return this.http.get<String[]>("https://localhost:8443/demo/user/usernames");
+    return this.http.get<String[]>("https://localhost:8443/api/user/usernames");
   }
   getAllRequestingUsers(): Observable<User[]>
   {
-    return this.http.get<User[]>("https://localhost:8443/demo/admin/GetAllRequests");
+    return this.http.get<User[]>("https://localhost:8443/api/admin/GetAllRequests");
   }
   confirmRequest(username:String): void {
     const httpOptions = {
@@ -80,10 +117,10 @@ export class UserService {
       })
     };
     
-    let tempUrl="https://localhost:8443/demo/admin/ConfirmRequest";
+    let tempUrl="https://localhost:8443/api/admin/User";
     console.log(username);
     let body={
-      "username":username
+            "username":username
     }
     let subscription="";
     this.http.post<String>(tempUrl,body,httpOptions).subscribe(result=> subscription=result.toString());
@@ -93,7 +130,7 @@ export class UserService {
     const httpOptions = {
       headers: { 'Content-Type': 'application/json'},    
     };
-    let tempUrl="https://localhost:8443/demo/user";
+    let tempUrl="https://localhost:8443/api/user";
     let subscription="";
     let body={
       "username":usr.userName,
@@ -146,7 +183,7 @@ export class UserService {
   }
   uploadProfilePic(usn:String,picture){
     console.log("whyyyyyyyyyy");
-    let url="https://localhost:8443/demo/user/ProfilePic/"+usn;
+    let url="https://localhost:8443/api/user/ProfilePic/"+usn;
     this.http.put(url,picture).subscribe(
       res=>{
         console.log(res)
@@ -163,7 +200,7 @@ export class UserService {
     };
     if(usr.password != identifier)
       return false; //WRONG PASSWORD
-    let tempUrl="https://localhost:8443/demo/user/"+usr.userName;
+    let tempUrl="https://localhost:8443/api/user/"+usr.userName;
     let subscription="";
     let body={
       "newPassword":newPassword,
@@ -183,7 +220,7 @@ export class UserService {
         'Content-Type':  'application/json',
       })
     };
-    let tempUrl="https://localhost:8443/demo/user/"+usr.userName;
+    let tempUrl="https://localhost:8443/api/user/"+usr.userName;
     let subscription="";
     let body={
       "newPassword":usr.password,
@@ -194,7 +231,7 @@ export class UserService {
     this.http.put<String>(tempUrl,body,httpOptions).subscribe(result => subscription=result.toString());
     return true;
   }
-  loggedIn(){
+  loggedIn(){ 
     if(!this.isAuthenticated())
       return false;
     return true;
@@ -241,7 +278,7 @@ export class UserService {
       "username":usn,
       "phone":phoneNumber
     };
-    let url="https://localhost:8443/demo/EditUserData/Phone";
+    let url="https://localhost:8443/api/EditUserData/Phone";
     this.http.put<String>(url,body).subscribe(
       data=>{
         console.log(data);
@@ -257,6 +294,8 @@ export class UserService {
     return this.http.post<string>(loginUrl, ln, { observe: 'response'}).pipe(
       tap((data: any) => {
           console.log(data);
+          localStorage.setItem('token', data.headers.get('Authorization'));
+         
       }),
       catchError((err) => {
         window.alert("INVALID CREDENTIALS PLEASE TRY AGAIN");
@@ -265,7 +304,7 @@ export class UserService {
   );
   }
   updateUser(usr:User){
-    let url="https://localhost:8443/demo/user/"+usr.userName;
+    let url="https://localhost:8443/api/user/"+usr.userName;
     let body={
       "LastName":usr.lastName,
       "FirstName":usr.firstName,
@@ -281,7 +320,7 @@ export class UserService {
     )
   }
   markBooking(id:number){
-    let url="https://localhost:8443/demo/Bookings/"+id;
+    let url="https://localhost:8443/api/Bookings/"+id;
     this.http.put(url,{}).subscribe(
       res=>console.log(res)
     );

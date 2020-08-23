@@ -16,15 +16,15 @@ li{
       }
 button {
     border-radius: 10px;
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 30px;
     margin: 15px;
-    opacity: 80%;
+    cursor: pointer;
     
 }
 button:hover{
@@ -49,7 +49,12 @@ h1{
       margin-right: 0;
 }
 #lastButton{
+    background-color: lightgray;
     font-size: xx-large;
+    color:black
+}
+#lastButton:hover{
+    background-color: lightseagreen;
 }
 #result{
     margin-left: 0;

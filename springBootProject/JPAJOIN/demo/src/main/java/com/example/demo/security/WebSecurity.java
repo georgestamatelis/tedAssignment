@@ -40,23 +40,23 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, "/login").permitAll()
              .antMatchers("/img/byId").permitAll()
                 //Apartment Methods
-                .antMatchers(HttpMethod.GET,"/demo/Apartments/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/demo/Apartments/**").hasRole("HOST")
-                .antMatchers(HttpMethod.PUT,"/demo/Apartments/**").hasRole("HOST")
-                .antMatchers(HttpMethod.DELETE,"/demo/Apartments/**").hasRole("HOST")
+                .antMatchers(HttpMethod.GET,"/api/Apartments/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/Apartments/**").hasRole("HOST")
+                .antMatchers(HttpMethod.PUT,"/api/Apartments/**").hasRole("HOST")
+                .antMatchers(HttpMethod.DELETE,"/api/Apartments/**").hasRole("HOST")
                 //user Methods
-                .antMatchers(HttpMethod.POST ,"/demo/user/**").permitAll()
+                .antMatchers(HttpMethod.POST ,"/api/user/**").permitAll()
                 //EVERYONE CAN LOGIN BUT ONLY AUTHENTICATED GUYS CAN DO THE FOLLOWING
-                .antMatchers("/demo/user/usernames").permitAll()
+                .antMatchers("/api/user/usernames").permitAll()
                 .antMatchers("/api/Colab").authenticated()
-                .antMatchers(HttpMethod.PUT, "/demo/user/**").authenticated()
-                .antMatchers(HttpMethod.GET,"/demo/user/**").authenticated()
+                .antMatchers(HttpMethod.PUT, "/api/user/**").authenticated()
+                .antMatchers(HttpMethod.GET,"/api/user/**").authenticated()
                 //ADMIN METHODS
-                .antMatchers("/demo/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 //REVIEWS
-                .antMatchers("/demo/user/usernames").permitAll()
-             .antMatchers("/accesories/Reviews").permitAll()
-                .antMatchers("/accesories/Apartment/**").permitAll()
+                .antMatchers("/api/user/usernames").permitAll()
+             .antMatchers("/api/Reviews").permitAll()
+                .antMatchers("/api/Apartment/**").permitAll()
             .anyRequest()
             .authenticated()
             .and().

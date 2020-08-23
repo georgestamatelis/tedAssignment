@@ -8,7 +8,7 @@ import java.io.IOException;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path="/demo")
+@RequestMapping(path="/api")
 public class ImageController {
     @Autowired
     ImageRepository imageRepository;

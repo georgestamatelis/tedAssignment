@@ -81,7 +81,7 @@ export class ManageApp1Component implements OnInit {
   getImage(){  
     let id=this.route.snapshot.params.id.split(":")[2];
     console.log(id);
-    let url="https://localhost:8443/demo/Apartments/"+this.cur.id+"/Images";
+    let url="https://localhost:8443/api/Apartments/"+this.cur.id+"/Images";
     this.http.get<ImageModel[]>(url).subscribe(
       res=>{
         this.imageList=res;
@@ -102,7 +102,7 @@ export class ManageApp1Component implements OnInit {
     }
   }
  DeleteImage(id:number){
-   let url="https://localhost:8443/demo/Apartments/Images/"+id;
+   let url="https://localhost:8443/api/Apartments/Images/"+id;
    this.http.delete<String>(url).subscribe(
      result=>{
       console.log(result);
@@ -121,7 +121,7 @@ export class ManageApp1Component implements OnInit {
  
  }
  AddPic(){
-  let url="https://localhost:8443/demo/Apartments/"+this.cur.id+"/Images";
+  let url="https://localhost:8443/api/Apartments/"+this.cur.id+"/Images";
   this.client.post(url,this.uploadData).subscribe(
     res=>{
       console.log(res)

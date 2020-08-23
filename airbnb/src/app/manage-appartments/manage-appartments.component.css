@@ -1,8 +1,4 @@
-#routerL{
-    font-size:x-large;
-    background-color:azure;
-    padding: 2%;
-}
+
 #wrapper{
     display: block;
     text-align: center;
@@ -12,24 +8,40 @@
 #first{
     margin-top: 0;
 }
-button{
-    font-size:medium;
-    background-color:azure;
-    padding: 1%;
+ul {
+    width: 40em;  
 }
 li{
-  margin-left: 40%;
+    list-style-type: none;
+    /*  display: block;*/
+      text-align: center;
+      padding-bottom: 2%;
+      background-color:white;
+      margin-left: 0;
+      margin-right: 0;
+      color:black;
+      border: 35px solid black;
+      opacity: 70%;
 }
-
-#apparmentList{
-    text-align: center;
-}
-table{
-    float:center;
+li:hover{
+    opacity: 100%;
 }
 .text-right{
     margin-top: 4%;
 }
 html{
-    background-color: cadetblue;
+    background-color: azure;
+    text-align: center;
 }
+button {
+    margin-top:2%;
+    font-size: xx-large;
+    background-color:black;
+    margin-bottom: 2%;
+    padding: 3.5%;
+    color:white;
+    cursor: pointer;
+  }
+  button:hover{
+    background-color:lightseagreen;
+  }

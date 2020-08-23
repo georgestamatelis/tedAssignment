@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/api") // This means URL's start with /demo (after Application path)
 @CrossOrigin
 public class AppartmentController {
     @Autowired // This means to get the bean called userRepository
@@ -37,7 +38,12 @@ public class AppartmentController {
     public @ResponseBody String changeApp(@RequestBody String jsonStr,@PathVariable String id) throws JSONException {
         JSONObject obj=new JSONObject(jsonStr);
         System.out.println("fuuuuuuuucK");
+        String loggedInusn= SecurityContextHolder.getContext().getAuthentication().getName();
         appartment n=this.appartmentRepository.findById(Integer.parseInt(id)).get();
+        if(!loggedInusn.equals(n.getOwnername()))
+        {
+            return "ERROR";
+        } //NEED TO ADD THE IF ABOVE ON ALL THE APPARTMENT METHODS  TOMORROW
         n.setSize((float) obj.getDouble("size"));
         n.setAddress(obj.getString("address"));
         n.setAllowPets(obj.getBoolean("pets"));
@@ -91,6 +97,11 @@ public class AppartmentController {
         appartment n=new appartment();
 
         n.setOwner(result);
+        String loggedInusn= SecurityContextHolder.getContext().getAuthentication().getName();
+        if(!loggedInusn.equals(n.getOwner().getUserName()) || n.getOwner().getRenter()==false)
+        {
+            return -1 ;
+        }//NEED TO ADD THE IF ABOVE ON ALL THE APPARTMENT METHODS  TOMORROW
         n.setSize((float) jObject.getDouble("size"));
         n.setHasheat(jObject.getBoolean("hasHeat"));
         n.setFloor(jObject.getInt("floor"));
@@ -225,7 +236,12 @@ public class AppartmentController {
     ///images
     @PostMapping("/Apartment/Profile-Image/{id}")
     public @ResponseBody String updateAppImage(@RequestParam("imgFile") MultipartFile file,@PathVariable String id) throws IOException {
+        String loggedInusn= SecurityContextHolder.getContext().getAuthentication().getName();
         appartment temp=this.appartmentRepository.findById(Integer.parseInt(id)).get();
+        if(!loggedInusn.equals(temp.getOwner().getUserName()) || temp.getOwner().getRenter()==false)
+        {
+            return "ERROR" ;
+        }//NEED TO ADD THE IF ABOVE ON ALL THE APPARTMENT METHODS  TOMORROW
         System.out.println("fuck me");
         temp.setMain_pic(file.getBytes());
         this.appartmentRepository.save(temp);

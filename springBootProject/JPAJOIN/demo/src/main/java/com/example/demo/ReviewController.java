@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path="/accesories") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/api") // This means URL's start with /demo (after Application path)
 @CrossOrigin
 public class ReviewController {
     @Autowired

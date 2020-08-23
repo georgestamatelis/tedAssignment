@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController // This means that this class is a Controller
-@RequestMapping(path = "demo")
+@RequestMapping(path = "api")
 @CrossOrigin
 public class AdminController {
     @Autowired // This means to get the bean called userRepository
@@ -21,7 +21,7 @@ public class AdminController {
     private AppartmentRepository appartmentRepository;
     @Autowired
     private BookingRepository bookingRepository;
-    @PostMapping("admin/ConfirmRequest")
+    @PostMapping("admin/User")
     public @ResponseBody String CofirmRequest(@RequestBody String jsonStr) throws JSONException {
         JSONObject obj = new JSONObject(jsonStr);
         String usn = obj.getString("username");
@@ -34,8 +34,8 @@ public class AdminController {
         this.userRepository.save(existing);
         return "SUCCESS";
     }
-    @GetMapping("admin/getBookingsbyHost")
-    @ResponseBody Iterable< Booking> getBookingsByHost(@RequestParam("usn") String usn){
+    @GetMapping("admin/User/{usn}/Appartment/Bookings")
+    @ResponseBody Iterable< Booking> getBookingsByHost(@PathVariable String usn){
         User usr=this.userRepository.findById(usn).get();
         List<appartment> temp=this.appartmentRepository.findAllByOwner(usr);
         List<Booking> result=new ArrayList<Booking>();
@@ -44,8 +44,8 @@ public class AdminController {
         }
         return result;
     }
-    @GetMapping("admin/getBookingsByClient")
-    @ResponseBody Iterable<Booking> getBookingsByClient(@RequestParam("usn") String usn){
+    @GetMapping("admin/User/{usn}/Bookings")
+    @ResponseBody Iterable<Booking> getBookingsByClient(@PathVariable String usn){
         return this.bookingRepository.findByUserName(usn);
     }
 }

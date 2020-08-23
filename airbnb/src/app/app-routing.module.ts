@@ -15,12 +15,14 @@ import { LoginComponent } from './login/login.component';
 import { AppartmentComponent } from './appartment/appartment.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 
-
+///I NEED TO ADD ADMIN GUARD FOR ADMIN PAGE AND USER DETAILS PAGE
+///I ALSO NEET TO ADD HOST GUARD FOR ADD-APPARTMENT
+///MANAGEAPP AND MANAGEAPP1
 const routes: Routes = [
   {path:"",component:AppartmentComponent},
   {path:"login",component:LoginComponent},
-  {path:"admin",component:AdminComponent},
-  {path:"user/:userName",component:UserComponent},
+  {path:"admin",component:AdminComponent,canActivate:[AdminGuard]},
+  {path:"user/:userName",component:UserComponent,canActivate:[AuthGuard]},
   {path:'manageApp1/:id',component:ManageApp1Component,canActivate:[AuthGuard]}/*later change it*/,
   {path:"add-appartment/:userName",component:AddAppartmentComponent,canActivate:[AuthGuard]},
   {path:"userDetails/:userName",component:UserDetailsComponent,canActivate:[AdminGuard]},
@@ -30,7 +32,7 @@ const routes: Routes = [
   {path:"search/:startD/:endD/:capacity/:country/:city/:neighborhood/:wifi/:tv/:pets/:parking/:desiredType/:ac/:smoking/:elevator/:maxCost",component:SearchResultsComponent},
   { path:'editProfile', loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfileModule) ,canActivate:[AuthGuard] },
   { path: 'appartment', loadChildren: () => import('./appartment/appartment.module').then(m => m.AppartmentModule) },
-  {path:"chat/:receiver/:appartment",component:MessageExchangeComponent}
+  {path:"chat/:receiver/:appartment",component:MessageExchangeComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

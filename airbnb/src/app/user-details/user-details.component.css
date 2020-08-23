@@ -18,8 +18,18 @@ ul{
     margin-top: 0;
     list-style-type: none;
 }
-button{
+button {
+    margin-top:2%;
     font-size: x-large;
-    padding: 2%;
+    background-color: black;
     margin-bottom: 2%;
-}
+    padding: 2.5%;
+    color:white;
+    cursor: pointer;
+
+    /*padding: 1.5%;
+*/
+  }
+  button:hover{
+    background-color:lightseagreen;
+  }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path="/accesories") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/api") // This means URL's start with /demo (after Application path)
 @CrossOrigin
 public class MessageController {
     @Autowired

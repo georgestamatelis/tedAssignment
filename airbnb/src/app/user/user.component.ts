@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from '../message.service';
 import { AppartmentService } from '../appartment.service';
 import { Booking } from '../models/booking';
+import { Chat } from '../models/Chat';
 
 @Component({
   selector: 'app-user',
@@ -20,12 +21,15 @@ export class UserComponent implements OnInit {
   p: number = 1;
   p2:number=1;
   p3:number=1;
+  p4:number=1;
   temp:number=0;
   reply:Boolean;
   public testUsr:User;
   ShowMessages:Boolean;
   show:Boolean;
-  messages:message[];
+ // myChat:Chat[];
+ myChat:Map<number,message[]>=new Map();
+  messages:message[] //{[id:number],message[]}
   constructor(public http:UserService,private router :Router,private appHttp:AppartmentService,private route:ActivatedRoute,private messageHttp:MessageService) { }
 
   ngOnInit(): void {
@@ -56,25 +60,24 @@ export class UserComponent implements OnInit {
                 })
             }
           )
-      }
-  );
-    
+          this.messageHttp.getAllMessagesByUsr(userN).subscribe(
+            result=>{
+              this.messages=result;
+              console.log(result);
+              this.messages.sort((a,b) => (a.app_id > b.app_id) ? 1 : ((b.app_id > a.app_id) ? -1 : 0))
+          })
+
+  });
   }
-  Delete_Message(message):void{
-    //will add backend request soon
-   this.messageHttp.deleteMessage(message.id);
-   delete this.messages[this.messages.indexOf(message)];
+
+  DeleteMessage(id:number){
+    this.messageHttp.deleteMessage(id)
   }
-  seeMessages(){
-    this.http.getMessages(this.testUsr.userName).subscribe(
-      data=>{
-        this.messages=data;
-        this.ShowMessages=true;
-      }
-    );
+  MarkMessage(id:number){
+    this.messageHttp.markMessage(id)
   }
-  Reply(receiver){
-    this.router.navigateByUrl("/chat/:receiver:"+receiver);
+  Reply(receiver,app_id){
+    this.router.navigateByUrl("/chat/:receiver:"+receiver+"/:appartment:"+app_id);
   }
  
   reset(){

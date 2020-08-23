@@ -35,7 +35,7 @@ export class MessageExchangeComponent implements OnInit {
     this.ReceiverUsn=input.split(":")[2];
     input=this.route.snapshot.params.appartment;
     let appId=input.split(":")[2];
-      this.httpC.get("https://localhost:8443/demo/user/UserName",{ responseType: 'text'}).subscribe(
+      this.httpC.get("https://localhost:8443/api/user/UserName",{ responseType: 'text'}).subscribe(
         data=>{
           this.SenderUsn=data;
           console.log(this.SenderUsn,this.ReceiverUsn); 

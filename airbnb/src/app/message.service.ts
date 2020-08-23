@@ -11,13 +11,13 @@ export class MessageService {
   constructor(private http: HttpClient) { }
 
   deleteMessage(id:Number){
-      let url="https://localhost:8443/accesories/messages/"+id;
+      let url="https://localhost:8443/api/messages/"+id;
       this.http.delete(url).subscribe(
         data=>console.log(data)
       );
   }
   markMessage(id:Number){
-    let url="https://localhost:8443/accesories/messages/"+id;
+    let url="https://localhost:8443/api/messages/"+id;
     this.http.put(url,{}).subscribe(
       res=>{
         console.log(res);
@@ -25,7 +25,7 @@ export class MessageService {
     )
   }
   sendMessage(receiver:String,sender:String,text:String,date:String,id:Number){
-    let url="https://localhost:8443/accesories/messages";
+    let url="https://localhost:8443/api/messages";
     let body={
       "receiver":receiver,
       "sender":sender,
@@ -40,7 +40,13 @@ export class MessageService {
     )
   }
   getMessages(appId):Observable<message[]>{
-    let url="https://localhost:8443/accesories/Apartment/"+appId+"/messages";///ByAppartment?appId="+appId;
+    let url="https://localhost:8443/api/Apartment/"+appId+"/messages";///ByAppartment?appId="+appId;
     return this.http.get<message[]>(url);
+  }
+  getAllMessagesByUsr(usn:String):Observable<message[]>{
+   let url="https://localhost:8443/api/user/"+usn+"/messages";
+///   console.log(url);
+   return this.http.get<message[]>(url)
+
   }
 }

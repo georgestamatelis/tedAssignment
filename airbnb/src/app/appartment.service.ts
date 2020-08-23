@@ -14,7 +14,7 @@ import { Booking } from './models/booking';
 })
 export class AppartmentService {
 
-  allAppartments:String="https://localhost:8443/demo/Apartments";
+  allAppartments:String="https://localhost:8443/api/Apartments";
   constructor(private http: HttpClient) {  }
   getAllAppartments() :Observable<appartment[]>
   {
@@ -36,24 +36,24 @@ export class AppartmentService {
   }
   getAppartmentsBylocation(country:String,city:String,hood:String,start:String,end:String,capacity:number):Observable<appartment[]>
   {
-    let url="https://localhost:8443/demo/Apartments/"+capacity+"/"+start+"/"+end+"/"+country+"/"+city+"/"+hood;
+    let url="https://localhost:8443/api/Apartments/"+capacity+"/"+start+"/"+end+"/"+country+"/"+city+"/"+hood;
       return this.http.get<appartment[]>(url);
   }
   getAppartmentById(id:Number): Observable<appartment>
   {
-    let url="https://localhost:8443/demo/Apartments/"+id.toString();
+    let url="https://localhost:8443/api/Apartments/"+id.toString();
     return this.http.get<appartment>(url);
   }
   getAppartmentsByOwnerName(str:String): Observable<appartment []>{
-    let url="https://localhost:8443/demo/user/"+str+"/Apartments";
+    let url="https://localhost:8443/api/user/"+str+"/Apartments";
     return this.http.get<appartment[]>(url);
   }
   getAppartmentsByOwnerNameBlob(str:String){
-    let url="https://localhost:8443/demo/user/"+str+"/Apartments/";
+    let url="https://localhost:8443/api/user/"+str+"/Apartments/";
     return this.http.get(url,{responseType: 'blob'});
   }
   getAppartmentsByOwnerNameBlobXML(str:String){
-    let url="https://localhost:8443/demo/user/"+str+"/Apartments/";
+    let url="https://localhost:8443/api/user/"+str+"/Apartments/";
     return this.http.get(url,{
       headers:new HttpHeaders({
         Accept:'application/xml'
@@ -96,10 +96,10 @@ export class AppartmentService {
     let f=new FormData()
     f.append("imgFile",selectedFile);
     console.log("fuck");
-    let url="https://localhost:8443/demo/Apartments";
+    let url="https://localhost:8443/api/Apartments";
     this.http.post<Number>(url,body).subscribe(
       data=>{          
-      this.http.post<String>("https://localhost:8443/demo/Apartment/Profile-Image/"+data,f).subscribe(
+      this.http.post<String>("https://localhost:8443/api/Apartment/Profile-Image/"+data,f).subscribe(
         res=>{console.log(res);}
       );
       }
@@ -139,7 +139,7 @@ export class AppartmentService {
     "description":app.description
            }
            console.log("fuuuuuck");
-      let url="https://localhost:8443/demo/Apartments/"+app.id;
+      let url="https://localhost:8443/api/Apartments/"+app.id;
       console.log(url);
       this.http.put<String>(url,body).subscribe(
         result=>{console.log(result);}
@@ -149,7 +149,7 @@ export class AppartmentService {
     let f=new FormData()
     f.append("imgFile",file);
     console.log("fuck");
-    let url="https://localhost:8443/demo/Apartment/Profile-Image/"+appId;
+    let url="https://localhost:8443/api/Apartment/Profile-Image/"+appId;
     this.http.post<String>(url,f).subscribe(
       res=>console.log(res)
     )
@@ -162,7 +162,7 @@ export class AppartmentService {
       "renter":usn,
       "Dates":Dates
     };
-    let url="https://localhost:8443/demo/user/"+usn+"/Apartments/"+appId+"/Bookings";
+    let url="https://localhost:8443/api/user/"+usn+"/Apartments/"+appId+"/Bookings";
     let subscription="";
     this.http.post<String>(url,body).subscribe(
       data=>{
@@ -174,7 +174,7 @@ export class AppartmentService {
   }
   getReviews(appId:Number):Observable<review[]>
   {
-    let Url="https://localhost:8443/accesories/Apartment/"+appId+"/Reviews";
+    let Url="https://localhost:8443/api/Apartment/"+appId+"/Reviews";
     return this.http.get<review[]>(Url);
   }
   addReview(usn:String,appId:number,review:number,comment:String){
@@ -184,18 +184,18 @@ export class AppartmentService {
      "comment":comment,
      "number":review
     };
-    let url="https://localhost:8443/accesories/Reviews";
+    let url="https://localhost:8443/api/Reviews";
     let subscription="";
     this.http.post<String>(url,body).subscribe(
       data=>subscription=data.toString()
     );
   }
   getReviewByOwnerName(usn:String){
-    let url="https://localhost:8443/accesories/user/"+usn+"/Apartment/Reviews";
+    let url="https://localhost:8443/api/user/"+usn+"/Apartment/Reviews";
     return this.http.get(url,{responseType: 'blob'});
   }
   getReviewByOwnerNameXML(usn:String){
-    let url="https://localhost:8443/accesories/user/"+usn+"/Apartment/Reviews";
+    let url="https://localhost:8443/api/user/"+usn+"/Apartment/Reviews";
     return this.http.get(url, { 
       headers: new HttpHeaders({ 
         'Accept': 'application/xml' 
@@ -204,11 +204,11 @@ export class AppartmentService {
     })
   }
   getReviewsByConductor(usn:String){
-    let url="https://localhost:8443/accesories/user/"+usn+"/Reviews";
+    let url="https://localhost:8443/api/user/"+usn+"/Reviews";
     return this.http.get(url,{responseType: 'blob'});
   }
   getReviewsByConductorXml(usn:String){
-    let url="https://localhost:8443/accesories/user/"+usn+"/Reviews";
+    let url="https://localhost:8443/api/user/"+usn+"/Reviews";
     return this.http.get(url,{
       headers: new HttpHeaders({ 
         'Accept': 'application/xml' 
@@ -216,11 +216,11 @@ export class AppartmentService {
       responseType: 'blob'});
   }
   getBookingsByHost(usn:String){
-    let url="https://localhost:8443/demo/admin/getBookingsbyHost?usn="+usn;
+    let url="https://localhost:8443/api/admin/User/"+usn+"/Appartment/Bookings";
     return this.http.get(url,{responseType: 'blob'});
   }
   getBookingsbyHostXML(usn:String){
-    let url="https://localhost:8443/demo/admin/getBookingsbyHost?usn="+usn;
+    let url="https://localhost:8443/api/admin/User/"+usn+"/Appartment/Bookings";
     return this.http.get(url,{
       headers: new HttpHeaders({ 
         'Accept': 'application/xml' 
@@ -228,17 +228,17 @@ export class AppartmentService {
       responseType: 'blob'});
   }
   getBookinsByClientObservable(usn:String):Observable<Booking[]>{
-    let url="https://localhost:8443/demo/user/"+usn+"/Bookings/";
+    let url="https://localhost:8443/api/user/"+usn+"/Bookings/";
     return this.http.get<Booking[]>(url);
 
   }
   getBookingsByClient(usn:String){
-    let url="https://localhost:8443/demo/admin/getBookingsByClient?usn="+usn;
+    let url="https://localhost:8443/api/user/"+usn+"/Bookings/";
     return this.http.get(url,{responseType: 'blob'});
   }
  getBookingsByClientXML(usn:String)
  {
-  let url="https://localhost:8443/demo/admin/getBookingsByClient?usn="+usn;
+  let url="https://localhost:8443/api/user/"+usn+"/Bookings/";
   return this.http.get(url,{
     headers: new HttpHeaders({ 
       'Accept': 'application/xml' 

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController // This means that this class is a Controller
-@RequestMapping(path = "demo")
+@RequestMapping(path = "api")
 @CrossOrigin
 public class UserController {
     @Autowired // This means to get the bean called userRepository

@@ -154,7 +154,7 @@ has_reviewed:Boolean;
      {
      // this.openChat=true;
       var usn:String
-      this.httpC.get("https://localhost:8443/demo/user/UserName",{ responseType: 'text'}).subscribe(
+      this.httpC.get("https://localhost:8443/api/user/UserName",{ responseType: 'text'}).subscribe(
         data=>{
           usn=data; 
           console.log(data);
@@ -184,7 +184,7 @@ has_reviewed:Boolean;
  
   
   getImages(){
-    let url="https://localhost:8443/demo/Apartments/"+this.id1+"/Images";
+    let url="https://localhost:8443/api/Apartments/"+this.id1+"/Images";
     this.http.get<ImageModel[]>(url).subscribe(
       res=>{
         this.imageList=res;

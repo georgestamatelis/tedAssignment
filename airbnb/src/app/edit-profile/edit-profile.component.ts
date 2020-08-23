@@ -122,7 +122,7 @@ export class EditProfileComponent implements OnInit {
       window.alert("your phone number has been changed succesfully")
   }
   sendPic(){
-    let url="https://localhost:8443/demo/user/ProfilePic/"+this.usr.userName;
+    let url="https://localhost:8443/api/user/ProfilePic/"+this.usr.userName;
     this.client.put(url,this.uploadData).subscribe(
       res=>{
         console.log(res)
