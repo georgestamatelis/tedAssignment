@@ -114,7 +114,9 @@ html {
     font-size: 30px;
     margin: 15px;
     opacity: 80%;
+    cursor: pointer;
   }
   button:hover {
     opacity: 100%;
+    background-color: lightseagreen;
   }

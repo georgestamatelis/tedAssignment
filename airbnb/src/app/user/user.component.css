@@ -59,13 +59,13 @@ button {
     background-color: lightgray;
     border-style: solid;
     margin-bottom: 2%;
+    opacity: 70%;
   }
-   /* opacity: 85%;
-  }
-  li :hover{
+  li:hover{
     opacity: 100%;
-  }*/
+  }
   #Bookings{
     margin-left: 2%;
     margin-right: 2%;
   }
+ 

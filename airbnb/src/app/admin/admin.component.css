@@ -22,16 +22,25 @@ header {
 }
 .admincontainer {
   text-align: center;
-  border-radius: 10px;
+  border-radius: 35%;
   margin-top: 20px;
   padding-top: 15px;
   padding-bottom: 1px;
   opacity: 75%;
-  width: 60%;
+  width: 75%;
+  height:350%;
+  margin-bottom:2%;
   display: block;
   margin-left: auto;
   background-color: gray;
   margin-right: auto;
+}
+table {
+  margin-left:17.5%;
+  margin-bottom: 6%;
+}
+table, tr, th, td {
+  border: 5px solid;
 }
 a{
   color:lightseagreen

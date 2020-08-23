@@ -20,6 +20,7 @@ export class MessageExchangeComponent implements OnInit {
   ReceiverUsn:String;
   messageText:String;
   Date:String;
+  p:number =1;
   curApp:appartment;
   com_history:message[];
   constructor(private route: ActivatedRoute,private userhttp:UserService,private httpC:HttpClient,private appHtttp:
@@ -39,11 +40,12 @@ export class MessageExchangeComponent implements OnInit {
         data=>{
           this.SenderUsn=data;
           console.log(this.SenderUsn,this.ReceiverUsn); 
-          this.userhttp.getMessagesBySenderAndReceiver(this.ReceiverUsn,this.SenderUsn).subscribe(
-            data=>{
-              this.com_history=data;
-              console.log(this.com_history);
-            });
+          this.messageHttp.getAllByDuplexAndAppartment(appId,this.SenderUsn,this.ReceiverUsn).subscribe(
+            res=>{
+              console.log(res);
+              this.com_history=res;
+            }
+          );
           }
           );
     this.appHtttp.getAppartmentById(appId).subscribe(
@@ -68,8 +70,7 @@ export class MessageExchangeComponent implements OnInit {
   Delete_Message(id){
     this.messageHttp.deleteMessage(id);
     alert("Message Deleted Successfully");
+    window.location.reload()
   }
-   Test(){
-
-   }
+  
 }

@@ -21,16 +21,16 @@
       </div>
     </ul>
     <p id="httpResult"></p>
-    <ul *ngIf="ShowUsers">
-      <div id="usernameLine0">
-        Username - Click for user details
-      </div>
-        <li *ngFor="let User of userList">
-          <div class="username">
-            {{User.userName}}
-          </div>
-          <div class="userDetails">
-            <a href='#' routerLink="/userDetails/:{{User.userName}}">User Details</a> <br>
-          </div>
-    </ul>
+    <div *ngIf="ShowUsers">
+      <table>
+        <tr>
+          <th>Username</th>
+          <th>Click for user details</th>
+        </tr>
+        <tr *ngFor="let User of userList" >
+          <td>{{User.userName}}</td>
+          <td><a href='#' routerLink="/userDetails/:{{User.userName}}">User Details</a><br></td>
+        </tr>
+    </table>
+  </div>
 </div>

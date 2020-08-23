@@ -49,4 +49,8 @@ export class MessageService {
    return this.http.get<message[]>(url)
 
   }
+  getAllByDuplexAndAppartment(appId:number,sender:String,receiver:String){
+    let url="https://localhost:8443/api/Apartment/"+appId+"/Sender/"+sender+"/Receiver/"+receiver+"/messages";
+    return this.http.get<message[]>(url);
+  }
 }

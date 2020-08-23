@@ -13,7 +13,18 @@ li{
       margin-right: 0;
       color:black;
       border: 15px solid black;
-      }
+      opacity: 70%;
+}
+li:hover{
+    opacity: 100%;
+    border:25px solid lightseagreen;
+}
+img{
+    cursor: pointer;
+}
+img:hover{
+    transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
 button {
     border-radius: 10px;
     background-color: black;
@@ -47,6 +58,11 @@ h1{
       background-color: black;
       text-align: center;
       margin-right: 0;
+      opacity: 70%;
+}
+#extra-services:hover{
+    opacity: 100%;
+    background-color: lightseagreen;
 }
 #lastButton{
     background-color: lightgray;
@@ -54,7 +70,8 @@ h1{
     color:black
 }
 #lastButton:hover{
-    background-color: lightseagreen;
+    background-color: black;
+    color: white;
 }
 #result{
     margin-left: 0;

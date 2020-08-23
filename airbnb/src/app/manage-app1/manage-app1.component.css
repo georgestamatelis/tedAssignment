@@ -15,9 +15,13 @@ li{
     margin-right: 5%;
 }
 button{
+    font-size: x-large;
     margin-left:5%;
     margin-top: 1%;
-    
+    cursor: pointer;
+}
+button:hover{
+    background-color: lightseagreen;
 }
 #choice{
     margin-left: 5%;
@@ -37,17 +41,16 @@ textarea{
 }
 #updateApp{
     padding: 2%;
-    font-size: x-large;
+    font-size: xx-large;
     background-color: azure;
     margin-bottom: 2.5%;
+    cursor: pointer;
+}
+#updateApp:hover{
+    background-color: lightseagreen;
 }
 label{
     margin-left: 2.5%;
-}
-button{
-    padding: 1%;
-    font-size: large;
-    background-color: azure;
 }
 html {
     background-color: cadetblue;
@@ -60,9 +63,20 @@ html {
 li{
     list-style-type: none;
 }
+img{
+    cursor: pointer;
+}
+img:hover{
+    transform:scale(1.5);
+}
 #messages li{
     background-color: beige;
     border-style: solid;
+    opacity: 75%;
+    cursor: pointer;
+}
+#messages li:hover{
+opacity: 100%;
 }
 h3{
     margin-top:0px;
