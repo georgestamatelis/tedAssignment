@@ -1,10 +1,12 @@
 package com.example.demo;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller // This means that this class is a Controller
@@ -76,5 +78,12 @@ public class MessageController {
     {
         return this.messageRepository.findAllByAppartmentAndAnswered(this.appartmentRepository.findById(appId).get(),false);
     }
-
+    @GetMapping("Apartment/{appId}/Sender/{susn}/Receiver/{rusn}/messages")
+    public  @ResponseBody Iterable<Message> duplexByApp(@PathVariable Integer appId,@PathVariable String susn,@PathVariable String rusn){
+     ArrayList<Message> result= (ArrayList<Message>) this.messageRepository.findAllByAppartmentAndReceiverUsnAndSenderUsnOrderByDate(
+                this.appartmentRepository.findById(appId).get(),rusn,susn);
+     result.addAll(this.messageRepository.findAllByAppartmentAndReceiverUsnAndSenderUsnOrderByDate(
+             this.appartmentRepository.findById(appId).get(),susn,rusn));
+     return result;
+    }
 }

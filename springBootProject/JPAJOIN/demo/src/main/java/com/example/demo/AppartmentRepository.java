@@ -10,6 +10,7 @@ import java.util.List;
 public interface AppartmentRepository extends CrudRepository<appartment, Integer> {
 
     public List<appartment> findAllByOwner(User owner);
+   // public Long countById();
     ///////////////////////////////////////////////////////////////
     public List<appartment>  findBylocationOrderByPriceAllIgnoringCase(String location);
     ////////////////////////////////////////////////////////////////////
@@ -29,6 +30,8 @@ public interface AppartmentRepository extends CrudRepository<appartment, Integer
     public List<appartment> findByLocationAndCapacityAndHasheatAndHasElevatorOrderByPriceAllIgnoringCase(String location,Integer Capacity,Boolean hasWifi,Boolean H);
     public List<appartment> findByLocationAndCapacityAndHasParkingAndHasElevatorOrderByPriceAllIgnoringCase(String location,Integer Capacity,Boolean hasWifi,Boolean H);
 
+ @Query(value="select * from appartment where id  in(select r.app_id from review r);",nativeQuery = true)
+ List<appartment> findAllKnownAppartments();
 
 }
 

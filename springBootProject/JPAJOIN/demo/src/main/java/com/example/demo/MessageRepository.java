@@ -11,4 +11,5 @@ public interface MessageRepository extends CrudRepository<Message, Integer> {
     List<Message> findAllByReceiver(User r);
     List<Message> findAllByAppartment (appartment app);
     List<Message> findAllByAppartmentAndAnswered(appartment app,Boolean HasAnswered);
+    List<Message> findAllByAppartmentAndReceiverUsnAndSenderUsnOrderByDate(appartment app,String r,String s);
 }
