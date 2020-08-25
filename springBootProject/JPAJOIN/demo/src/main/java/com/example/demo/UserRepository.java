@@ -17,4 +17,5 @@ public interface UserRepository extends CrudRepository<User, String> {
             ");",nativeQuery = true)
     public List<User> getAllKnownUsers();
 
+    public List<User> findAllByOrderByUserNameAsc();
 }

@@ -9,105 +9,122 @@ import java.util.Random;
 
 @Service
 public class MatrixFactorization {
-   private UserRepository userRepository;
-   private AppartmentRepository appartmentRepository;
-   private ReviewRepository reviewRepository;
-   private  UserVectorRepository userVectorRepository;
-   private AppViewRepository appViewRepository;
-   private  SearchRepository searchRepository;
-   ///////////////////////////////////////////////
-    ///////////////////////////////////////
-   private Long numberOfUsers;
-   private  Long numberOfItems;
+    private UserRepository userRepository;
+    private AppartmentRepository appartmentRepository;
+    private ReviewRepository reviewRepository;
+    private UserVectorRepository userVectorRepository;
+    private AppViewRepository appViewRepository;
+    private SearchRepository searchRepository;
+    int users ;//= (int) userRepository.count();
+    int apartments ;//= (int) appartmentRepository.count();
     private ArrayList<User> allUsers;
     private ArrayList<appartment> allAppartments;
-    private ArrayList<Review> allReviews;
-    //////////////////////////////////////
-    private  Integer k=3 ;//Number of Latent features
-    double V[][];
-    double F[][];
-  double h=0.0004;
+    int genres = 3;//Number of Latent features
+    double P[][];
+    double Q[][];
+    double R[][];
+    int steps = 5000; double h = 0.0004; double beta = 0.02;
+    Random randd = new Random();
+
     @Autowired
-    public MatrixFactorization(UserRepository userRepository, AppartmentRepository appartmentRepository, ReviewRepository reviewRepository,AppViewRepository appViewRepository,SearchRepository searchRepository,UserVectorRepository userVectorRepository) {
-        System.out.println("MATRIX FACTORISATION STARTS");
+    public MatrixFactorization(UserRepository userRepository, AppartmentRepository appartmentRepository, ReviewRepository reviewRepository, AppViewRepository appViewRepository, SearchRepository searchRepository, UserVectorRepository userVectorRepository) {
+        System.out.println("MATRIX FACTORIZATION STARTS");
         this.userRepository = userRepository;
+        this.users= (int) this.userRepository.count();
         this.appartmentRepository = appartmentRepository;
+        this.apartments= (int) this.appartmentRepository.count();
         this.reviewRepository = reviewRepository;
-        this.userVectorRepository=userVectorRepository;
-        this.searchRepository=searchRepository;
-        this.appViewRepository=appViewRepository;
-        /////////////////////////////////
-        this.numberOfItems=appartmentRepository.count();
-        this.numberOfUsers=userRepository.count();
-        this.k=3;
-        this.InitialiseVAndFRandomly();
-        this.allReviews= (ArrayList<Review>) this.reviewRepository.findAll();
-        this.allUsers= (ArrayList<User>) this.userRepository.findAll();
-        this.allAppartments= (ArrayList<appartment>) this.appartmentRepository.findAll();
-        ArrayList<appartment> KnownAppartments= (ArrayList<appartment>) this.appartmentRepository.findAllKnownAppartments();//new ArrayList<>();
-        ArrayList<User>KnownUsers= (ArrayList<User>) this.userRepository.getAllKnownUsers(); //new ArrayList<>();
-
-  /////////////////////
-        System.out.println("GATHERED KNOWN DATA");
-        double n=0.02;
-        while(k>0){
-            //STEP A
-            //ITERATE OVER EACH KNOWN ELEMENT XIJ
-             for(User u:KnownUsers){
-                 ArrayList<Review> uReviews= (ArrayList<Review>) this.reviewRepository.findAllByUserName(u.getUserName());
-                 ArrayList<appartment> uApps=new ArrayList<appartment>();
-                 for(Review r: uReviews){
-                     uApps.add(this.appartmentRepository.findById(r.getAppId()).get());
-                 }
-                 for(appartment ap:uApps){
-                     //Now we are iterating over known elements
-                  int i=allUsers.indexOf(u);
-                  int j=allAppartments.indexOf(ap);
-                  //KNOWN xij
-                     double KnownXij=this.reviewRepository.findAllByAppartmentAndUser(ap,u).get(0).getNumber();
-                     double EstimateXij=0.00;
-                     for(int kappa=0;kappa<k;kappa++){
-                         EstimateXij+=V[i][kappa]*F[kappa][j];
-                     }
-                     double Eij=KnownXij-EstimateXij;
-                     double gradientv=-2*Eij*F[k-1][j];
-                     double gradientf=-2*Eij*V[i][k-1];
-                    for(int collumn=0;collumn<this.allUsers.size();collumn++)
-                        for(int kappa=0;kappa<k;kappa++)
-                            V[i][kappa]+=n*2*Eij*F[kappa][j];
-                    for(int row=0;row<this.allAppartments.size();row++)
-                        for(int kappa=0;kappa<k;kappa++)
-                            F[kappa][j]+=n*2*Eij*V[i][kappa];
-                 }
-                 System.out.println("Done with user "+KnownUsers.indexOf(u));
-             }
-
-            //LOOP OVER KNOWN ELEMENTS DONE CALCULATE MEAN SQUARE ERROR AND CHECK TERMINATING CONDITION HERE
-            break;
+        this.userVectorRepository = userVectorRepository;
+        this.searchRepository = searchRepository;
+        this.appViewRepository = appViewRepository;
+        /////////////////////
+        P=  new double[users][genres];
+        Q=  new double[genres][apartments];
+        R = new double[users][apartments];
+        ///////////////
+        System.out.println("GATHERING KNOWN DATA");
+        this.allUsers = (ArrayList<User>) this.userRepository.findAllByOrderByUserNameAsc(); // USERS LIST (SORTED)
+        this.allAppartments = (ArrayList<appartment>) this.appartmentRepository.findAll(); // APARTMENT LIST
+        for (int j=0; j<apartments; j++) {
+            System.out.println("Apartment " + j);
+            ArrayList<Review> reviewz = (ArrayList<Review>) this.reviewRepository.findAllByAppartment(allAppartments.get(j));
+            for (int r=0; r< reviewz.size(); r++) {
+                String user_name = reviewz.get(r).getUserName();
+                for (int i=0; i<users; i++) {
+                    if (user_name == allUsers.get(i).getUserName()) {
+                        if (R[i][j] == 0) // First review of user i for apartment j
+                            R[i][j] = reviewz.get(r).getNumber();
+                        else
+                            R[i][j] = (R[i][j] + reviewz.get(r).getNumber()) / 2;
+                    }
+                }
+            }
         }
-        //FACTORIZATION DONE CALCULATE USER VECTORS
+        System.out.println("GATHERED KNOWN DATA, STARTING FACTORIZATION");
+        for (int i = 0; i < users; ++i) {
+            for (int j = 0; j < genres; ++j) {
+                P[i][j] = randd.nextDouble();
+            }
+        }
+        for (int i = 0; i < genres; ++i) {
+            for (int j = 0; j < apartments; ++j) {
+                Q[i][j] = randd.nextDouble();
+            }
+        }
+        for (int s=0; s<steps; s++) {
+            System.out.println("Factorization step " + s + " of " + steps);
+            for (int i=0; i<users; i++) {
+                for (int j=0; j<apartments; j++) {
+                    if (R[i][j] > 0) {
+                        double dot = 0.0;
+                        for (int k=0; k<genres; k++) {
+                            dot += P[i][k] * Q[k][j];
+                        }
+                        double eij = R[i][j] - dot;
+                        for (int k=0; k<genres; k++) {
+                            P[i][k] += h * (2 * eij * Q[k][j] - beta * P[i][k]);
+                            Q[k][j] += h * (2 * eij * P[i][k] - beta * Q[k][j]);
+                        }
+                    }
+                }
+            }
+            double e = 0;
+            for (int i=0; i<users; i++) { // possible mistake here
+                for (int j=0; j<apartments; j++) {
+                    if (R[i][j] > 0) {
+                        double dot = 0.0;
+                        for (int k=0; k<genres; k++) {
+                            dot += P[i][k] * Q[k][j];
+                        }
+                        e += ((R[i][j] - dot) * (R[i][j] - dot));
+                        for (int k=0; k<genres; k++) {
+                            e += ((beta / 2) * (P[i][k] * P[i][k] + Q[k][j] * Q[k][j]));
+                        }
+                    }
+                }
+            }
+            if (e < 0.001)
+                break;
+            System.out.printf("e: %f\n", e);
+        }
+        double[][] result = new double[users][apartments];
+        for (int i=0; i<users; i++) {
+            for (int j=0; j<apartments; j++) {
+                result[i][j] = 0;
+                for (int k=0; k<genres; k++) {
+                    result[i][j] += P[i][k] * Q[k][j];
+                }
+            }
+        }
         System.out.println("MATRIX FACTORIZATION DONE");
     }
-
-
     public double RatingFunction(User u,appartment app){
         ArrayList<Review> rv= (ArrayList<Review>) this.reviewRepository.findAllByAppartmentAndUser(app,u);
-            double sum=0.00;
-            for(Review r:rv){
-                System.out.println(r.getAppId()+"\t"+r.getUserName());
-                sum+=r.getNumber();
-            }
-            return sum/rv.size();
-    }
-    private  void InitialiseVAndFRandomly(){
-        Random r = new Random();
-        V=new double[Math.toIntExact(numberOfUsers)][k];
-        F=new double[k][Math.toIntExact(numberOfItems)];
-        for(int i=0;i<k;i++)
-            for(int j=0;j<numberOfItems;j++)
-                F[i][j]=(Math.random()*((5-0)+1))+0;
-        for(int i=0;i<numberOfUsers;i++)
-            for(int j=0;j<k;j++)
-                V[i][j]=(Math.random()*((5-0)+1))+0;
+        double sum=0.00;
+        for(Review r:rv){
+            System.out.println(r.getAppId()+"\t"+r.getUserName());
+            sum+=r.getNumber();
+        }
+        return sum/rv.size();
     }
 }
