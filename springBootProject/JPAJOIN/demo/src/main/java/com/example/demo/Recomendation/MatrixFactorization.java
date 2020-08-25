@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class MatrixFactorization {
@@ -23,7 +24,7 @@ public class MatrixFactorization {
     double P[][];
     double Q[][];
     double R[][];
-    int steps = 5000; double h = 0.0004; double beta = 0.02;
+    int steps = 5000; double h = 0.004; double beta = 0.02;
     Random randd = new Random();
 
     @Autowired
@@ -51,11 +52,12 @@ public class MatrixFactorization {
             for (int r=0; r< reviewz.size(); r++) {
                 String user_name = reviewz.get(r).getUserName();
                 for (int i=0; i<users; i++) {
-                    if (user_name == allUsers.get(i).getUserName()) {
+                    if (user_name.equals(allUsers.get(i).getUserName())) {
                         if (R[i][j] == 0) // First review of user i for apartment j
                             R[i][j] = reviewz.get(r).getNumber();
                         else
                             R[i][j] = (R[i][j] + reviewz.get(r).getNumber()) / 2;
+                     //   System.out.println(R[i][j]);
                     }
                 }
             }
@@ -63,12 +65,13 @@ public class MatrixFactorization {
         System.out.println("GATHERED KNOWN DATA, STARTING FACTORIZATION");
         for (int i = 0; i < users; ++i) {
             for (int j = 0; j < genres; ++j) {
-                P[i][j] = randd.nextDouble();
+                P[i][j] = ThreadLocalRandom.current().nextDouble(0, 5);
+                System.out.println(P[i][j]);
             }
         }
         for (int i = 0; i < genres; ++i) {
             for (int j = 0; j < apartments; ++j) {
-                Q[i][j] = randd.nextDouble();
+                Q[i][j] = ThreadLocalRandom.current().nextDouble(0, 5);
             }
         }
         for (int s=0; s<steps; s++) {
@@ -89,6 +92,7 @@ public class MatrixFactorization {
                 }
             }
             double e = 0;
+            System.out.printf("%d\t, %d\n",users,apartments);
             for (int i=0; i<users; i++) { // possible mistake here
                 for (int j=0; j<apartments; j++) {
                     if (R[i][j] > 0) {
@@ -103,9 +107,9 @@ public class MatrixFactorization {
                     }
                 }
             }
+            System.out.printf("e: %f\n", e);
             if (e < 0.001)
                 break;
-            System.out.printf("e: %f\n", e);
         }
         double[][] result = new double[users][apartments];
         for (int i=0; i<users; i++) {
