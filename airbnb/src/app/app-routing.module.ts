@@ -14,6 +14,7 @@ import { MessageExchangeComponent } from './message-exchange/message-exchange.co
 import { LoginComponent } from './login/login.component';
 import { AppartmentComponent } from './appartment/appartment.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { RecommendedComponent } from './recommended/recommended.component';
 
 ///I NEED TO ADD ADMIN GUARD FOR ADMIN PAGE AND USER DETAILS PAGE
 ///I ALSO NEET TO ADD HOST GUARD FOR ADD-APPARTMENT
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path:"add-appartment/:userName",component:AddAppartmentComponent,canActivate:[AuthGuard]},
   {path:"userDetails/:userName",component:UserDetailsComponent,canActivate:[AdminGuard]},
   {path:"signUp",component:SingupComponent},
+  {path:"Recomended",component:RecommendedComponent,canActivate:[AuthGuard]},
   {path:"manageApp",component:ManageAppartmentsComponent, canActivate:[AuthGuard]},
   {path:"appDetails/:id/:startD/:endD",component:AppartmentDetailsComponent},
   {path:"search/:startD/:endD/:capacity/:country/:city/:neighborhood/:wifi/:tv/:pets/:parking/:desiredType/:ac/:smoking/:elevator/:maxCost",component:SearchResultsComponent},

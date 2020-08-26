@@ -5,12 +5,13 @@
     <div id="actions" *ngIf="this.http.loggedIn()"><h2>Available Actions</h2></div>
     <nav *ngIf="this.http.loggedIn()"> 
         <button routerLink="/editProfile">Edit Profile Data</button>
+        <div *ngIf="this.testUsr.isRenter"><button routerLink="/Recomended">Check out your recomendations</button></div>
         <div *ngIf="this.testUsr.renter"><button routerLink="/appartment">Search for appartments</button></div>
         <div *ngIf="this.testUsr.owner"><button   routerLink="/manageApp">Manage your appartments</button></div>
         <button (click)="logout()" >Click here to logout</button><br>
     </nav>
 </div>
-<div id="Bookings" *ngIf="!testUsr.owner">
+<div id="Bookings" *ngIf="testUsr.isRenter">
 <h1>My Bookings:</h1>
 <li *ngFor="let b of myBookings | paginate: {id: 'foo', itemsPerPage: 3, currentPage: p2 }">
     <p>appId: {{b.appId}}</p>
@@ -34,7 +35,7 @@
     <pagination-controls  id="bla" (pageChange)="p3 = $event"></pagination-controls>
  </div>
 </div>
-<div id="Messages" *ngIf="!testUsr.owner" >
+<div id="Messages" *ngIf="testUsr.isRenter" >
 <h1>My messages</h1>
 <li *ngFor="let m of messages | paginate: {id: 'bloom', itemsPerPage: 3, currentPage: p4 }">
     <p>about appartment {{m.app_id}}</p>

@@ -65,6 +65,13 @@ export class UserComponent implements OnInit {
               this.messages=result;
               console.log(result);
               this.messages.sort((a,b) => (a.app_id > b.app_id) ? 1 : ((b.app_id > a.app_id) ? -1 : 0))
+              this.messages.forEach(element => {
+                console.log(element.answered);
+                if(element.answered==true)
+                {
+                  this.messages.splice(this.messages.indexOf(element));
+                }
+              });
           })
 
   });
@@ -74,7 +81,9 @@ export class UserComponent implements OnInit {
     this.messageHttp.deleteMessage(id)
   }
   MarkMessage(id:number){
-    this.messageHttp.markMessage(id)
+    this.messageHttp.markMessage(id);
+    alert("MESSAGE HAS BEEN MARKED SUCCESSFULY")
+    window.location.reload();
   }
   Reply(receiver,app_id){
     this.router.navigateByUrl("/chat/:receiver:"+receiver+"/:appartment:"+app_id);

@@ -9,4 +9,5 @@ export class User{
     owner:Boolean;
     renter:Boolean;
     pic:any;
+    isRenter:Boolean;
 }

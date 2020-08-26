@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';  // Add this
 import { Observable } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {map, startWith} from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +28,7 @@ import { ReplyComponent } from './reply/reply.component';
 import { MessageExchangeComponent } from './message-exchange/message-exchange.component';
 import { LoginComponent } from './login/login.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { RecommendedComponent } from './recommended/recommended.component';
 //import { AngularOpenlayersModule } from 'ngx-openlayers';
 
 
@@ -43,7 +46,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     ReplyComponent,
     MessageExchangeComponent,
     LoginComponent,
-    SearchResultsComponent, 
+    SearchResultsComponent,
+    RecommendedComponent, 
   ],
   imports: [
     BrowserModule,
@@ -53,10 +57,10 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     HttpClientModule,
     NgxPaginationModule
   ],
-  providers: [UserService,AppartmentService,AuthGuard,  {
+  providers: [UserService,DatePipe,AppartmentService,AuthGuard,  {
     provide: HTTP_INTERCEPTORS,
     useClass: UserInterceptor,
-    multi: true
+    multi: true,
   }],
   bootstrap: [AppComponent]
 })

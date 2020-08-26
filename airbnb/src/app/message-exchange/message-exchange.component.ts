@@ -8,6 +8,7 @@ import { appartment } from '../models/appartment';
 import { AppartmentService } from '../appartment.service';
 import { MessageService } from '../message.service';
 import { allowedNodeEnvironmentFlags } from 'process';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-message-exchange',
@@ -24,10 +25,11 @@ export class MessageExchangeComponent implements OnInit {
   curApp:appartment;
   com_history:message[];
   constructor(private route: ActivatedRoute,private userhttp:UserService,private httpC:HttpClient,private appHtttp:
-    AppartmentService, private messageHttp:MessageService) { }
+    AppartmentService, private messageHttp:MessageService,private datePipe:DatePipe) { }
 
   ngOnInit(): void {
     this.Date=new Date().toString();
+    this.Date=this.datePipe.transform(this.Date,'dd-MM-yyyy');
     console.log(this.Date)
     //let input=this.route.snapshot.params.sender;
     //this.SenderUsn=input.split(":")[2];
@@ -66,6 +68,7 @@ export class MessageExchangeComponent implements OnInit {
     m.text=this.messageText;
     m.appId=this.curApp.id;
     m.answered=false;
+    window.location.reload();
   }
   Delete_Message(id){
     this.messageHttp.deleteMessage(id);

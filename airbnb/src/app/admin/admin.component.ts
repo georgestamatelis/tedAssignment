@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
   loginOk:Boolean;
   ShowUsers:Boolean;
   ShowRequests:Boolean;
+  p:number=1;
   userList :User[];
   input1:Observable<User[]>;
   appartmentList:appartment[];

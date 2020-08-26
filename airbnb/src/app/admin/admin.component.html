@@ -27,10 +27,13 @@
           <th>Username</th>
           <th>Click for user details</th>
         </tr>
-        <tr *ngFor="let User of userList" >
+        <tr *ngFor="let User of userList | paginate: { itemsPerPage: 10, currentPage: p }" >
           <td>{{User.userName}}</td>
           <td><a href='#' routerLink="/userDetails/:{{User.userName}}">User Details</a><br></td>
         </tr>
     </table>
+    <div class="text-right" >
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
   </div>
 </div>
