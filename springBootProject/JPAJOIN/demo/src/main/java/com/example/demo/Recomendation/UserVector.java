@@ -1,6 +1,5 @@
 package com.example.demo.Recomendation;
 
-import com.example.demo.appartment;
 import lombok.Data;
 
 import javax.persistence.ElementCollection;
@@ -15,8 +14,7 @@ public class UserVector {
     @Id
     private String UserName;
     @ElementCollection
-    private
-    List<appartment> TopRecomended=new ArrayList<>();
+    List<Integer> Ids =new ArrayList<>();
 
     public String getUserName() {
         return UserName;
@@ -26,11 +24,11 @@ public class UserVector {
         UserName = userName;
     }
 
-    public List<appartment> getTopRecomended() {
-        return TopRecomended;
+    public List<Integer> getIds() {
+        return Ids;
     }
 
-    public void setTopRecomended(List<appartment> topRecomended) {
-        TopRecomended = topRecomended;
+    public void setIds(List<Integer> ids) {
+        Ids = ids;
     }
 }
