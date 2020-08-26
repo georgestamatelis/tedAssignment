@@ -24,7 +24,7 @@ public class MatrixFactorization {
     double P[][];
     double Q[][];
     double R[][];
-    int steps = 5000; double h = 0.004; double beta = 0.02;
+    int steps = 100000; double h = 0.007; double beta = 0.02;
     Random randd = new Random();
 
     @Autowired
@@ -39,10 +39,11 @@ public class MatrixFactorization {
         this.searchRepository = searchRepository;
         this.appViewRepository = appViewRepository;
         /////////////////////
-        P=  new double[users][genres];
-        Q=  new double[genres][apartments];
+        P = new double[users][genres];
+        Q = new double[genres][apartments];
         R = new double[users][apartments];
         ///////////////
+        int reviewzz = 0;
         System.out.println("GATHERING KNOWN DATA");
         this.allUsers = (ArrayList<User>) this.userRepository.findAllByOrderByUserNameAsc(); // USERS LIST (SORTED)
         this.allAppartments = (ArrayList<appartment>) this.appartmentRepository.findAll(); // APARTMENT LIST
@@ -53,28 +54,30 @@ public class MatrixFactorization {
                 String user_name = reviewz.get(r).getUserName();
                 for (int i=0; i<users; i++) {
                     if (user_name.equals(allUsers.get(i).getUserName())) {
+                        reviewzz++;
                         if (R[i][j] == 0) // First review of user i for apartment j
                             R[i][j] = reviewz.get(r).getNumber();
                         else
                             R[i][j] = (R[i][j] + reviewz.get(r).getNumber()) / 2;
-                     //   System.out.println(R[i][j]);
+                        //   System.out.println(R[i][j]);
                     }
                 }
             }
         }
+        System.out.println("reviewzz: " + reviewzz);
         System.out.println("GATHERED KNOWN DATA, STARTING FACTORIZATION");
         for (int i = 0; i < users; ++i) {
             for (int j = 0; j < genres; ++j) {
-                P[i][j] = ThreadLocalRandom.current().nextDouble(0, 5);
-                System.out.println(P[i][j]);
+                P[i][j] = ThreadLocalRandom.current().nextGaussian();
+//                System.out.println(P[i][j]);
             }
         }
         for (int i = 0; i < genres; ++i) {
             for (int j = 0; j < apartments; ++j) {
-                Q[i][j] = ThreadLocalRandom.current().nextDouble(0, 5);
+                Q[i][j] = ThreadLocalRandom.current().nextGaussian();
             }
         }
-        for (int s=0; s<steps; s++) {
+        for (int s=0; s<steps/10000; s++) {
             System.out.println("Factorization step " + s + " of " + steps);
             for (int i=0; i<users; i++) {
                 for (int j=0; j<apartments; j++) {
@@ -92,7 +95,7 @@ public class MatrixFactorization {
                 }
             }
             double e = 0;
-            System.out.printf("%d\t, %d\n",users,apartments);
+//            System.out.printf("%d\t, %d\n",users,apartments);
             for (int i=0; i<users; i++) { // possible mistake here
                 for (int j=0; j<apartments; j++) {
                     if (R[i][j] > 0) {
@@ -108,7 +111,7 @@ public class MatrixFactorization {
                 }
             }
             System.out.printf("e: %f\n", e);
-            if (e < 0.001)
+            if (e <= 10)
                 break;
         }
         double[][] result = new double[users][apartments];
@@ -120,15 +123,52 @@ public class MatrixFactorization {
                 }
             }
         }
-        System.out.println("MATRIX FACTORIZATION DONE");
-    }
-    public double RatingFunction(User u,appartment app){
-        ArrayList<Review> rv= (ArrayList<Review>) this.reviewRepository.findAllByAppartmentAndUser(app,u);
-        double sum=0.00;
-        for(Review r:rv){
-            System.out.println(r.getAppId()+"\t"+r.getUserName());
-            sum+=r.getNumber();
+        System.out.println("MATRIX FACTORIZATION DONE, CALCULATING top5 USER VECTORS");
+        for (int i=0; i<users; i++) { // For every user
+            ArrayList<appartment> top5 = new ArrayList<appartment>();
+            for (int t=0; t<5; t++) { // Recommend this many apartments
+                // Find this user's highest rated apartment.
+                // If it's an actual rating, not a prediction, make it 0.
+                // If it's a prediction, save it to the "top 5" list and make it 0 (so we don't find it again in the next iteration to get 5 apartments).
+                // If 5 non-rated apartments are not found, complete 5 recommendations with apartments he's actually rated -------TO BE IMPLEMENTED------------------
+                double max_rating_found = 0;
+                int max_rating_found_index = 0;
+                for (int j=0; j<apartments; j++) {
+                    if (result[i][j] > max_rating_found) {
+                        max_rating_found = result[i][j];
+                        max_rating_found_index = j;
+                    }
+                }
+                System.out.println("Score: " + result[i][max_rating_found_index]);
+                result[i][max_rating_found_index] = 0;
+                if (R[i][max_rating_found_index] > 0) { // Apartment with max rating has actually been rated, we want a predicted one. Continue and don't count this iteration.
+                    t--;
+                    continue;
+                }
+                top5.add(allAppartments.get(max_rating_found_index));
+            }
+            UserVector uv1 = new UserVector();
+            uv1.setUserName(allUsers.get(i).getUserName());
+            ArrayList<Integer> temp=new ArrayList<Integer>();
+            for(appartment app:top5)
+            {
+                temp.add(app.getId());
+            }
+            uv1.setIds(temp); // User vector is ready
+            for (int v=0; v<5; v++) {
+                System.out.println("vector spot " + v + ": " + uv1.getIds().get(v));
+            }
+            this.userVectorRepository.save(uv1);
         }
-        return sum/rv.size();
+        System.out.println("DONE CREATING top5 USER VECTORS");
     }
+//    public double RatingFunction(User u,appartment app){
+//        ArrayList<Review> rv= (ArrayList<Review>) this.reviewRepository.findAllByAppartmentAndUser(app,u);
+//        double sum=0.00;
+//        for(Review r:rv){
+//            System.out.println(r.getAppId()+"\t"+r.getUserName());
+//            sum+=r.getNumber();
+//        }
+//        return sum/rv.size();
+//    }
 }
