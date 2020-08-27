@@ -191,6 +191,23 @@ export class ManageApp1Component implements OnInit {
       alert(`lat: ${lat} long: ${lon}`);
       this.cur.longitude=lon;
       this.cur.latitude=lat;
+      
+      fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + lon + '&lat=' + lat).then(function(response) {
+          return response.json();
+        }).then((json)=>{
+          console.log(json);
+          console.log(json.address);
+          ////////////////////////////
+          this.country=json.address.country;
+          this.hood=json.address.neighbourhood;
+          if(!this.hood)
+            this.hood=json.address.suburb;
+          this.city=json.address.city;
+          if(!this.city)
+            this.city=json.address.municipality;
+          this.cur.address=json.address.road+" "+json.address.house_number+" "+json.address.postcode;
+          console.log(this.country,this.hood,this.city,this.cur.address);
+        })
     });
     this.setCenter();
   }

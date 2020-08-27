@@ -1,11 +1,8 @@
-<html>
-<body>
 <h3>Change the appartment components you want and leave the others the same</h3>
-<div id="wrapper">
-<div id="LocationInfo">
-    <h1> Appartment's location </h1>
+<h1> Appartment's location </h1>
     <div id="map" class="map"></div>
     <div id="mouse-position"></div>
+<div id="Location">
     <p> Neighborhood</p>
     <input type="text" [(ngModel)]="hood">
     <p>City:</p>
@@ -15,13 +12,14 @@
     <p>address</p>
     <input type="text" [(ngModel)]="cur.address">
     <p> ways to access the appartment using public transport</p>
-    <input type="text" [(ngModel)]="cur.accessInfo">
+    <input style="margin-bottom:5%"type="text" [(ngModel)]="cur.accessInfo">
 </div>
-
-<p>Change appartment's available dates bellow:</p>
-<input  class="datesetter" type="date" [(ngModel)]="startD">
-<input class="datesetter" type="date" [(ngModel)]="endD">
-<div id="spaceInfo">
+<div id="dates">
+    <h1>Appartment Available </h1><strong>From</strong>
+    <input  class="datesetter" type="date" [(ngModel)]="startD"><strong>TO</strong>
+    <input class="datesetter" type="date" [(ngModel)]="endD">
+</div>
+<div id="space">
     <h1>Appartment's space</h1> 
     <p> Size (square meters)</p>
     <input type="number" [(ngModel)]="cur.size">
@@ -46,9 +44,9 @@
             <option value="full house">full house</option>
         </select>
 </div>
+<div id="CheckBoxes">
 <div id="rules">
     <h1> Appartment rules:</h1>
-
     <input  class="check"  type="checkbox" [(ngModel)]="cur.allowPets" id="id4">
     <label for="id4">pets  allowed</label><br>
     <input  class="check"  type="checkbox" [(ngModel)]="cur.allowSmoking" id="id5">
@@ -68,12 +66,14 @@
     <label for="id3">air conditioning</label><br>
     <input class="check"  type="checkbox" [(ngModel)]="cur.hasTv" id="id6">
     <label for="id6">television </label><br>
-    <input class="check"  type="checkbox" [(ngModel)]="cur.hasElevator" id="id7">
-    <label for="id7">Elevator </label><br> 
+    <input style="margin-bottom:5%" class="check"  type="checkbox" [(ngModel)]="cur.hasElevator" id="id7">
+    <label  for="id7">Elevator </label><br> 
+</div>
 </div>
 <div id="description">
-    <h1>description:</h1>
-    <input type="textarea" rows="40" cols="50" [(ngModel)]="cur.description" >
+    <p>
+        <textarea [(ngModel)]="cur.description"> </textarea>
+    </p>
 </div>
 <div id="mainPic">
     <h1> Appartment's main /representing Picture</h1>
@@ -117,7 +117,4 @@
  <div class="message-pagination" >
     <pagination-controls  id="foo" (pageChange)="p2 = $event"></pagination-controls>
  </div>
-<button id="updateApp" (click)="PostIt()">UPDATE APPARTMENT</button>
-</div>
-</body>
-</html>
+<button (click)="PostIt()">UPDATE APPARTMENT</button>

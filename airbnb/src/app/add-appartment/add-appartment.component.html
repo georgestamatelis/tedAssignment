@@ -1,22 +1,22 @@
 <h1> Location</h1>
-<div id="Location">
     <div id="map" class="map"></div>
     <div id="mouse-position"></div>
-    <p>neighborhood</p>
-    <input type="text"  [(ngModel)]="hood">
-    <p>city</p>
-    <input type="text"  [(ngModel)]="city">
-    <p>country</p>
-    <input type="text"  [(ngModel)]="country">
-    <p>Adress:</p>
-    <input type="text" [(ngModel)]="tempApp.address">
-    <p>accesibility with public transport ,eg: accesible by bus,by train , walking distance from harbour e.t.c </p>
-    <input type="text" [(ngModel)]="tempApp.accessInfo"><br>
-</div>
+    <div id="Location">
+        <p>neighborhood</p>
+        <input type="text"  [(ngModel)]="hood">
+        <p>city</p>
+        <input type="text"  [(ngModel)]="city">
+        <p>country</p>
+        <input type="text"  [(ngModel)]="country">
+        <p>Adress:</p>
+        <input type="text" [(ngModel)]="tempApp.address">
+        <p>access with public transport information:</p>
+        <input type="text" style="margin-bottom: 3%;" [(ngModel)]="tempApp.accessInfo"><br>
+    </div>
 <div id="dates">
-    <h1>The apartment is Available from</h1>
-    <input type="date" [(ngModel)]="startD"> To
-<input type="date" [(ngModel)]="endD"><br>
+    <h1>The apartment is Available </h1><strong>from</strong>
+    <input type="date" [(ngModel)]="startD"> <strong>To</strong>
+    <input type="date" [(ngModel)]="endD"><br>
 </div><br>
 <h1> Information about apparment's space :</h1>
 <div id="space">
@@ -46,10 +46,11 @@
     <p>minimumn price (per night)</p>
     <input type="number" [(ngModel)]="tempApp.price">
     <p>Aditional cost per person:</p>
-    <input type="number" [(ngModel)]="tempApp.cost_per_person">
+    <input style="margin-bottom: 3%;" type="number" [(ngModel)]="tempApp.cost_per_person">
 </div>
+<div id="CheckBoxes">
 <div id="Services">
-<h1>Aditional Services</h1>
+<h1>Aditional Services:</h1>
     <input type="checkbox"[(ngModel)]="tempApp.hasWifi" id="id1">
     <label for="id1">wifi</label><br>
     <input type="checkbox" [(ngModel)]="tempApp.hasParking" id="id2">
@@ -59,7 +60,7 @@
     <input type="checkbox" [(ngModel)]="tempApp.hasTv" id="id6">
     <label for="id6">television </label><br>
     <input type="checkbox" [(ngModel)]="tempApp.hasElevator" id="id7">
-    <label for="id7">Elevator </label><br>
+    <label for="id7" style="margin-bottom: 3%;">Elevator </label><br>
 </div>
 <div id="Rules">
     <h1> Appartment rules:</h1>
@@ -70,11 +71,12 @@
     <input type="checkbox" [(ngModel)]="tempApp.idAvailable" id="ava">
     <label for="ava">Is Appartment available for gatherings,parties e.t.c ?</label>
     <p>Minimum Mandatory dates to book:</p>
-    <input type="number" [(ngModel)]="tempApp.minDatesToBook">
+    <input style="margin-bottom: 3%;" type="number" [(ngModel)]="tempApp.minDatesToBook">
+</div>
 </div>
 
 <!----------------------------------------------------------------------------->
-<h1>Please provide a small description of the appartment bellow</h1>
+<h1>Please provide a small description of the appartment bellow</h1><br>
 <p>
     <textarea [(ngModel)]="tempApp.description"> </textarea>
 </p>

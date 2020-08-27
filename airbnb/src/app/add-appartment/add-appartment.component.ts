@@ -4,8 +4,11 @@ import { AppartmentService } from '../appartment.service';
 import { appartment } from '../models/appartment';
 import { ActivatedRoute, Router } from '@angular/router';
 import{User} from 'src/app/models/User';
+import {map} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ThrowStmt } from '@angular/compiler';
+import { NominatimResponse } from '../models/NominatimResponse';
+import { ReverseGeocodeResponse } from '../models/ReverseGeocoding';
 
 declare var ol: any;
 
@@ -94,27 +97,42 @@ export class AddAppartmentComponent implements OnInit {
       ],
       view: new ol.View({
         center: ol.proj.fromLonLat([73.8567, 18.5204]),
-        zoom: 8
+        zoom: 10
       })
-    });
-
+      });
     this.map.on('click', (args) =>{
       console.log(args.coordinate);
       var lonlat = ol.proj.transform(args.coordinate, 'EPSG:3857', 'EPSG:4326');
       console.log(lonlat);
-      
       var lon = lonlat[0];
       var lat = lonlat[1];
       alert(`lat: ${lat} long: ${lon}`);
       this.tempApp.longitude=lon;
       this.tempApp.latitude=lat;
+      fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + lon + '&lat=' + lat).then(function(response) {
+          return response.json();
+        }).then((json)=>{
+          console.log(json);
+          console.log(json.address);
+          ////////////////////////////
+          this.country=json.address.country;
+          this.hood=json.address.neighbourhood;
+          if(!this.hood)
+            this.hood=json.address.suburb;
+          this.city=json.address.city;
+          if(!this.city)
+            this.city=json.address.municipality;
+          this.tempApp.address=json.address.road+" "+json.address.house_number+" "+json.address.postcode;
+          console.log(this.country,this.hood,this.city,this.tempApp.address);
+        })
+      //simpleReverseGeocoding(lon,lat);
     });
     this.setCenter();
   }
 
   setCenter() {
     var view = this.map.getView();
-    view.setCenter(ol.proj.fromLonLat([25.0,25.00]));
+    view.setCenter(ol.proj.fromLonLat([23.7,38.00]));
     view.setZoom(8);
   }
     

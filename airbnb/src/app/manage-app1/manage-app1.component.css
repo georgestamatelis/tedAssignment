@@ -14,15 +14,7 @@ li{
     margin-left:5%;
     margin-right: 5%;
 }
-button{
-    font-size: x-large;
-    margin-left:5%;
-    margin-top: 1%;
-    cursor: pointer;
-}
-button:hover{
-    background-color: lightseagreen;
-}
+
 #choice{
     margin-left: 5%;
     font-size: x-large;
@@ -32,22 +24,8 @@ button:hover{
 option{
     font-size: x-large;
 }
-textarea{
-    height: 5%;
-}
-#wrapper{
-    margin-left: 2.5%;
-    height:100%;
-}
-#updateApp{
-    padding: 2%;
-    font-size: xx-large;
-    background-color: azure;
-    margin-bottom: 2.5%;
+#map{
     cursor: pointer;
-}
-#updateApp:hover{
-    background-color: lightseagreen;
 }
 label{
     margin-left: 2.5%;
@@ -65,6 +43,7 @@ li{
 }
 img{
     cursor: pointer;
+    margin-left:5%
 }
 img:hover{
     transform:scale(1.5);
@@ -81,3 +60,82 @@ opacity: 100%;
 h3{
     margin-top:0px;
 }
+#Location{
+    text-align: center;
+    background-color: lightslategray;
+    margin:5%;
+    opacity: 70%;
+}
+#dates{
+    text-align: center;
+    background-color: lightslategray;
+    border-radius: 45%;
+    opacity: 70%;
+}
+#dates input{
+    margin-left:2%;
+    margin-right:2%;
+    margin-bottom: 3%;
+}
+#dates h1{
+    margin-top: 2%;
+}
+#Location:hover, #dates:hover{
+    opacity:100%;
+}
+#space{
+    text-align: center;
+    background-color: lightslategray;
+    margin:5%;  
+    opacity: 70%;
+}
+#space:hover{
+    opacity: 100%;
+}
+#CheckBoxes{
+    background-color: lightslategray;
+    margin-left:20%;
+    margin-right:20%;
+    opacity: 70%;
+}
+#CheckBoxes:hover{
+    opacity: 100%;
+}
+#CheckBoxes input{
+    margin-left:5%;
+}
+#CheckBoxes p{
+    margin-left:5%
+}
+textarea{
+    margin-top:10%;
+    margin-left:40%;
+    margin-bottom: 10%;
+    transform:scale(5);
+    opacity: 65%;
+    border-width:thick;
+    border-color:black;
+  }
+textarea:hover{
+      opacity: 100%;
+      border-color: lightseagreen;
+}
+button {
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: xx-large;
+    margin-left:40%;
+    margin-top:5%; 
+    margin-bottom:5%;
+    opacity: 80%;
+    cursor: pointer;
+  }
+  button:hover {
+    opacity: 100%;
+    background-color: lightseagreen;
+  }

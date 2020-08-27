@@ -1,30 +1,89 @@
-p{
-    margin-left:25px;
+#map{
+    cursor: pointer;
 }
-input{
-    margin-left:25px;
-}
-h1{
-    margin-left: 25px;
-}
-h3{
-    margin-left: 25px;
-}
-textarea{
-    width:250px;
-    height:150px ;
-}
-button{
-    background-color: blueviolet;
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 30px;
-  margin-left: 30px;
-  margin-bottom: 25px;
-}
-#appartmentType{
+button {
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: xx-large;
+    margin-left:40%;
+    margin-top:5%; 
+    margin-bottom:5%;
+    transform:scale(2.5);
+    opacity: 80%;
+    cursor: pointer;
+  }
+  button:hover {
+    opacity: 100%;
+    background-color: lightseagreen;
+  }
+
+/*#appartmentType{
     margin-left: 5%;
+}*/
+
+textarea{
+    margin-top:5%;
+    margin-left:40%;
+    margin-bottom: 5%;
+    transform:scale(5);
+    opacity: 65%;
+    border-width:thick;
+    border-color:black;
+  }
+textarea:hover{
+      opacity: 100%;
+      border-color: lightseagreen;
+}
+#Location{
+    text-align: center;
+    background-color: lightslategray;
+    margin:5%;
+    opacity: 70%;
+}
+#Location:hover, #dates:hover{
+    opacity:100%;
+}
+#dates{
+    text-align: center;
+    background-color: lightslategray;
+    border-radius: 45%;
+    opacity: 70%;
+}
+#dates input{
+    margin-left:2%;
+    margin-right:2%;
+    margin-bottom: 3%;
+}
+#dates h1{
+    margin-top: 2%;
+}
+#space{
+    text-align: center;
+    background-color: lightslategray;
+    margin:5%;  
+    opacity: 70%;
+}
+#space:hover{
+    opacity: 100%;
+}
+
+#CheckBoxes{
+    background-color: lightslategray;
+    margin-left:20%;
+    margin-right:20%;
+    opacity: 70%;
+}
+#CheckBoxes:hover{
+    opacity: 100%;
+}
+#CheckBoxes input{
+    margin-left:5%;
+}
+#CheckBoxes p{
+    margin-left:5%
 }
