@@ -1,15 +1,13 @@
 package com.example.demo;
 
 
-import com.example.demo.Recomendation.AppView;
-import com.example.demo.Recomendation.AppViewRepository;
-import com.example.demo.Recomendation.Search;
-import com.example.demo.Recomendation.SearchRepository;
+import com.example.demo.Recomendation.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController // This means that this class is a Controller
@@ -28,6 +26,8 @@ public class RecomedationController {
     private SearchRepository searchRepository;
     @Autowired
     private AppViewRepository appViewRepository;
+    @Autowired
+    private UserVectorRepository userVectorRepository;
 
     private int get_Average_Review(User ui){
         List<Review> allR=this.reviewRepository.findAllByUserName(ui.getUserName());
@@ -46,11 +46,16 @@ public class RecomedationController {
 
         return 0;
     }
-    @GetMapping("user/Recomended")
-    public Iterable<appartment> getRecomended(@RequestParam("usn")String usn){
-        List<appartment> allAppartments=(List)this.appartmentRepository.findAll();
-        int number_of_results=5;
-        return null;
+    @GetMapping("user/Recomended/{usn}")
+    public Iterable<appartment> getRecomended(@PathVariable String usn){
+        UserVector uv=this.userVectorRepository.findById(usn).get();
+        List<appartment> result=new ArrayList<>();
+        for(Integer i :uv.getIds())
+        {
+            result.add(this.appartmentRepository.findById(i).get());
+
+        }
+        return result;
     }
     ///////////////Searches/
     //Root

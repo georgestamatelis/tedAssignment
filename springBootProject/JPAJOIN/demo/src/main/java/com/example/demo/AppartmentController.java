@@ -98,7 +98,7 @@ public class AppartmentController {
 
         n.setOwner(result);
         String loggedInusn= SecurityContextHolder.getContext().getAuthentication().getName();
-        if(!loggedInusn.equals(n.getOwner().getUserName()) || n.getOwner().getRenter()==false)
+        if(!loggedInusn.equals(n.getOwner().getUserName()) || n.getOwner().getOwner()==false)
         {
             return -1 ;
         }//NEED TO ADD THE IF ABOVE ON ALL THE APPARTMENT METHODS  TOMORROW
@@ -238,8 +238,8 @@ public class AppartmentController {
     public @ResponseBody String updateAppImage(@RequestParam("imgFile") MultipartFile file,@PathVariable String id) throws IOException {
         String loggedInusn= SecurityContextHolder.getContext().getAuthentication().getName();
         appartment temp=this.appartmentRepository.findById(Integer.parseInt(id)).get();
-        if(!loggedInusn.equals(temp.getOwner().getUserName()) || temp.getOwner().getRenter()==false)
-        {
+        if(!loggedInusn.equals(temp.getOwner().getUserName()) || temp.getOwner().getOwner()==false)
+        {   System.out.println("ILLEGAL LOGIN");
             return "ERROR" ;
         }//NEED TO ADD THE IF ABOVE ON ALL THE APPARTMENT METHODS  TOMORROW
         System.out.println("fuck me");

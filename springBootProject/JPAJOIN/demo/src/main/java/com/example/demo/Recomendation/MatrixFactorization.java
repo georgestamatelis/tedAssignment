@@ -1,4 +1,4 @@
-package com.example.demo.Recomendation;
+/*package com.example.demo.Recomendation;
 
 import com.example.demo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,11 @@ public class MatrixFactorization {
     int apartments ;//= (int) appartmentRepository.count();
     private ArrayList<User> allUsers;
     private ArrayList<appartment> allAppartments;
-    int genres = 3;//Number of Latent features
+    int genres = 5;//Number of Latent features
     double P[][];
     double Q[][];
     double R[][];
-    int steps = 100000; double h = 0.007; double beta = 0.02;
+    int steps = 1000; double h = 0.007; double beta = 0.000002;
     Random randd = new Random();
 
     @Autowired
@@ -77,7 +77,7 @@ public class MatrixFactorization {
                 Q[i][j] = ThreadLocalRandom.current().nextGaussian();
             }
         }
-        for (int s=0; s<steps/10000; s++) {
+        for (int s=0; s<steps; s++) {
             System.out.println("Factorization step " + s + " of " + steps);
             for (int i=0; i<users; i++) {
                 for (int j=0; j<apartments; j++) {
@@ -95,6 +95,7 @@ public class MatrixFactorization {
                 }
             }
             double e = 0;
+            double sumOfAllErrors = 0; // ΓΙΑ ΝΑ ΞΕΡΟΥΜ ΤΙ ΜΑΣ ΓΙΝΕΤΑΙ
 //            System.out.printf("%d\t, %d\n",users,apartments);
             for (int i=0; i<users; i++) { // possible mistake here
                 for (int j=0; j<apartments; j++) {
@@ -103,16 +104,19 @@ public class MatrixFactorization {
                         for (int k=0; k<genres; k++) {
                             dot += P[i][k] * Q[k][j];
                         }
+                        sumOfAllErrors += R[i][j] - dot;
                         e += ((R[i][j] - dot) * (R[i][j] - dot));
-                        for (int k=0; k<genres; k++) {
-                            e += ((beta / 2) * (P[i][k] * P[i][k] + Q[k][j] * Q[k][j]));
-                        }
+//                        for (int k=0; k<genres; k++) {
+//                            e += ((beta / 2) * (P[i][k] * P[i][k] + Q[k][j] * Q[k][j]));
+//                        }
                     }
                 }
             }
-            System.out.printf("e: %f\n", e);
-            if (e <= 10)
-                break;
+            e = e / reviewzz; // 34.670 known reviews
+            e = java.lang.Math.sqrt(e);
+            System.out.printf("e: %f, Sum Of All Errors: %f\n", e, sumOfAllErrors);
+//            if (e <= 10)
+//                break;
         }
         double[][] result = new double[users][apartments];
         for (int i=0; i<users; i++) {
@@ -139,7 +143,7 @@ public class MatrixFactorization {
                         max_rating_found_index = j;
                     }
                 }
-                System.out.println("Score: " + result[i][max_rating_found_index]);
+                System.out.print("Score: " + result[i][max_rating_found_index] + "_____");
                 result[i][max_rating_found_index] = 0;
                 if (R[i][max_rating_found_index] > 0) { // Apartment with max rating has actually been rated, we want a predicted one. Continue and don't count this iteration.
                     t--;
@@ -147,6 +151,7 @@ public class MatrixFactorization {
                 }
                 top5.add(allAppartments.get(max_rating_found_index));
             }
+            System.out.print("\n");
             UserVector uv1 = new UserVector();
             uv1.setUserName(allUsers.get(i).getUserName());
             ArrayList<Integer> temp=new ArrayList<Integer>();
@@ -156,8 +161,9 @@ public class MatrixFactorization {
             }
             uv1.setIds(temp); // User vector is ready
             for (int v=0; v<5; v++) {
-                System.out.println("vector spot " + v + ": " + uv1.getIds().get(v));
+                System.out.print("vector spot " + v + ": " + uv1.getIds().get(v) + "_____");
             }
+            System.out.print("\n");
             this.userVectorRepository.save(uv1);
         }
         System.out.println("DONE CREATING top5 USER VECTORS");
@@ -172,3 +178,4 @@ public class MatrixFactorization {
 //        return sum/rv.size();
 //    }
 }
+*/
