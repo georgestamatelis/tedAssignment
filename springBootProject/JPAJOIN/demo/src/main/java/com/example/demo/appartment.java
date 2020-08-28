@@ -39,6 +39,7 @@ public class appartment {
     private String location; //location={town+country+neighbourhood}
     private double latitude;
     private double longitude;
+    @Lob
     private String accessInfo;
     private String type;
     private int numberOfBeds;

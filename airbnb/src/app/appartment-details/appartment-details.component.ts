@@ -35,6 +35,7 @@ has_reviewed:Boolean;
   Dates:String[];
   review:number;
   usr:User; 
+  ownerInfo:User;
   imageList:ImageModel[];
   messages: message[];
 
@@ -53,6 +54,12 @@ has_reviewed:Boolean;
     this.apphttp.getAppartmentById(this.id1).subscribe(
       data=>{this.cur=data;
       console.log(this.cur);
+      this.apphttp.getOwnerInfo(this.id1).subscribe(
+        res=>{
+          console.log(res);
+          this.ownerInfo=res;
+        }
+      )
       this.set_up_map();
     }
     );

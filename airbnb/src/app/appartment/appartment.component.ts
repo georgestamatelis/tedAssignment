@@ -22,7 +22,7 @@ export class AppartmentComponent implements OnInit {
 
   neighborhood:String="";
   City:String="";
-  location:String="neighborhood-city-country";
+  location:String="neighborhood,city,country";
   wifi:Boolean;
   pets:Boolean;
   appartmentTypes:String[]=["private flat","shared room","full house"]
@@ -75,7 +75,7 @@ export class AppartmentComponent implements OnInit {
     return result;
   }
   byLocation():void{
-    var splitted=this.location.split("-");
+    var splitted=this.location.split(",");
     this.neighborhood=splitted[0];
     this.City=splitted[1];
     this.Country=splitted[2];    
@@ -85,68 +85,6 @@ export class AppartmentComponent implements OnInit {
     +"/:endD:"+this.endD+"/:capacity:"+this.capacity
     +"/:country:"+this.Country+"/:city:"+this.City+"/:neighborhood:"+this.neighborhood+
     "/:wifi:false/:tv:false/:pets:false/:parking:false/:desiredType:none/:ac:false/:smoking:false/:elevator:false/:maxCost:9999999"); 
-
-    /*this.input1=this.apphttp.getAppartmentsBylocation(this.Country,this.City,this.neighborhood,this.startD,this.endD,this.capacity);
-    this.input1.subscribe(
-      res=> 
-      {
-        this.allApartments=res;
-        console.log(this.allApartments);
-        this.allApartments.forEach(element => {
-          console.log(element.id);
-          this.apphttp.getReviews(element.id).subscribe(
-            data=>{element.reviews=data
-              console.log(data)
-            element.numberOfReviews=data.length
-            }
-          );
-            ////////////NOW TAKE AWAY THOSE WITH COST MORE THAN  MAX ALLOWED PRICE
-         if(element.price > this.maxCost)
-          delete this.allApartments[this.allApartments.indexOf(element)]  
-          if(this.desiredType!="nada")
-              if(element.type!=this.desiredType) 
-                delete this.allApartments[this.allApartments.indexOf(element)]  
-
-        });
-        // desired type of appartment
-        
-        
-      }
-    );
-    this.show=true;
-    ///aditional constraints from check boxes
-    if(this.wifi==true){
-      for(let i=0;i<this.allApartments.length;i++)
-         if(!this.allApartments[i].hasWifi)
-            delete this.allApartments[i];
-    }
-    if(this.tv==true){
-      for(let i=0;i<this.allApartments.length;i++)
-         if(!this.allApartments[i].hasTv)
-            delete this.allApartments[i];
-    }
-    if(this.ac==true){
-      for(let i=0;i<this.allApartments.length;i++)
-         if(!this.allApartments[i].hasheat)
-            delete this.allApartments[i];
-    }
-    if(this.pets)
-      for(let i=0;i<this.allApartments.length;i++)
-        if(!this.allApartments[i].allowPets)
-          delete this.allApartments[i];
-    if(this.smoking)
-      for(let i=0;i<this.allApartments.length;i++)
-        if(!this.allApartments[i].allowSmoking)
-           delete this.allApartments[i];
-    if(this.parking)
-      for(let i=0;i<this.allApartments.length;i++)
-        if(!this.allApartments[i].hasParking)
-          delete this.allApartments[i];
-    if(this.elevator)
-      for(let i=0;i<this.allApartments.length;i++)
-        if(!this.allApartments[i].hasElevator && this.allApartments[i].floor>=1)
-            delete this.allApartments[i];
-      */    
   }
   getAverage(array: review[]):number{
     var average:number=0;

@@ -32,15 +32,15 @@
 
     <div id="result">
         <ul id="hor">
-            <li *ngFor="let app of appList | paginate: { itemsPerPage: 10, currentPage: p }">
+            <li *ngFor="let app of appList | paginate: { itemsPerPage: 10, currentPage: p }" routerLink="/appDetails/:id:{{app.id}}/:startD:{{this.startD}}/:endD:{{this.endD}}" >
+                    <img  src="data:image/jpeg;base64,{{app.main_pic}}"> <br>
                     <p >Price(Per Night): {{app.price}}</p>
                     <p >Capacity : {{app.capacity}}</p>
-                    <p *ngIf="app.reviews">number of reviews: {{app.numberOfReviews}}</p>
                     <p *ngIf="!app.reviews">zero reviews yet</p>
                     <p>Type: {{app.type}}</p>
+                    <p>Number of beds: {{app.numberOfBeds}}</p>
+                    <p *ngIf="app.reviews">number of reviews: {{app.numberOfReviews}}</p>
                     <p *ngIf="app.reviews">average review: {{this.getAverage(app.reviews)}}</p>
-                    <img  src="data:image/jpeg;base64,{{app.main_pic}}"> <br>
-                    <button *ngIf="app!=null" id="linker"routerLink="/appDetails/:id:{{app.id}}/:startD:{{this.startD}}/:endD:{{this.endD}}">Click here to see more</button>
                 </li>
         </ul>
       <!--Including the pagination control.-->

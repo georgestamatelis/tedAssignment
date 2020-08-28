@@ -245,4 +245,8 @@ export class AppartmentService {
     }),
     responseType: 'blob'});
  } 
+ getOwnerInfo(id:number):Observable<User>{
+   let url="https://localhost:8443/api/Apartments/"+id+"/OwnerInfo"
+   return this.http.get<User>(url);
+ }
 }

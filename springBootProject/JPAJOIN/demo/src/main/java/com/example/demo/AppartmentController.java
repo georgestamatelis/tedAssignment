@@ -251,4 +251,15 @@ public class AppartmentController {
     public @ResponseBody byte[] getAppImage(@PathVariable String id){
         return this.appartmentRepository.findById(Integer.parseInt(id)).get().getMain_pic();
     }
+    @GetMapping("Apartments/{id}/OwnerInfo")
+    public  @ResponseBody User getOwnerInfo(@PathVariable String id){
+        User n=new User();
+        User owner=this.appartmentRepository.findById(Integer.parseInt(id)).get().getOwner();
+        n.setUserName(owner.getUserName());
+        n.setPhoneNumber(owner.getPhoneNumber());
+        n.setEmail(owner.getEmail());
+        n.setFirstName(owner.getFirstName());
+        n.setLastName(owner.getLastName());
+        return n;
+    }
 }
