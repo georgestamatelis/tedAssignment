@@ -172,5 +172,11 @@ public class UserController {
         this.bookingRepository.save(b);
         return "OK";
   }
-
+    @GetMapping("user/{usn}/is-owner")
+    public  @ResponseBody Boolean getPermissionToPost(@PathVariable String usn){
+        User usr=this.userRepository.findById(usn).get();
+        if(!usn.equals("admin1'"))
+          return  usr.getOwner();
+        return true; //admin has permission to everything
+    }
 }

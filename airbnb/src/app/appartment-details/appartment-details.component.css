@@ -1,25 +1,20 @@
-button{
-  background-color: blueviolet;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 30px;
-  margin-left: 3%;
+button {
+  margin-top:2%;
+  font-size: x-large;
+  background-color: black;
   margin-bottom: 2%;
+  padding: 2.5%;
+  color:white;
   cursor: pointer;
+
+  /*padding: 1.5%;
+*/
 }
 button:hover{
-  background-color: turquoise;
+  background-color:lightseagreen;
 }
-p{
-  margin-left: 3%;
-}
-h2{
-  margin-left: 2%;
-}
+
+
 ul{
   margin-left: 5%;
 }
@@ -40,6 +35,51 @@ img{
 img:hover{
   transform:scale(1.5);
 }
-#map:hover{
-  transform:scale(1.5);
+
+#General{
+  margin-top:5%;
+  background-color:lightblue;
+  float: left;
+  text-align: center;
+  margin-left:2.5%
+}
+#services-rules{
+  margin-top:5%;
+  background-color:rgb(198, 173, 230);
+  float:right;
+  width: 600px;
+  text-align: center;
+  margin-bottom: 5%;
+  margin-right:2.5%;
+}
+#location{
+  clear: both;
+}
+#description{
+  clear:both;
+  text-align:center;
+  margin-top:15%
+}
+#morePictures{
+  margin-left:5%
+}
+#hostInfo{
+  background-color:rgb(198, 173, 230);
+  margin-left:5%;
+  text-align: center;
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
+#BookButton{
+  margin-left: 42.5%;
+  margin-right: 40%;
+  transform: scale(2);
+}
+#hostPic{
+  float: left;
+  background-color:rgb(198, 173, 230);
+}
+#Rest{
+  background-color:rgb(198, 173, 230);
+  margin-left: 2%;
 }

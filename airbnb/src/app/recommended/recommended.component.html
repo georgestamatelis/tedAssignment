@@ -1,9 +1,9 @@
 <div id="result">
-    <li *ngFor="let app of appList">
+    <li *ngFor="let app of appList" routerLink="/appDetails/:id:{{app.id}}/:startD:{{this.startD}}/:endD:{{this.endD}}">
         <p >Price(Per Night): {{app.price}}</p>
-                    <p >Capacity : {{app.capacity}}</p>
-                    <p>Type: {{app.type}}</p>
-                    <img  src="data:image/jpeg;base64,{{app.main_pic}}"> <br>
-                    <button *ngIf="app!=null" id="linker"routerLink="/appDetails/:id:{{app.id}}/:startD:{{this.startD}}/:endD:{{this.endD}}">Click here to see more</button>
+        <p>Capacity : {{app.capacity}}</p>
+        <p>Type: {{app.type}}</p>
+        <p>Country: {{app.location.split("+")[0]+","+app.location.split("+")[1]}}</p>
+        <img  src="data:image/jpeg;base64,{{app.main_pic}}"> <br>
     </li>
 </div>

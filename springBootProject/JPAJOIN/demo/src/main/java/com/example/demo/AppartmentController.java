@@ -260,6 +260,7 @@ public class AppartmentController {
         n.setEmail(owner.getEmail());
         n.setFirstName(owner.getFirstName());
         n.setLastName(owner.getLastName());
+        n.setPic(owner.getPic());
         return n;
     }
 }

@@ -6,13 +6,15 @@ import { User } from '../models/User';
 import { appartment } from '../models/appartment';
 import { DatePipe } from '@angular/common';
 
+declare var ol: any;
+
 @Component({
   selector: 'app-recommended',
   templateUrl: './recommended.component.html',
   styleUrls: ['./recommended.component.css']
 })
 export class RecommendedComponent implements OnInit {
-
+ map:any;
   usr:User;
   startD:String;
   endD:String;
@@ -40,5 +42,5 @@ export class RecommendedComponent implements OnInit {
     )
   }
 
-
+  
 }

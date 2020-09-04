@@ -58,8 +58,7 @@ export class UserService {
   }   
 
  
-  isAuthenticated(){ //here check by login from backend
-    
+  isAuthenticated(){ //here check by login from backend    
     var obj:any;
    // let usn="-"
     if(!localStorage.getItem('token'))
@@ -79,10 +78,20 @@ export class UserService {
       return true;
     return false;
   }
-  isHost(){
+  async isHost(){
     if(!this.isAuthenticated())
       return false;
       ///fill it up
+      var obj:any;
+      let str=localStorage.getItem('token').slice(7);
+      obj=atob(str.split('.')[1])
+      let array=obj.split(":");
+      let usn=array[1].split(",")[0];
+     usn=usn.substring(1, usn.length-1);
+     console.log(usn)///if authentication is successfull then  usn="username"}
+     let priviledge=await this.http.get("https://localhost:8443/api/user/"+usn+"/is-owner").toPromise();
+     console.log(priviledge)
+     return priviledge;
   }
   getLastUsr():User
   {
