@@ -15,6 +15,7 @@ import { CollaborationService } from '../collaboration.service';
 export class SearchResultsComponent implements OnInit {
 
   wifi:Boolean=false;
+  showReqs=true;
   pets:Boolean=false;
   appartmentTypes:String[]=["private flat","shared room","full house","none"]
   desiredType:String="none";
@@ -132,5 +133,9 @@ ApplyFilters()
   console.log(url);
  this.router.navigateByUrl(url);
  //window.location.reload(); 
+
+}
+hideReqs(){
+  this.showReqs=false;
 }
 }

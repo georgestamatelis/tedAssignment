@@ -142,7 +142,7 @@ has_reviewed:Boolean;
     if(this.userName)
       {
         this.apphttp.bookAppartment(this.id1,this.Dates,this.userName);
-        document.getElementById("resUlt").innerHTML="Success";
+        window.alert("BOOKING SUCCESFULL");
         console.log(this.Dates);
       }
     else{

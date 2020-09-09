@@ -46,6 +46,8 @@ export class MessageExchangeComponent implements OnInit {
             res=>{
               console.log(res);
               this.com_history=res;
+              const uniqueSet=new Set(res);
+              this.com_history=[...uniqueSet];
             }
           );
           }

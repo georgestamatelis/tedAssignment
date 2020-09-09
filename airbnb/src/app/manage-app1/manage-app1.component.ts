@@ -57,10 +57,9 @@ export class ManageApp1Component implements OnInit {
       data=>{
         this.cur=data
         this.getImage();
-        this.set_up_map();
         let Arr=this.cur.location.split("+");
         this.hood=Arr[0]; this.city=Arr[1] ; this.country=Arr[2];
-        this.messageHttp.getMessages(this.cur.id).subscribe(
+        this.messageHttp.getMessages(data.id).subscribe(
           res=>{
             this.messages=res;
             console.log(res);
@@ -75,6 +74,8 @@ export class ManageApp1Component implements OnInit {
           }
           
         );
+        this.set_up_map();
+
       }
     );
   }

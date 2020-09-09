@@ -1,112 +1,51 @@
 html {
-    background: url('p5.jpg') white no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-  }
-  header {
+  background: url('p5.jpg') white no-repeat;
+  background-size: cover;
+  font-weight: bold;
+  font-size: 110%;
+  height: 100%;
+  background-attachment: fixed;
+  position:fixed;   
+  left: 0;
+  text-align: center;
+  min-height: 100%;
+  min-width: 100%;
+}
+  
+header {
     margin-bottom: 0px;
   }
-  a {
-     color: black;
-     font-weight: bold;
-     font-family: "Calibri";
-     text-decoration: none;
+#textTop{
+    background-color: purple;
+    padding-bottom: 2%;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+  } 
+  #mainForm{
+     margin-top:2%;
+     /*width: 70%;
+     */width:900px;
+     margin-bottom: 5%;
+     background-color: white;
+     padding-bottom:2%;
+     opacity: 60%;
+     border-radius: 25px;
+     display: inline-block;
   }
-  a.logo {
-    font-weight: bold;
+  .inp{
+    display: inline-block;
+    margin-right: 3%;
   }
-  
-
-  li:hover {
-    opacity: 100%;
+  .lastinp{
+    display: inline-block;
   }
-  #bookBeautiful {
-   /* margin-top: 36px;
-    */margin-bottom: 10px;
-    font-size: 250%;
-    font-style: italic;
-    font-weight: bold;
-    color:white;
-    text-align: center;
-  }
-  ul {
-    margin-right: 10px;
-  }
-  
-  li{
-      display: block;
-      text-align: center;
-      padding-bottom: 2%;
-      background-color: white;
-      opacity: 80%;
-      margin-left: 5px;
-      margin-right: 5px;
-    border: 2px black solid;
-  }
-  
-  #linker{
-      background-color:yellow;
-      border-color: yellow;
-  }
-  #timeset{
-    border-radius: 10px;
-    font-weight: bold;
-    text-align: center;
-    min-width: 100px;
-    background-color: white;
-    opacity: 70%;
-    border-right: blueviolet;
-    border-left: blueviolet;
-    padding-bottom: 15px;
-    padding-top: 7px;
-    display: block;
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  #timeset:hover {
-    opacity: 90%;
-  }
-  #addReq {
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 120%;
-    text-align: center;
-    background-color: white;
-    opacity: 70%;
-    padding-bottom: 7px;
-    padding-top: 10px;
-    margin-top: 20px;
-    display: block;
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  #addReq:hover {
-    opacity: 90%;
-  }
-  #addReqBody {
-    margin-top: 8px;
-    font-size: 80%;
-    text-align: left;
-    padding-left: 18%;
-  }
-  .checkbox {
-    margin-right: 8px;
-  }
-  #maxCost {
-    margin-bottom: 20px;
-  }
-  #apartmentType {
-    margin-bottom: 10px;
-  }
-  #searchButton {
-    text-align: center;
+  #mainForm:hover {
+    opacity: 95%;
   }
   button {
     border-radius: 10px;
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: purple;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -115,8 +54,24 @@ html {
     margin: 15px;
     opacity: 80%;
     cursor: pointer;
+    font-weight: bold;
+    font-size:xx-large;
   }
   button:hover {
     opacity: 100%;
     background-color: lightseagreen;
   }
+label{
+  font-size: large;
+}
+@media only screen and (max-width: 725px) {
+ html{
+  background-image:none;
+  background-attachment: none;
+   background-color:lightblue;
+   position: relative;
+ } 
+ #mainForm{
+  width:75%;   
+ }
+}

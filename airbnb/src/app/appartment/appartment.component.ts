@@ -22,7 +22,7 @@ export class AppartmentComponent implements OnInit {
 
   neighborhood:String="";
   City:String="";
-  location:String="neighborhood,city,country";
+  location:String="Select neighborhood,city,country";
   wifi:Boolean;
   pets:Boolean;
   appartmentTypes:String[]=["private flat","shared room","full house"]

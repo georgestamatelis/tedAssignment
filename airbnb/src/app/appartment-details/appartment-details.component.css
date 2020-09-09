@@ -6,9 +6,6 @@ button {
   padding: 2.5%;
   color:white;
   cursor: pointer;
-
-  /*padding: 1.5%;
-*/
 }
 button:hover{
   background-color:lightseagreen;
@@ -52,13 +49,17 @@ img:hover{
   margin-bottom: 5%;
   margin-right:2.5%;
 }
-#location{
+#Location{
   clear: both;
+  margin-left:5%;
+  margin-right: 5%;
 }
+
 #description{
   clear:both;
-  text-align:center;
-  margin-top:15%
+  margin-top:15%;
+  margin-left:5%;
+  margin-right: 5%;
 }
 #morePictures{
   margin-left:5%
@@ -82,4 +83,39 @@ img:hover{
 #Rest{
   background-color:rgb(198, 173, 230);
   margin-left: 2%;
+}
+#hostProfilePic{
+  float:left;
+}
+@media only screen and (max-width: 1325px) {
+ 
+  #General{
+    clear:both;
+    margin-top:5%;
+    background-color:lightblue;
+    text-align: center;
+    display:block;
+    width: 100vw;
+
+  }
+  #services-rules{
+    background-color:rgb(198, 173, 230);
+    clear:both;
+    margin-top:5%;
+    width:92.5%;
+    text-align: center;
+    margin-bottom: 5%; 
+    margin-left:2.5%;
+    display:block; 
+  }
+}
+@media only screen and (max-width: 1050px) {
+  #hostProfilePic{
+    clear: both;
+    margin-left:15%;
+    margin-bottom:15%;
+  }
+  #Rest{
+    clear:both;
+  }
 }

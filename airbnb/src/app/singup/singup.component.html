@@ -1,8 +1,10 @@
 <html>
 <!--<h1>BECOME A PART OF AIRBNB</h1>-->
+<div id="pleaseFillOut_sabot">
     <div id="pleaseFillOut">
         Please fill out the following form
     </div>
+</div>
 <div class="pleaseTypeStuff">
     <div class="text">
         Username:
@@ -59,12 +61,14 @@
         <input class="checkbox" type="checkbox" name="checkbox" id="checker" [(ngModel)]="newUser.renter">
     </div>
     <div class="form" >
-        <p> Please choose your profile Picture</p>
-        <input type="file" (change)="onFileChanged($event)">
+        Please choose your profile Picture
+        <input class="form" type="file" (change)="onFileChanged($event)">
        <!---- <button (click)="sendImage()">Go</button>-->
     </div>
 </div>
-    <button id="signUpButton" (click)="handleClick()"> <strong>Sign up</strong> </button><br>
+    <button id="signUpButton" (click)="handleClick()">
+        <strong>Sign up</strong>
+    </button>
 <div *ngIf="success==true && show==true">Sign up succesfull.</div>
 <div *ngIf="success==false && show==true">Sign up failed Username allready in use.</div>
 <div *ngIf="success==true && show==true && newUser.requestforOwner">You will be notified when the admin confirms your request</div>    

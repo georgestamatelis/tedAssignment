@@ -1,7 +1,7 @@
 ul {
     width: 33em;
     margin-left: 0;
-    
+    display: inline-block;    
 }
 li{
     list-style-type: none;
@@ -9,15 +9,12 @@ li{
       text-align: center;
       padding-bottom: 2%;
       background-color:white;
-      margin-left: 0;
       margin-right: 0;
       color:black;
       border: 15px solid black;
-      opacity: 70%;
-      cursor:pointer
+      cursor:pointer;
 }
 li:hover{
-    opacity: 100%;
     border:25px solid lightseagreen;
 }
 img{
@@ -53,18 +50,20 @@ h1{
 
 }
 #extra-services{
-     margin-top: 2%;
       color:white;
-      background-size:cover ;
-      background-color: black;
+      background-color:lightblue;
       text-align: center;
-      margin-right: 0;
-      opacity: 70%;
+      margin-left:1%;
+      width: 20%;
+      z-index:1;     
+      height: 100%;
+      font-size:x-large; 
+      position: fixed;
+      overflow-y: auto;
+      text-align: left;
+      border-radius: 15px;
 }
-#extra-services:hover{
-    opacity: 100%;
-    background-color: lightseagreen;
-}
+
 #lastButton{
     background-color: lightgray;
     font-size: xx-large;
@@ -75,12 +74,60 @@ h1{
     color: white;
 }
 #result{
-    margin-left: 0;
+    position: relative;
+    box-sizing:border-box;
+    margin-left:25%;
 }
 img{
+    margin-top:7%;
     size:80%;
+    float:left;
     margin-right: 0;
+    margin-left:2%;
 }
 .text-right{
     margin-left:0;
 }
+#textForApp{
+  /*  float:right;*/
+    margin-left:2%
+}
+
+@media only screen and (max-width: 1250px) {
+    #extra-services{
+      width: 75%;
+      margin-left:0;
+    transform:scale(0.5);
+      position: fixed;
+      
+    }
+    body{
+        text-align: left;
+        display:block;
+    }
+    #result{
+        left:0;
+        margin-left:0;
+    }
+    ul{
+        float:left;
+    }
+    li{
+        list-style-type: none;
+        /*  display: block;*/
+          text-align: center;
+          padding-bottom: 2%;
+          background-color:white;
+          margin-left: 0;
+          color:black;
+          border: 15px solid black;
+          cursor:pointer;
+    }
+    #container{
+        margin-left:0;
+    }
+    .text-right{
+        margin-left:45%;
+    }
+  }
+  

@@ -2,58 +2,64 @@ html {
   font-weight: bold;
   font-size: 110%;
   height: 100%;
-  /*background-attachment: fixed;
-  position:fixed;*/
+  /*background-image: url('p5.jpg');*/
   top: 0;
   left: 0;
   min-height: 100%;
   min-width: 100%;
+  padding-bottom: 20px;
+  /*background-color: pink;*/
+    /*background-attachment: fixed;
+    background-position: center;
+    background-size: cover;*/
 }
 header {
-  margin-top: 0px;
+  margin-top: 10px;
   font-style: italic;
   font-family: "Calibri";
   color:black;
   padding: 5px;
   text-align: center;
   background-color: white;
-  opacity: 75%;
-  font-size: 150%;
+  font-size: 3.5vw;
 }
 .admincontainer {
+  background:radial-gradient(lightseagreen,white);
+  border-color: black 5px;
   text-align: center;
-  border-radius: 35%;
+  border-radius: 45px;
   margin-top: 20px;
   padding-top: 15px;
   padding-bottom: 1px;
-  opacity: 75%;
-  width: 75%;
-  height:350%;
-  margin-bottom:2%;
+  width: 60%;
+  /*height:350%;*/
+  /*margin-bottom:2%;*/
   display: block;
   margin-left: auto;
-  background-color: gray;
+  background-color: white;
   margin-right: auto;
 }
-table {
-  margin-left:17.5%;
+#result {
+  margin-bottom: 20px;
+  font-size: 3vw;
+}
+#table {
+  font-size: 2.3vw;
+  margin-left: 21.18%;
   margin-bottom: 6%;
 }
 table, tr, th, td {
-  border: 5px solid;
+  border: 0.3vw solid;
 }
-a{
-  color:lightseagreen
-}
-.admincontainer:hover{
-  opacity: 95%;
-}
+
 button {
-  margin-top:2%;
+  border-radius: 10px;
+  margin-top: 10px;
   font-size: x-large;
   background-color: black;
   margin-bottom: 2%;
   padding: 2.5%;
+  font-size: 1.8vw;
   color:white;
   cursor: pointer;
 }
