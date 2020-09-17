@@ -12,6 +12,7 @@ public interface UserRepository extends CrudRepository<User, String> {
     public List<User> getAllByisOwner(Boolean isOwner);
     public List<User> getAllByRequestforOwner(Boolean RequestforOwner);
 
+    //this query is use only from offline code
     @Query(value ="select * from user where user_name in (\n" +
             "select r.user_name from review r\n" +
             ");",nativeQuery = true)

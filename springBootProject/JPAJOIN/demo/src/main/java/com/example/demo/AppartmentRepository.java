@@ -16,6 +16,8 @@ public interface AppartmentRepository extends CrudRepository<appartment, Integer
     ////////////////////////////////////////////////////////////////////
     public List<appartment>  findByLocationAndCapacityOrderByPriceAllIgnoringCase(String location,Integer Capacity);
    //@Query("select a from apparment a where ")
+ //WE USE JPA'S BIND VARIABLE INSIDE THE QUERRY SO IT IS PROBABLY SAFE FROM SQL INJECTION , IF WE USED STRING
+ //CONCATENATION WE WOULD HAVE A PROBLEM
     @Query(value = "SELECT distinct * FROM appartment a WHERE a.location=?1 AND a.capacity >= ?2 ORDER BY a.price",nativeQuery =true)
     public List<appartment>  findByLocationAndCapacityGreaterThanEqualOrderByPrice(String location,Integer capacity);
 
@@ -30,8 +32,9 @@ public interface AppartmentRepository extends CrudRepository<appartment, Integer
     public List<appartment> findByLocationAndCapacityAndHasheatAndHasElevatorOrderByPriceAllIgnoringCase(String location,Integer Capacity,Boolean hasWifi,Boolean H);
     public List<appartment> findByLocationAndCapacityAndHasParkingAndHasElevatorOrderByPriceAllIgnoringCase(String location,Integer Capacity,Boolean hasWifi,Boolean H);
 
- @Query(value="select * from appartment where id  in(select r.app_id from review r);",nativeQuery = true)
- List<appartment> findAllKnownAppartments();
+    //we don't have to worry about this querrys safety as it is used only on  offline processes
+    @Query(value="select * from appartment where id  in(select r.app_id from review r);",nativeQuery = true)
+    List<appartment> findAllKnownAppartments();
 
 }
 
